@@ -1,0 +1,7 @@
+package com.javarush.island.levanov.entity.organisms.animals.herbivores;
+
+import com.javarush.island.levanov.entity.organisms.Limit;
+import com.javarush.island.levanov.entity.organisms.animals.Animal;
+
+public abstract class Herbivore extends Animal {
+}
