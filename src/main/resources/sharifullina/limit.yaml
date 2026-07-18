@@ -1,0 +1,80 @@
+Wolf:
+  maxWeight: 50
+  maxCount: 30
+  maxSpeed: 3
+  maxFood: 8
+Boa:
+  maxWeight: 15
+  maxCount: 30
+  maxSpeed: 1
+  maxFood: 3
+Fox:
+  maxWeight: 8
+  maxCount: 30
+  maxSpeed: 2
+  maxFood: 2
+Bear:
+  maxWeight: 500
+  maxCount: 5
+  maxSpeed: 2
+  maxFood: 80
+Eagle:
+  maxWeight: 6
+  maxCount: 20
+  maxSpeed: 3
+  maxFood: 1
+Horse:
+  maxWeight: 400
+  maxCount: 20
+  maxSpeed: 4
+  maxFood: 60
+Deer:
+  maxWeight: 300
+  maxCount: 20
+  maxSpeed: 4
+  maxFood: 50
+Rabbit:
+  maxWeight: 2
+  maxCount: 150
+  maxSpeed: 2
+  maxFood: 0.45
+Mouse:
+  maxWeight: 0.05
+  maxCount: 500
+  maxSpeed: 1
+  maxFood: 0.01
+Goat:
+  maxWeight: 60
+  maxCount: 140
+  maxSpeed: 3
+  maxFood: 10
+Sheep:
+  maxWeight: 70
+  maxCount: 140
+  maxSpeed: 3
+  maxFood: 15
+Boar:
+  maxWeight: 400
+  maxCount: 50
+  maxSpeed: 2
+  maxFood: 50
+Buffalo:
+  maxWeight: 700
+  maxCount: 10
+  maxSpeed: 3
+  maxFood: 100
+Duck:
+  maxWeight: 1
+  maxCount: 200
+  maxSpeed: 4
+  maxFood: 0.15
+Caterpillar:
+  maxWeight: 0.01
+  maxCount: 1000
+  maxSpeed: 0
+  maxFood: 0
+Grass:
+  maxWeight: 1
+  maxCount: 200
+  maxSpeed: 0
+  maxFood: 0
