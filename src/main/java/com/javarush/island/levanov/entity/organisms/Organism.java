@@ -4,18 +4,12 @@ import com.javarush.island.levanov.util.Constants;
 import com.javarush.island.levanov.util.IdGenerator;
 import com.javarush.island.levanov.util.Randomizer;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 public abstract class Organism implements Reproducible {
 
     //    private static AtomicLong idCounter;
     public OrganismParams params;
     private long id;
     private double weight;
-
-    public double getWeight() {
-        return weight;
-    }
 
     public Organism() {
         Class<?> clazz = this.getClass();
@@ -24,8 +18,20 @@ public abstract class Organism implements Reproducible {
         this.id = IdGenerator.generateId();
     }
 
+    public double getWeight() {
+        return weight;
+    }
+
     public String getIcon() {
         return params.icon();
+    }
+
+    public int getVelocity(){
+        return params.velocity();
+    }
+
+    public int getMaxNumberInCell(){
+        return params.maxNumberInCell();
     }
 
     @Override

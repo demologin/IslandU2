@@ -36,7 +36,7 @@ public class Constants {
         PARAMS.put(Boar.class, new OrganismParams("Boar", "\uD83D\uDC17", 400, 50, 2, 50));
         PARAMS.put(Buffalo.class, new OrganismParams("Buffalo", "\uD83D\uDC03", 700, 10, 3, 100));
         PARAMS.put(Duck.class, new OrganismParams("Duck", "\uD83E\uDD86", 1, 200, 4, 0.15));
-        PARAMS.put(Caterpillar.class, new OrganismParams("Caterpillar", "\uD83D\uDC1B.", 0.01, 1000, 0, 0));
+        PARAMS.put(Caterpillar.class, new OrganismParams("Caterpillar", "\uD83D\uDC1B", 0.01, 1000, 0, 0));
         PARAMS.put(Grass.class, new OrganismParams("Grass", "\uD83C\uDF3F", 1, 200, 0, 0));
     }
 }

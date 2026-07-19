@@ -1,13 +1,12 @@
 package com.javarush.island.levanov.view;
 
+import com.javarush.island.levanov.entity.map.Cell;
 import com.javarush.island.levanov.entity.map.GameMap;
 import com.javarush.island.levanov.entity.organisms.Organism;
+import com.javarush.island.levanov.entity.organisms.OrganismParams;
 import com.javarush.island.levanov.util.Constants;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class ConsoleView implements View {
     private final GameMap gameMap;
@@ -25,10 +24,10 @@ public class ConsoleView implements View {
             for (int j = 0; j < gameMap.cells[i].length; j++) {
                 Map<String, Set<Organism>> cellResidents = gameMap.cells[i][j].getResidents();
                 for (Map.Entry<String, Set<Organism>> stringSetEntry : cellResidents.entrySet()) {
-                    mapResidents.merge(stringSetEntry.getKey(), stringSetEntry.getValue(), (set1, set2) -> {
-                            set1.addAll(set2);
-                            return set1;
-                        });
+                    mapResidents.merge(stringSetEntry.getKey(), new HashSet<>(stringSetEntry.getValue()), (set1, set2) -> {
+                        set1.addAll(set2);
+                        return set1;
+                    });
                 }
             }
         }
@@ -49,4 +48,23 @@ public class ConsoleView implements View {
         }
         System.out.println(statistics);
     }
+
+    @Override
+    public void showCellResidents(Cell cell) {
+        System.out.print("x=" + cell.xCoordinate + " ,y=" + cell.yCoordinate+ "   ");
+        Map<String, Set<Organism>> cellResidents = cell.getResidents();
+        for (Map.Entry<String, Set<Organism>> stringSetEntry : cellResidents.entrySet()) {
+            try {
+                Class<?> clazz = Class.forName(stringSetEntry.getKey());
+                OrganismParams organismParams = Constants.PARAMS.get(clazz);
+                String icon = organismParams.icon();
+                int number = stringSetEntry.getValue().size();
+                System.out.print(icon  + number + " ");
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        System.out.println();
+    }
 }
+

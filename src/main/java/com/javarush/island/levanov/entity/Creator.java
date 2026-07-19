@@ -10,22 +10,19 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class Creator {
-    public GameMap createGameMap(){
+    public GameMap createGameMap() {
         GameMap gameMap = new GameMap();
         for (int i = 0; i < gameMap.cells.length; i++) {
             for (int j = 0; j < gameMap.cells[i].length; j++) {
-                gameMap.cells[i][j] = new Cell();
+                gameMap.cells[i][j] = new Cell(i, j, gameMap);
                 gameMap.cells[i][j].setResidents(getInitialCellResidents());
-//                System.out.println(gameMap.cells[i][j].getResidents());
-//                System.out.println();
             }
         }
         return gameMap;
     }
 
     // причесать эксепшены
-    // заменить на private
-    public Map<String, Set<Organism>> getInitialCellResidents()  {
+    private Map<String, Set<Organism>> getInitialCellResidents() {
         Map<String, Set<Organism>> initialCellResidents = new LinkedHashMap<>();
         for (Class<?> type : Constants.TYPES) {
             Set<Organism> initialCellResidentsOfType = new HashSet<>();
@@ -42,9 +39,6 @@ public class Creator {
             }
             initialCellResidents.put(type.getName(), initialCellResidentsOfType);
         }
-//        for (Map.Entry<String, Set<Organism>> stringSetEntry : initialCellResidents.entrySet()) {
-//            System.out.println(stringSetEntry);
-//        }
         return initialCellResidents;
     }
 
