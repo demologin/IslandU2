@@ -13,7 +13,6 @@ import java.util.concurrent.locks.Lock;
 
 public class MovingService implements Runnable {
     private final Game game;
-    private Map<String, Cell> movingAnimals = new HashMap<>();
 
     public MovingService(Game game) {
         this.game = game;

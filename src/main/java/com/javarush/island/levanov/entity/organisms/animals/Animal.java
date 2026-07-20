@@ -1,8 +1,6 @@
 package com.javarush.island.levanov.entity.organisms.animals;
 
 import com.javarush.island.levanov.entity.map.Cell;
-import com.javarush.island.levanov.entity.organisms.Eating;
-import com.javarush.island.levanov.entity.organisms.Movable;
 import com.javarush.island.levanov.entity.organisms.Organism;
 
 import java.util.Map;

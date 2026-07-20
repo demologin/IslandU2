@@ -15,6 +15,9 @@ public class Constants {
     public static final int PERIOD = 100;
     public static final int NUMBER_OF_PROCESSORS = Runtime.getRuntime().availableProcessors();
 
+    public static final double GROW_VELOCITY = 0.1;
+    public static final double LOSE_WEIGHT_VELOCITY = 0.1;
+
 
     public static final Class<?>[] TYPES = {
             Wolf.class, Boa.class, Fox.class, Bear.class, Eagle.class,

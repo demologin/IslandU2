@@ -10,6 +10,7 @@ import com.javarush.island.levanov.entity.organisms.animals.Animal;
 import com.javarush.island.levanov.entity.organisms.animals.predators.Wolf;
 import com.javarush.island.levanov.services.GameServiceProcessor;
 import com.javarush.island.levanov.services.MovingService;
+import com.javarush.island.levanov.services.PlantGrowingService;
 import com.javarush.island.levanov.services.ViewService;
 import com.javarush.island.levanov.util.Randomizer;
 import com.javarush.island.levanov.view.ConsoleView;
@@ -30,6 +31,7 @@ public class ConsoleRunner {
         Game game = new Game(gameMap, console);
         List<Runnable> services = List.of(
                 new MovingService(game),
+                new PlantGrowingService(game),
                 new ViewService(game)
         );
 

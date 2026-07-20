@@ -3,9 +3,11 @@ package com.javarush.island.levanov.view;
 import com.javarush.island.levanov.entity.map.Cell;
 import com.javarush.island.levanov.entity.map.GameMap;
 import com.javarush.island.levanov.entity.organisms.Organism;
+import com.javarush.island.levanov.entity.organisms.animals.plants.Grass;
 import com.javarush.island.levanov.util.Constants;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ConsoleView implements View {
     private final GameMap gameMap;
@@ -19,6 +21,7 @@ public class ConsoleView implements View {
         Map<String, Set<Organism>> mapResidents = getMapResidents();
         Map<String, Integer> statistics = getStatistics(mapResidents);
         System.out.println("Total residents: " + getTotalResidents());
+        System.out.println("Total grass weight: " + getTotalGrassWeight());
         System.out.println(statistics);
     }
 
@@ -53,6 +56,7 @@ public class ConsoleView implements View {
         return statistics;
     }
 
+    // дает неточное число потому что берет все ячейки по очереди, в это время все перебегают между ячейками
     private int getTotalResidents() {
         return Arrays.stream(gameMap.cells)
                 .flatMap(Arrays::stream)
@@ -71,6 +75,19 @@ public class ConsoleView implements View {
 //        return total;
     }
 
+    double getTotalGrassWeight() {
+        double totalGrassWeight = Arrays.stream(gameMap.cells)
+                .flatMap(Arrays::stream)
+                .map(Cell::getResidentsSet)
+                .map(set -> set
+                        .stream()
+                        .filter(o -> o instanceof Grass)
+                        .map(Organism::getWeight)
+                        .reduce(0.0, Double::sum))
+                .reduce(0.0, Double::sum);
+        totalGrassWeight = (double) Math.round(totalGrassWeight * 100) / 100;
+        return totalGrassWeight;
+    }
 
     @Override
     public void showCellResidents(Cell cell) {
@@ -98,4 +115,3 @@ public class ConsoleView implements View {
         }
     }
 }
-

@@ -1,14 +1,16 @@
 package com.javarush.island.levanov.entity.organisms;
 
+import com.javarush.island.levanov.entity.map.Cell;
 import com.javarush.island.levanov.util.Constants;
 import com.javarush.island.levanov.util.IdGenerator;
 import com.javarush.island.levanov.util.Randomizer;
 
 public abstract class Organism implements Reproducible {
 
-    //    private static AtomicLong idCounter;
     public OrganismParams params;
-    private long id;
+
+    private final long id;
+
     private double weight;
 
     public Organism() {
@@ -16,6 +18,10 @@ public abstract class Organism implements Reproducible {
         this.params = Constants.PARAMS.get(clazz);
         this.weight = (double) Math.round(params.maxWeight() * Randomizer.getRandomProbability() * 100) / 100;
         this.id = IdGenerator.generateId();
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
     }
 
     public double getWeight() {
@@ -26,16 +32,20 @@ public abstract class Organism implements Reproducible {
         return params.icon();
     }
 
-    public int getVelocity(){
+    public int getVelocity() {
         return params.velocity();
     }
 
-    public int getMaxNumberInCell(){
+    public int getMaxNumberInCell() {
         return params.maxNumberInCell();
     }
 
+    public double getMaxWeight() {
+        return params.maxWeight();
+    }
+
     @Override
-    public void produce() {
+    public void reproduce() {
 
     }
 
