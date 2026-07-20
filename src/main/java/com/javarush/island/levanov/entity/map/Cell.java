@@ -5,12 +5,15 @@ import com.javarush.island.levanov.util.Constants;
 import com.javarush.island.levanov.util.Randomizer;
 
 import java.util.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Cell {
     private final GameMap gameMap;
     private Map<String, Set<Organism>> residents;
     public final int xCoordinate;
     public final int yCoordinate;
+    private final Lock lock = new ReentrantLock(true);
 
     public Cell(int xCoordinate, int yCoordinate, GameMap gameMap) {
         this.xCoordinate = xCoordinate;
@@ -18,30 +21,47 @@ public class Cell {
         this.gameMap = gameMap;
     }
 
-    public void setResidents(Map<String, Set<Organism>> residents) {
+    public void setResidentsMap(Map<String, Set<Organism>> residents) {
         this.residents = residents;
     }
 
-    public Map<String, Set<Organism>> getResidents() {
+    public Lock getLock() {
+        return lock;
+    }
+
+    public Map<String, Set<Organism>> getResidentsMap() {
         return residents;
     }
 
+    public Set<Organism> getResidentsSet() {
+        Map<String, Set<Organism>> cellResidents = this.getResidentsMap();
+        Set<Organism> allOrganisms = new HashSet<>();
+        for (Map.Entry<String, Set<Organism>> stringSetEntry : cellResidents.entrySet()) {
+            allOrganisms.addAll(stringSetEntry.getValue());
+        }
+        return allOrganisms;
+    }
+
+    public int getResidentsNumber(Cell cell){
+        return cell.getResidentsSet().size();
+    }
+
     public Cell getNextCell() {
-        List<Cell> availableCells = this.getAvailableCells();
+        List<Cell> availableCells = this.getAvailableNextCells();
         int size = availableCells.size();
         return availableCells.get(Randomizer.getRandomNextCell(size));
     }
 
-    public boolean isCellFull(Organism organism){
-        Map<String, Set<Organism>> residents = this.getResidents();
+    public boolean isCellFull(Organism organism) {
+        Map<String, Set<Organism>> residents = this.getResidentsMap();
         Set<Organism> residentsOfThisType = residents.get(organism.getClass().getName());
         return residentsOfThisType.size() == organism.getMaxNumberInCell();
     }
 
     // ходят только в 4 стороны
-    private List<Cell> getAvailableCells() {
+    private List<Cell> getAvailableNextCells() {
         List<Cell> availableCells = new ArrayList<>();
-        Cell[][] cells = this.gameMap.getCells();
+        Cell[][] cells = this.gameMap.cells;
         if (this.xCoordinate == 0) {
             availableCells.add(cells[this.xCoordinate + 1][this.yCoordinate]);
         } else if (this.xCoordinate == Constants.COLS - 1) {
@@ -60,5 +80,4 @@ public class Cell {
         }
         return availableCells;
     }
-
 }

@@ -7,4 +7,6 @@ public interface View {
     void showStatistics();
 
     void showCellResidents(Cell cell);
+
+    void showMap();
 }

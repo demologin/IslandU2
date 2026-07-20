@@ -2,58 +2,72 @@ package com.javarush.island.levanov.entity.organisms.animals;
 
 import com.javarush.island.levanov.entity.map.Cell;
 import com.javarush.island.levanov.entity.organisms.Eating;
-import com.javarush.island.levanov.entity.organisms.Limit;
 import com.javarush.island.levanov.entity.organisms.Movable;
 import com.javarush.island.levanov.entity.organisms.Organism;
-import com.javarush.island.levanov.util.Randomizer;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
 
 public abstract class Animal extends Organism implements Movable, Eating {
 
 
     @Override
-    public void move(Cell startCell) {
-        // сделать потокобезопасным
+    public void safeMove(Cell startCell) {
+        // сделать потокобезопасным и подумать надо ли блокировать обе ячейки если я и так блокирую обе ячейки по очереди
         // добавить рекурсию
-        int velocity = this.getVelocity();
         Cell middleCell = startCell;
-        for (int i = 0; i < velocity; i++) {
+        for (int i = 0; i < this.getVelocity(); i++) {
             Cell nextCell = middleCell.getNextCell();
-            if (!nextCell.isCellFull(this)) {
-                this.addToNextCell(nextCell);
-                this.deleteFromStartCell(middleCell);
-                System.out.println("move from "
-                        + middleCell.xCoordinate + "," + middleCell.yCoordinate +
-                        " to " +
-                        +nextCell.xCoordinate + "," + nextCell.yCoordinate);
-            } else {
-                System.out.println("Can't move");
-            }
+//            Lock lockNextCell = nextCell.getLock();
+//            Lock lockMiddleCell = middleCell.getLock();
+//            lockNextCell.lock();
+//            try {
+//                lockMiddleCell.lock();
+//                try {
+                    if (!nextCell.isCellFull(this)) {
+                        this.safeAddToNextCell(nextCell);
+                        this.safeDeleteFromStartCell(middleCell);
+                    }
+//                } finally {
+//                    lockMiddleCell.unlock();
+//                }
+//            } finally {
+//                lockNextCell.unlock();
+//            }
             middleCell = nextCell;
         }
     }
 
     // переписать на лямбду
-    private void addToNextCell(Cell nextCell) {
-        String className = this.getClass().getName();
-        Map<String, Set<Organism>> nextCellResidents = nextCell.getResidents();
-        Set<Organism> nextCellResidentsOfThisType = nextCellResidents.get(className);
-        nextCellResidentsOfThisType.add(this);
-        nextCellResidents.put(className, nextCellResidentsOfThisType);
-        nextCell.setResidents(nextCellResidents);
+    private void safeAddToNextCell(Cell nextCell) {
+        Lock lock = nextCell.getLock();
+        lock.lock();
+        try {
+            String className = this.getClass().getName();
+            Map<String, Set<Organism>> nextCellResidents = nextCell.getResidentsMap();
+            Set<Organism> nextCellResidentsOfThisType = nextCellResidents.get(className);
+            nextCellResidentsOfThisType.add(this);
+            nextCellResidents.put(className, nextCellResidentsOfThisType);
+            nextCell.setResidentsMap(nextCellResidents);
+        } finally {
+            lock.unlock();
+        }
     }
 
-    private void deleteFromStartCell(Cell startCell) {
-        String className = this.getClass().getName();
-        Map<String, Set<Organism>> startCellResidents = startCell.getResidents();
-        Set<Organism> startCellResidentsOfThisType = startCellResidents.get(className);
-        startCellResidentsOfThisType.remove(this);
-        startCellResidents.put(className, startCellResidentsOfThisType);
-        startCell.setResidents(startCellResidents);
-
+    private void safeDeleteFromStartCell(Cell startCell) {
+        Lock lock = startCell.getLock();
+        lock.lock();
+        try {
+            String className = this.getClass().getName();
+            Map<String, Set<Organism>> startCellResidents = startCell.getResidentsMap();
+            Set<Organism> startCellResidentsOfThisType = startCellResidents.get(className);
+            startCellResidentsOfThisType.remove(this);
+            startCellResidents.put(className, startCellResidentsOfThisType);
+            startCell.setResidentsMap(startCellResidents);
+        } finally {
+            lock.unlock();
+        }
     }
 
     @Override

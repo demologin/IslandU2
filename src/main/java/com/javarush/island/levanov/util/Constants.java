@@ -12,6 +12,9 @@ import java.util.Map;
 public class Constants {
     public static final int ROWS = 2;
     public static final int COLS = 2;
+    public static final int PERIOD = 100;
+    public static final int NUMBER_OF_PROCESSORS = Runtime.getRuntime().availableProcessors();
+
 
     public static final Class<?>[] TYPES = {
             Wolf.class, Boa.class, Fox.class, Bear.class, Eagle.class,
