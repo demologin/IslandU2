@@ -24,9 +24,20 @@ public class Location {
         this.y = y;
 
         for (OrganismType type : OrganismType.values()) {
+
             organisms.put(type, new ArrayList<>());
+
         }
 
+    }
+
+
+    public void lock() {
+        lock.lock();
+    }
+
+    public void unlock() {
+        lock.unlock();
     }
 
     public void addOrganism(Organism organism) {
@@ -45,13 +56,16 @@ public class Location {
         return organisms.get(type).size();
     }
 
-    public boolean contains(OrganismType type) {
-        return !organisms.get(type).isEmpty();
+    public boolean isEmpty(OrganismType type) {
+        return organisms.get(type).isEmpty();
+    }
+
+    public boolean isFull(OrganismType type) {
+        return count(type) >= type.getMaxCount();
     }
 
     public EnumMap<OrganismType, List<Organism>> getAllOrganisms() {
         return new EnumMap<>(organisms);
-
     }
 
 }
