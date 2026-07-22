@@ -3,7 +3,7 @@ package com.javarush.island.rukavanov.config;
 import lombok.Getter;
 
 @Getter
-public enum AnimalData {
+public enum OrganismType {
     WOLF("🐺", 50, 30, 3, 8),
     SNAKE("🐍", 15, 30, 1, 3),
     FOX("🦊", 8, 30, 2, 2),
@@ -27,12 +27,12 @@ public enum AnimalData {
     private final int speed;
     private final double foodNorm;
 
-    AnimalData(String icon,
+    OrganismType(String icon,
 
-               double weight,
-               int maxCount,
-               int speed,
-               double foodNorm) {
+                 double weight,
+                 int maxCount,
+                 int speed,
+                 double foodNorm) {
 
         this.icon = icon;
         this.weight = weight;

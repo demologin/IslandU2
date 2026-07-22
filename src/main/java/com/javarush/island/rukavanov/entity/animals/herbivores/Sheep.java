@@ -1,11 +1,11 @@
 package com.javarush.island.rukavanov.entity.animals.herbivores;
 
-import com.javarush.island.rukavanov.config.AnimalData;
+import com.javarush.island.rukavanov.config.OrganismType;
 
 public class Sheep extends Herbivore {
 
     public Sheep() {
-        super(AnimalData.SHEEP);
+        super(OrganismType.SHEEP);
     }
 
 }

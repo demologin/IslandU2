@@ -1,6 +1,6 @@
 package com.javarush.island.rukavanov.entity.animals;
 
-import com.javarush.island.rukavanov.config.AnimalData;
+import com.javarush.island.rukavanov.config.OrganismType;
 import com.javarush.island.rukavanov.entity.Organism;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,12 +10,12 @@ import lombok.Setter;
 public abstract class Animal extends Organism {
 
 
-    private final AnimalData data;
+    private final OrganismType data;
     private double satiety;
     private boolean alive = true;
     private boolean moved;
 
-    protected Animal(AnimalData data) {
+    protected Animal(OrganismType data) {
 
         this.data = data;
         this.satiety = data.getFoodNorm();
@@ -23,7 +23,7 @@ public abstract class Animal extends Organism {
     }
 
     @Override
-    public AnimalData getData() {
+    public OrganismType getData() {
         return data;
     }
 

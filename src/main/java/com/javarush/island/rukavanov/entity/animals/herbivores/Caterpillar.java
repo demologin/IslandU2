@@ -1,11 +1,11 @@
 package com.javarush.island.rukavanov.entity.animals.herbivores;
 
-import com.javarush.island.rukavanov.config.AnimalData;
+import com.javarush.island.rukavanov.config.OrganismType;
 
 public class Caterpillar extends Herbivore {
 
     public Caterpillar() {
-        super(AnimalData.CATERPILLAR);
+        super(OrganismType.CATERPILLAR);
 
     }
 

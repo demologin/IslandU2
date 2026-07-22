@@ -1,8 +1,10 @@
 package com.javarush.island.rukavanov.factory;
 
-import com.javarush.island.khmelov.entity.organizm.animals.predators.*;
-import com.javarush.island.rukavanov.config.AnimalData;
+import com.javarush.island.rukavanov.entity.animals.predators.*;
+import com.javarush.island.rukavanov.entity.animals.herbivores.*;
+import com.javarush.island.rukavanov.config.OrganismType;
 import com.javarush.island.rukavanov.entity.Organism;
+import com.javarush.island.rukavanov.entity.plants.Plant;
 
 public final class OrganismFactory {
 
@@ -10,7 +12,7 @@ public final class OrganismFactory {
 
     }
 
-    public static Organism create(AnimalData data) {
+    public static Organism create(OrganismType data) {
 
         return switch (data) {
 
@@ -30,7 +32,6 @@ public final class OrganismFactory {
             case DUCK -> new Duck();
             case CATERPILLAR -> new Caterpillar();
             case PLANT -> new Plant();
-
         };
 
     }
