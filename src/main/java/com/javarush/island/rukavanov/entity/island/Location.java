@@ -24,13 +24,10 @@ public class Location {
         this.y = y;
 
         for (OrganismType type : OrganismType.values()) {
-
             organisms.put(type, new ArrayList<>());
-
         }
 
     }
-
 
     public void lock() {
         lock.lock();

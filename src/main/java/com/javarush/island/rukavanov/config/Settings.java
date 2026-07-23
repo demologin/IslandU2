@@ -30,7 +30,6 @@ public final class Settings {
     public static final int START_PLANT = 100;
 
     // Процент от нормы еды, который животное теряет за такт.
-
     public static final double HUNGER_PERCENT = 0.10;
     public static final int PLANTS_GROW_PER_TICK = 5;
 
