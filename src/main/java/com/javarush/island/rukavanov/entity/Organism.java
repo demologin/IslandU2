@@ -5,14 +5,22 @@ import com.javarush.island.rukavanov.config.OrganismType;
 
 public abstract class Organism {
 
-    public abstract OrganismType getData();
+    private final OrganismType data;
+
+    protected Organism(OrganismType data) {
+        this.data = data;
+    }
+
+    public OrganismType getData() {
+        return data;
+    }
 
     public double getWeight() {
-        return getData().getWeight();
+        return data.getWeight();
     }
 
     public String getIcon() {
-        return getData().getIcon();
+        return data.getIcon();
     }
 
 }

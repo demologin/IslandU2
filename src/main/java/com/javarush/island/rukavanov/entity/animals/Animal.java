@@ -10,53 +10,78 @@ import lombok.Setter;
 public abstract class Animal extends Organism {
 
 
-    private final OrganismType data;
     private double satiety;
-    private boolean alive = true;
-    private boolean moved;
+    private boolean alive;
 
-    protected Animal(OrganismType data) {
+    protected Animal(OrganismType type) {
 
-        this.data = data;
-        this.satiety = data.getFoodNorm();
-
-    }
-
-    @Override
-    public OrganismType getData() {
-        return data;
-    }
-
-    public void setSatiety(double satiety) {
-        this.satiety = Math.max(0, satiety);
+        super(type);
+        this.satiety = type.getFoodNorm();
+        this.alive = true;
 
     }
 
-    public void eat(double foodWeight) {
-        satiety = Math.min(
-                satiety + foodWeight,
-                data.getFoodNorm()
 
-        );
-
+    public boolean isAlive() {
+        return alive;
     }
 
-    public void spendEnergy(double value) {
-
-        satiety -= value;
-        if (satiety <= 0) {
-            alive = false;
-            satiety = 0;
-        }
-
-    }
 
     public void die() {
         alive = false;
     }
 
-    public void resetTick() {
-        moved = false;
+
+    public boolean isHungry() {
+        return satiety < getData().getFoodNorm();
     }
 
+
+    public boolean isFull() {
+
+        return satiety >= getData().getFoodNorm();
+
+    }
+
+
+    public void loseSatiety(double amount) {
+
+        if (!alive) {
+            return;
+        }
+
+        satiety -= amount;
+
+        if (satiety <= 0) {
+            satiety = 0;
+            die();
+        }
+    }
+
+    public void eat(Organism food) {
+
+        if (!alive) {
+            return;
+        }
+
+        satiety += food.getWeight();
+
+        if (satiety > getData().getFoodNorm()) {
+            satiety = getData().getFoodNorm();
+        }
+    }
+
+    public void resetSatiety() {
+        satiety = getData().getFoodNorm();
+    }
+
+
+    public double getSatiety() {
+        return satiety;
+    }
+
+
+    public double getSatietyPercent() {
+        return satiety / getData().getFoodNorm();
+    }
 }
