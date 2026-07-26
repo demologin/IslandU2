@@ -5,5 +5,22 @@ public record OrganismParams(String name,
                              double maxWeight,
                              int maxNumberInCell,
                              int velocity,
-                             double maxFootWeight) {
+                             double maxFoodWeight//,
+//                             double probabilityBeingEatenByWolf,
+//                             double probabilityBeingEatenByBoa,
+//                             double probabilityBeingEatenByFox,
+//                             double probabilityBeingEatenByBear,
+//                             double probabilityBeingEatenByEagle,
+//                             double probabilityBeingEatenByHorse,
+//                             double probabilityBeingEatenByDear,
+//                             double probabilityBeingEatenByRabbit,
+//                             double probabilityBeingEatenByMouse,
+//                             double probabilityBeingEatenByGoat,
+//                             double probabilityBeingEatenBySheep,
+//                             double probabilityBeingEatenByBoar,
+//                             double probabilityBeingEatenByBuffalo,
+//                             double probabilityBeingEatenByDuck,
+//                             double probabilityBeingEatenByCaterpillar,
+//                             double probabilityBeingEatenByGrass
+) {
 }

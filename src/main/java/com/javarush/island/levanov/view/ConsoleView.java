@@ -3,11 +3,13 @@ package com.javarush.island.levanov.view;
 import com.javarush.island.levanov.entity.map.Cell;
 import com.javarush.island.levanov.entity.map.GameMap;
 import com.javarush.island.levanov.entity.organisms.Organism;
-import com.javarush.island.levanov.entity.organisms.animals.plants.Grass;
+import com.javarush.island.levanov.entity.organisms.animals.Animal;
+import com.javarush.island.levanov.entity.organisms.plants.Grass;
+import com.javarush.island.levanov.services.GameServiceProcessor;
 import com.javarush.island.levanov.util.Constants;
 
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.concurrent.locks.Lock;
 
 public class ConsoleView implements View {
     private final GameMap gameMap;
@@ -20,24 +22,31 @@ public class ConsoleView implements View {
     public void showStatistics() {
         Map<String, Set<Organism>> mapResidents = getMapResidents();
         Map<String, Integer> statistics = getStatistics(mapResidents);
+        System.out.println("STEP #: " + GameServiceProcessor.step);
         System.out.println("Total residents: " + getTotalResidents());
         System.out.println("Total grass weight: " + getTotalGrassWeight());
+        System.out.println("Total animals weight: " + getTotalAnimalWeight());
+        System.out.println("steps forward: " + Organism.stepForward);
+        System.out.println("steps from: " + Organism.stepFrom);
+        System.out.println("fullCellCounter: " + Organism.fullCellCounter);
         System.out.println(statistics);
     }
 
     private Map<String, Set<Organism>> getMapResidents() {
         Map<String, Set<Organism>> mapResidents = new LinkedHashMap<>();
-        for (int i = 0; i < gameMap.cells.length; i++) {
-            for (int j = 0; j < gameMap.cells[i].length; j++) {
-                Map<String, Set<Organism>> cellResidents = gameMap.cells[i][j].getResidentsMap();
-                for (Map.Entry<String, Set<Organism>> stringSetEntry : cellResidents.entrySet()) {
-                    mapResidents.merge(stringSetEntry.getKey(), new HashSet<>(stringSetEntry.getValue()), (set1, set2) -> {
-                        set1.addAll(set2);
-                        return set1;
-                    });
-                }
-            }
-        }
+        Arrays.stream(gameMap.cells)
+                .flatMap(Arrays::stream)
+                .map(cell -> cell.getResidentsMap())
+                .map(map -> map.entrySet())
+                .forEach(set -> {
+                    for (Map.Entry<String, Set<Organism>> stringSetEntry : set) {
+                        mapResidents.merge(stringSetEntry.getKey(), new HashSet<>(stringSetEntry.getValue()), (set1, set2) -> {
+                                    set1.addAll(set2);
+                                    return set1;
+                                }
+                        );
+                    }
+                });
         return mapResidents;
     }
 
@@ -62,17 +71,6 @@ public class ConsoleView implements View {
                 .flatMap(Arrays::stream)
                 .map(cell -> cell.getResidentsSet().size())
                 .reduce(0, Integer::sum);
-//
-//        int total = 0;
-//        for (int i = 0; i < gameMap.cells.length; i++) {
-//            for (int j = 0; j < gameMap.cells[i].length; j++) {
-//                Map<String, Set<Organism>> cellResidents = gameMap.cells[i][j].getResidentsMap();
-//                for (Map.Entry<String, Set<Organism>> stringSetEntry : cellResidents.entrySet()) {
-//                    total += stringSetEntry.getValue().size();
-//                }
-//            }
-//        }
-//        return total;
     }
 
     double getTotalGrassWeight() {
@@ -89,19 +87,39 @@ public class ConsoleView implements View {
         return totalGrassWeight;
     }
 
+    double getTotalAnimalWeight() {
+        double totalAnimalWeight = Arrays.stream(gameMap.cells)
+                .flatMap(Arrays::stream)
+                .map(Cell::getResidentsSet)
+                .map(set -> set
+                        .stream()
+                        .filter(o -> o instanceof Animal)
+                        .map(Organism::getWeight)
+                        .reduce(0.0, Double::sum))
+                .reduce(0.0, Double::sum);
+        totalAnimalWeight = (double) Math.round(totalAnimalWeight * 100) / 100;
+        return totalAnimalWeight;
+    }
+
     @Override
-    public void showCellResidents(Cell cell) {
+    public void safeShowCellResidents(Cell cell) {
         System.out.print("x=" + cell.xCoordinate + " ,y=" + cell.yCoordinate + "   ");
-        Map<String, Set<Organism>> cellResidents = cell.getResidentsMap();
-        for (Map.Entry<String, Set<Organism>> stringSetEntry : cellResidents.entrySet()) {
-            try {
-                Class<?> clazz = Class.forName(stringSetEntry.getKey());
-                String icon = Constants.PARAMS.get(clazz).icon();
-                int counter = stringSetEntry.getValue().size();
-                System.out.print(icon + counter + " ");
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
+        Lock lock = cell.getLock();
+        lock.lock();
+        try {
+            Map<String, Set<Organism>> cellResidents = cell.getResidentsMap();
+            for (Map.Entry<String, Set<Organism>> stringSetEntry : cellResidents.entrySet()) {
+                try {
+                    Class<?> clazz = Class.forName(stringSetEntry.getKey());
+                    String icon = Constants.PARAMS.get(clazz).icon();
+                    int counter = stringSetEntry.getValue().size();
+                    System.out.print(icon + counter + " ");
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
+        } finally {
+            lock.unlock();
         }
         System.out.println();
     }
@@ -110,7 +128,7 @@ public class ConsoleView implements View {
     public void showMap() {
         for (int i = 0; i < gameMap.cells.length; i++) {
             for (int j = 0; j < gameMap.cells[i].length; j++) {
-                showCellResidents(gameMap.cells[i][j]);
+                safeShowCellResidents(gameMap.cells[i][j]);
             }
         }
     }

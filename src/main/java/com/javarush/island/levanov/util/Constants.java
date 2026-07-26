@@ -2,7 +2,7 @@ package com.javarush.island.levanov.util;
 
 import com.javarush.island.levanov.entity.organisms.OrganismParams;
 import com.javarush.island.levanov.entity.organisms.animals.herbivores.*;
-import com.javarush.island.levanov.entity.organisms.animals.plants.Grass;
+import com.javarush.island.levanov.entity.organisms.plants.Grass;
 import com.javarush.island.levanov.entity.organisms.animals.predators.*;
 
 import java.util.HashMap;
@@ -10,13 +10,15 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Constants {
-    public static final int ROWS = 2;
-    public static final int COLS = 2;
-    public static final int PERIOD = 100;
+    public static final int ROWS = 20;
+    public static final int COLS = 100;
+    public static final int PERIOD = 30;
     public static final int NUMBER_OF_PROCESSORS = Runtime.getRuntime().availableProcessors();
+    public static final double CHILD_WEIGHT = 0.25;
+    public static final double REPRODUCE_PROBABILITY = 0.1;
 
     public static final double GROW_VELOCITY = 0.1;
-    public static final double LOSE_WEIGHT_VELOCITY = 0.1;
+    public static final double LOSE_WEIGHT_VELOCITY = 0.05;
 
 
     public static final Class<?>[] TYPES = {
@@ -43,6 +45,86 @@ public class Constants {
         PARAMS.put(Buffalo.class, new OrganismParams("Buffalo", "\uD83D\uDC03", 700, 10, 3, 100));
         PARAMS.put(Duck.class, new OrganismParams("Duck", "\uD83E\uDD86", 1, 200, 4, 0.15));
         PARAMS.put(Caterpillar.class, new OrganismParams("Caterpillar", "\uD83D\uDC1B", 0.01, 1000, 0, 0));
-        PARAMS.put(Grass.class, new OrganismParams("Grass", "\uD83C\uDF3F", 1, 200, 0, 0));
+        PARAMS.put(Grass.class, new OrganismParams("Grass", "\uD83C\uDF3F", 30000, 200, 0, 0));
+    }
+
+    public static final Map<Class<?>, Map<Class<?>, Double>> PROBABILITY_BEING_CAUGHT = new LinkedHashMap<>();
+
+    static {
+        PROBABILITY_BEING_CAUGHT.put(Wolf.class, new HashMap<>(Map.ofEntries(
+                Map.entry(Horse.class, 0.1),
+                Map.entry(Dear.class, 0.15),
+                Map.entry(Rabbit.class, 0.6),
+                Map.entry(Mouse.class, 0.8),
+                Map.entry(Goat.class, 0.6),
+                Map.entry(Sheep.class, 0.7),
+                Map.entry(Boar.class, 0.15),
+                Map.entry(Buffalo.class, 0.1),
+                Map.entry(Duck.class, 0.4)
+        )));
+        PROBABILITY_BEING_CAUGHT.put(Boa.class, new HashMap<>(Map.ofEntries(
+                Map.entry(Fox.class, 0.15),
+                Map.entry(Rabbit.class, 0.2),
+                Map.entry(Mouse.class, 0.4),
+                Map.entry(Duck.class, 0.1)
+        )));
+        PROBABILITY_BEING_CAUGHT.put(Fox.class, new HashMap<>(Map.ofEntries(
+                Map.entry(Rabbit.class, 0.7),
+                Map.entry(Mouse.class, 0.9),
+                Map.entry(Duck.class, 0.6),
+                Map.entry(Caterpillar.class, 0.4)
+        )));
+        PROBABILITY_BEING_CAUGHT.put(Bear.class, new HashMap<>(Map.ofEntries(
+                Map.entry(Boa.class, 0.8),
+                Map.entry(Horse.class, 0.4),
+                Map.entry(Dear.class, 0.8),
+                Map.entry(Rabbit.class, 0.8),
+                Map.entry(Mouse.class, 0.9),
+                Map.entry(Goat.class, 0.7),
+                Map.entry(Sheep.class, 0.7),
+                Map.entry(Boar.class, 0.5),
+                Map.entry(Buffalo.class, 0.2),
+                Map.entry(Duck.class, 0.1)
+        )));
+        PROBABILITY_BEING_CAUGHT.put(Eagle.class, new HashMap<>(Map.ofEntries(
+                Map.entry(Fox.class, 0.8),
+                Map.entry(Rabbit.class, 0.9),
+                Map.entry(Mouse.class, 0.9),
+                Map.entry(Duck.class, 0.8)
+        )));
+        PROBABILITY_BEING_CAUGHT.put(Horse.class, new HashMap<>(Map.ofEntries(
+                Map.entry(Grass.class, 1.0)
+        )));
+        PROBABILITY_BEING_CAUGHT.put(Dear.class, new HashMap<>(Map.ofEntries(
+                Map.entry(Grass.class, 1.0)
+        )));
+        PROBABILITY_BEING_CAUGHT.put(Rabbit.class, new HashMap<>(Map.ofEntries(
+                Map.entry(Grass.class, 1.0)
+        )));
+        PROBABILITY_BEING_CAUGHT.put(Mouse.class, new HashMap<>(Map.ofEntries(
+                Map.entry(Grass.class, 1.0),
+                Map.entry(Caterpillar.class, 0.9)
+        )));
+        PROBABILITY_BEING_CAUGHT.put(Goat.class, new HashMap<>(Map.ofEntries(
+                Map.entry(Grass.class, 1.0)
+        )));
+        PROBABILITY_BEING_CAUGHT.put(Sheep.class, new HashMap<>(Map.ofEntries(
+                Map.entry(Grass.class, 1.0)
+        )));
+        PROBABILITY_BEING_CAUGHT.put(Boar.class, new HashMap<>(Map.ofEntries(
+                Map.entry(Mouse.class, 0.5),
+                Map.entry(Caterpillar.class, 0.9),
+                Map.entry(Grass.class, 1.0)
+        )));
+        PROBABILITY_BEING_CAUGHT.put(Buffalo.class, new HashMap<>(Map.ofEntries(
+                Map.entry(Grass.class, 1.0)
+        )));
+        PROBABILITY_BEING_CAUGHT.put(Duck.class, new HashMap<>(Map.ofEntries(
+                Map.entry(Caterpillar.class, 0.9),
+                Map.entry(Grass.class, 1.0)
+        )));
+        PROBABILITY_BEING_CAUGHT.put(Caterpillar.class, new HashMap<>(Map.ofEntries(
+                Map.entry(Grass.class, 1.0)
+        )));
     }
 }

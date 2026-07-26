@@ -34,16 +34,32 @@ public class Cell {
     }
 
     public Set<Organism> getResidentsSet() {
-        Map<String, Set<Organism>> cellResidents = this.getResidentsMap();
+        lock.lock();
         Set<Organism> allOrganisms = new HashSet<>();
-        for (Map.Entry<String, Set<Organism>> stringSetEntry : cellResidents.entrySet()) {
-            allOrganisms.addAll(stringSetEntry.getValue());
+        try {
+            Map<String, Set<Organism>> cellResidents = this.getResidentsMap();
+            for (Map.Entry<String, Set<Organism>> stringSetEntry : cellResidents.entrySet()) {
+                allOrganisms.addAll(stringSetEntry.getValue());
+            }
+        } finally {
+            lock.unlock();
         }
         return allOrganisms;
     }
 
-    public int getResidentsNumber(Cell cell){
-        return cell.getResidentsSet().size();
+    public boolean haveCouple(Organism organism) {
+        lock.lock();
+        boolean haveCouple = false;
+        try {
+            Map<String, Set<Organism>> cellResidents = this.getResidentsMap();
+            if (cellResidents.get(organism.getClass().getName()).size() > 1) {
+                haveCouple = true;
+            }
+
+        } finally {
+            lock.unlock();
+        }
+        return haveCouple;
     }
 
     public Cell getNextCell() {
@@ -58,25 +74,25 @@ public class Cell {
         return residentsOfThisType.size() == organism.getMaxNumberInCell();
     }
 
-    // ходят только в 4 стороны
+    // учесть маленькое поле 2 на 1
     private List<Cell> getAvailableNextCells() {
         List<Cell> availableCells = new ArrayList<>();
         Cell[][] cells = this.gameMap.cells;
-        if (this.xCoordinate == 0) {
-            availableCells.add(cells[this.xCoordinate + 1][this.yCoordinate]);
-        } else if (this.xCoordinate == Constants.COLS - 1) {
-            availableCells.add(cells[this.xCoordinate - 1][this.yCoordinate]);
-        } else {
-            availableCells.add(cells[this.xCoordinate + 1][this.yCoordinate]);
-            availableCells.add(cells[this.xCoordinate - 1][this.yCoordinate]);
+        switch (this.xCoordinate) {
+            case 0 -> availableCells.add(cells[this.xCoordinate + 1][this.yCoordinate]);
+            case Constants.COLS - 1 -> availableCells.add(cells[this.xCoordinate - 1][this.yCoordinate]);
+            default -> {
+                availableCells.add(cells[this.xCoordinate + 1][this.yCoordinate]);
+                availableCells.add(cells[this.xCoordinate - 1][this.yCoordinate]);
+            }
         }
-        if (this.yCoordinate == 0) {
-            availableCells.add(cells[this.xCoordinate][this.yCoordinate + 1]);
-        } else if (this.yCoordinate == Constants.ROWS - 1) {
-            availableCells.add(cells[this.xCoordinate][this.yCoordinate - 1]);
-        } else {
-            availableCells.add(cells[this.xCoordinate][this.yCoordinate + 1]);
-            availableCells.add(cells[this.xCoordinate][this.yCoordinate - 1]);
+        switch (this.yCoordinate) {
+            case 0 -> availableCells.add(cells[this.xCoordinate][this.yCoordinate + 1]);
+            case Constants.ROWS - 1 -> availableCells.add(cells[this.xCoordinate][this.yCoordinate - 1]);
+            default -> {
+                availableCells.add(cells[this.xCoordinate][this.yCoordinate + 1]);
+                availableCells.add(cells[this.xCoordinate][this.yCoordinate - 1]);
+            }
         }
         return availableCells;
     }

@@ -2,7 +2,7 @@ package com.javarush.island.levanov.util;
 
 import com.javarush.island.levanov.entity.organisms.Organism;
 import com.javarush.island.levanov.entity.organisms.animals.herbivores.Herbivore;
-import com.javarush.island.levanov.entity.organisms.animals.plants.Plant;
+import com.javarush.island.levanov.entity.organisms.plants.Plant;
 import com.javarush.island.levanov.entity.organisms.animals.predators.Predator;
 
 public class BornProbabilityGenerator {

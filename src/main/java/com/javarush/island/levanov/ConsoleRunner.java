@@ -3,24 +3,11 @@ package com.javarush.island.levanov;
 import com.javarush.island.levanov.entity.Creator;
 import com.javarush.island.levanov.entity.EntityFactory;
 import com.javarush.island.levanov.entity.Game;
-import com.javarush.island.levanov.entity.map.Cell;
 import com.javarush.island.levanov.entity.map.GameMap;
-import com.javarush.island.levanov.entity.organisms.Organism;
-import com.javarush.island.levanov.entity.organisms.animals.Animal;
-import com.javarush.island.levanov.entity.organisms.animals.predators.Wolf;
-import com.javarush.island.levanov.services.GameServiceProcessor;
-import com.javarush.island.levanov.services.MovingService;
-import com.javarush.island.levanov.services.PlantGrowingService;
-import com.javarush.island.levanov.services.ViewService;
-import com.javarush.island.levanov.util.Randomizer;
+import com.javarush.island.levanov.services.*;
 import com.javarush.island.levanov.view.ConsoleView;
-import org.w3c.dom.ls.LSOutput;
 
-import java.lang.reflect.GenericArrayType;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class ConsoleRunner {
     public static void main(String[] args) {
@@ -28,10 +15,14 @@ public class ConsoleRunner {
         Creator creator = new Creator(entityFactory);
         GameMap gameMap = creator.createGameMap();
         ConsoleView console = new ConsoleView(gameMap);
-        Game game = new Game(gameMap, console);
+        Game game = new Game(gameMap,entityFactory, console);
+
         List<Runnable> services = List.of(
                 new MovingService(game),
+                new EatingService(game),
                 new PlantGrowingService(game),
+                new LooseWeightService(game),
+                new ReproduceService(game),
                 new ViewService(game)
         );
 
@@ -39,14 +30,28 @@ public class ConsoleRunner {
         Thread thread = new Thread(gameServiceProcessor);
         thread.start();
 
+//        ScheduledExecutorService viewPool = Executors.newSingleThreadScheduledExecutor();
+//        viewPool.scheduleWithFixedDelay(new ViewService(game), Constants.PERIOD*2/3, Constants.PERIOD, TimeUnit.MILLISECONDS);
+//
+//        System.out.println("START");
+//        console.showStatistics();
+
+
         try {
-            Thread.sleep(1000);
+            Thread.sleep(20000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         game.setFinished(true);
-        System.out.println();
-        console.showStatistics();
 
+
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("FINISH");
+        console.showStatistics();
+//        console.showMap();
     }
 }

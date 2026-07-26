@@ -12,7 +12,7 @@ public class ViewService implements Runnable{
     @Override
     public void run() {
         game.getView().showStatistics();
-        game.getView().showMap();
+//        game.getView().showMap();
         System.out.println();
     }
 }

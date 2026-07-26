@@ -4,11 +4,9 @@ import com.javarush.island.levanov.entity.Game;
 import com.javarush.island.levanov.entity.map.Cell;
 import com.javarush.island.levanov.entity.organisms.Organism;
 import com.javarush.island.levanov.entity.organisms.animals.Animal;
+import org.w3c.dom.ls.LSOutput;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.locks.Lock;
 
 public class MovingService implements Runnable {
@@ -20,23 +18,15 @@ public class MovingService implements Runnable {
 
     @Override
     public void run() {
+        Map<Cell, Set<Organism>> residentsToMove = new HashMap<>();
         Arrays.stream(game.getGameMap().cells)
                 .flatMap(Arrays::stream)
-                .forEach(this::processOneCell);
-    }
+                .forEach(cell -> residentsToMove.put(cell, cell.getResidentsSet()));
 
-    public void processOneCell(Cell cell) {
-        Lock lock = cell.getLock();
-        lock.lock();
-        try {
-            Set<Organism> allOrganisms = cell.getResidentsSet();
-            for (Organism organism : allOrganisms) {
-                if (organism instanceof Animal) {
-                    ((Animal) organism).safeMove(cell);
-                }
+        for (Map.Entry<Cell, Set<Organism>> cellSetEntry : residentsToMove.entrySet()) {
+            for (Organism organism : cellSetEntry.getValue()) {
+                organism.safeMove(cellSetEntry.getKey());
             }
-        } finally {
-            lock.unlock();
         }
     }
 }
