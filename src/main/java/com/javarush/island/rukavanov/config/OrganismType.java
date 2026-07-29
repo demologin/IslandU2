@@ -2,6 +2,9 @@ package com.javarush.island.rukavanov.config;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Getter
 public enum OrganismType {
     WOLF("🐺", 50, 30, 3, 8),
@@ -40,5 +43,18 @@ public enum OrganismType {
         this.speed = speed;
         this.foodNorm = foodNorm;
 
+    }
+
+    private static final List<OrganismType> ANIMALS =
+            Arrays.stream(values())
+                    .filter(type -> type != PLANT)
+                    .toList();
+
+    public static List<OrganismType> animals() {
+        return ANIMALS;
+    }
+
+    public boolean isPlant() {
+        return this == PLANT;
     }
 }

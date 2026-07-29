@@ -2,11 +2,14 @@ package com.javarush.island.rukavanov.entity.island;
 
 import com.javarush.island.rukavanov.config.OrganismType;
 import com.javarush.island.rukavanov.entity.Organism;
+import com.javarush.island.rukavanov.entity.animals.Animal;
+import com.javarush.island.rukavanov.util.RandomUtil;
 import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
 @Getter
@@ -61,8 +64,67 @@ public class Location {
         return count(type) >= type.getMaxCount();
     }
 
-    public EnumMap<OrganismType, List<Organism>> getAllOrganisms() {
-        return new EnumMap<>(organisms);
+//    public EnumMap<OrganismType, List<Organism>> getAllOrganisms() {
+//        return new EnumMap<>(organisms);
+//    }
+
+    public int getTotalOrganisms() {
+
+        int total = 0;
+        for (List<Organism> list : organisms.values()) {
+            total += list.size();
+        }
+        return total;
+    }
+
+    public boolean hasOrganisms() {
+        return getTotalOrganisms() > 0;
+    }
+
+    public Map<OrganismType, List<Organism>> getAllOrganisms() {
+
+        EnumMap<OrganismType, List<Organism>> copy = new EnumMap<>(OrganismType.class);
+
+        for (Map.Entry<OrganismType, List<Organism>> entry : organisms.entrySet()) {
+            copy.put(entry.getKey(), new ArrayList<>(entry.getValue()));
+        }
+
+        return copy;
+
+    }
+
+    public List<Animal> getAnimals(OrganismType type) {
+
+        return organisms.get(type)
+                .stream()
+                .map(organism -> (Animal) organism)
+                .toList();
+
+    }
+
+    public void removeDeadAnimals() {
+
+        for (OrganismType type : OrganismType.animals()) {
+
+            organisms.get(type)
+                    .removeIf(organism -> !((Animal) organism).isAlive());
+
+        }
+
+    }
+
+    public Organism getRandomOrganism(OrganismType type) {
+
+        List<Organism> list = organisms.get(type);
+
+        if (list.isEmpty()) {
+            return null;
+        }
+
+        return list.get(
+                RandomUtil.random(list.size())
+        );
+
     }
 
 }

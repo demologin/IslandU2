@@ -63,9 +63,6 @@ public final class FoodMatrix {
 
     }
 
-    private FoodMatrix() {
-
-    }
 
     private static void put(OrganismType hunter,
                             OrganismType food,
