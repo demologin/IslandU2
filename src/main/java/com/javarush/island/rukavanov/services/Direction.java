@@ -6,7 +6,7 @@ public enum Direction {
     UP,
     DOWN,
     LEFT,
-    RIGHT
+    RIGHT;
 
     private static final Direction[] VALUES = values();
     public static Direction random() {
