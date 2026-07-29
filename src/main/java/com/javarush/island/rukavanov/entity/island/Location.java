@@ -121,9 +121,21 @@ public class Location {
             return null;
         }
 
-        return list.get(
-                RandomUtil.random(list.size())
-        );
+        return list.get(RandomUtil.random(list.size()));
+
+    }
+
+    public Organism takeRandomOrganism(OrganismType type) {
+
+        List<Organism> list = organisms.get(type);
+
+        if (list.isEmpty()) {
+            return null;
+        }
+
+        int index = RandomUtil.random(list.size());
+
+        return list.remove(index);
 
     }
 
