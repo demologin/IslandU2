@@ -11,32 +11,18 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class IslandPopulator {
 
-    /** Фабрика для создания животных при заселении острова. */
     private final AnimalFactory animalFactory = new AnimalFactory();
 
-    /** Загруженная конфигурация острова (характеристики видов животных и растения). */
     private final IslandConfig islandConfig = ConfigLoader.loadConfig();
 
-    /**
-     * Возвращает случайную координату x в пределах ширины острова.
-     */
     private int getRandomX() {
         return ThreadLocalRandom.current().nextInt(SimulationConfig.ISLAND_WIDTH);
     }
 
-    /**
-     * Возвращает случайную координату y в пределах высоты острова.
-     */
     private int getRandomY() {
         return ThreadLocalRandom.current().nextInt(SimulationConfig.ISLAND_HEIGHT);
     }
 
-    /**
-     * Заселяет остров стартовой популяцией животных
-     * согласно значениям из config.yaml.
-     *
-     * @param island остров, который нужно заселить
-     */
     public void populate(Island island) {
         for (Map.Entry<String, AnimalSpeciesConfig> entry : islandConfig.getAnimals().entrySet()) {
             String type = entry.getKey();

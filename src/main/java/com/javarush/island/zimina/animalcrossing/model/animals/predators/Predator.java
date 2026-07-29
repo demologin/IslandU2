@@ -5,11 +5,6 @@ import com.javarush.island.zimina.animalcrossing.map.Location;
 import com.javarush.island.zimina.animalcrossing.model.animals.Animal;
 import com.javarush.island.zimina.animalcrossing.model.animals.Carnivorous;
 
-/**
- * Базовый класс для всех хищников на острове.
- * Реализует общий механизм поедания добычи по вероятности:
- * конкретные виды предоставляют свою таблицу вероятностей через getFoodProbabilities().
- */
 public abstract class Predator extends Animal implements Carnivorous {
 
     protected Predator(int x, int y, AnimalSpeciesConfig config) {

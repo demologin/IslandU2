@@ -11,11 +11,6 @@ import com.javarush.island.zimina.animalcrossing.util.ProbabilityUtils;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-/**
- * Базовый класс для всех животных на острове.
- * Содержит общее поведение и характеристики: скорость передвижения,
- * потребность в пище и текущий уровень сытости.
- */
 @Getter
 public abstract class Animal extends Organism {
 
@@ -81,11 +76,7 @@ public abstract class Animal extends Organism {
             }
         }
     }
-    /**
-     * Отмечает животное как погибшее и убирает его с клетки.
-     *
-     * @param location клетка, на которой находится животное
-     */
+
     public void die(Location location) {
         die();
         location.getLock().lock();
@@ -96,22 +87,10 @@ public abstract class Animal extends Organism {
         }
     }
 
-    /**
-     * Увеличивает сытость животного на указанное количество килограммов,
-     * но не выше значения, необходимого для полного насыщения.
-     *
-     * @param amount количество съеденной пищи в килограммах
-     */
     public void increaseSatiety(double amount) {
         satiety = Math.min(satiety + amount, foodNeeded);
     }
 
-    /**
-     * Уменьшает сытость животного за такт симуляции в зависимости от его скорости.
-     * Если сытость опускается до нуля или ниже — животное умирает и убирается с клетки.
-     *
-     * @param location клетка, на которой находится животное
-     */
     public void starve(Location location) {
         double loss = foodNeeded * speed * HUNGER_RATE / 100;
         satiety -= loss;

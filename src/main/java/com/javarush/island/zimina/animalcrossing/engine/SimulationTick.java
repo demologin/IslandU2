@@ -21,12 +21,6 @@ import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-/**
- * Выполняет один такт симуляции: последовательно проходит фазы
- * (перемещение, голод, еда, размножение, рост растений).
- * Внутри каждой фазы клетки острова обрабатываются параллельно
- * (по строкам), синхронизация обеспечивается через Location.getLock().
- */
 public class SimulationTick {
 
     private static final int SEED_CHANCE = 40;
@@ -38,11 +32,6 @@ public class SimulationTick {
     private final ExecutorService executor =
             Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
-    /**
-     * Выполняет один такт симуляции для всего острова.
-     *
-     * @param island остров, для которого выполняется такт
-     */
     public void run(Island island) {
         try {
             runPhaseParallel(island, location -> movementPhase(location, island));

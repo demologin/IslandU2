@@ -5,12 +5,6 @@ import com.javarush.island.zimina.animalcrossing.map.Location;
 import com.javarush.island.zimina.animalcrossing.model.Organism;
 import com.javarush.island.zimina.animalcrossing.util.ProbabilityUtils;
 
-/**
- * Растение на острове.
- * В отличие от животных, растения не двигаются и не питаются —
- * они увеличивают свою численность через рост по расписанию.
- */
-
 public class Plant  extends Organism {
 
     private static final double GROWTH_RATE = 50;
@@ -20,12 +14,6 @@ public class Plant  extends Organism {
         super(x, y, weight);
     }
 
-    /**
-     * Уменьшает вес растения на указанное количество килограммов,
-     * не позволяя весу стать отрицательным (например, когда его частично съедают).
-     *
-     * @param amount на сколько килограммов уменьшить вес
-     */
     public void reduceWeight(double amount) {
         weight = Math.max(weight - amount, 0);
     }

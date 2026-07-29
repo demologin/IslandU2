@@ -11,13 +11,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * Точка входа для запуска симуляции острова.
- * Такты выполняются по расписанию через ScheduledExecutorService,
- * с периодом SimulationConfig.TICK_DURATION_MS.
- * Симуляция останавливается по достижении MAX_TICKS тактов
- * или при полном вымирании животных на острове.
- */
+
 public class Main {
 
     private static final int MAX_TICKS = 100;

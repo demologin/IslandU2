@@ -6,21 +6,8 @@ import org.yaml.snakeyaml.constructor.Constructor;
 
 import java.io.InputStream;
 
-/**
- * Загружает конфигурацию острова (характеристики видов животных и растений)
- * из файла config.yaml, лежащего в ресурсах проекта.
- * Использует SnakeYAML с явным описанием типов, чтобы вложенная карта
- * "имя вида -> характеристики" превращалась в объекты AnimalSpeciesConfig,
- * а не в безликие структуры Map.
- */
 public class ConfigLoader {
 
-    /**
-     * Читает config.yaml и превращает его в объект IslandConfig
-     * со всеми характеристиками видов животных и растения.
-     *
-     * @return заполненный объект конфигурации острова
-     */
     public static IslandConfig loadConfig() {
         Constructor constructor = new Constructor(IslandConfig.class, new org.yaml.snakeyaml.LoaderOptions());
 

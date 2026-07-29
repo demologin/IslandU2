@@ -10,15 +10,8 @@ import com.javarush.island.zimina.animalcrossing.model.animals.predators.*;
 
 import java.util.Map;
 
-/**
- * Фабрика для создания животных различных видов по их названию.
- * Хранит соответствие между именем вида и способом создания
- * конкретного объекта (ссылкой на конструктор), что позволяет
- * заселять остров без дублирования кода для каждого вида.
- */
 public class AnimalFactory {
 
-    /** Карта соответствия названия вида и функции для создания его экземпляра. */
     private final Map<String, TriFunction<Integer, Integer, AnimalSpeciesConfig, Animal>> animals = Map.ofEntries(
             Map.entry("Rabbit", Rabbit::new),
             Map.entry("Wolf", Wolf::new),
@@ -37,16 +30,6 @@ public class AnimalFactory {
             Map.entry("Caterpillar", Caterpillar::new)
     );
 
-    /**
-     * Создаёт животное указанного вида в заданных координатах
-     * с характеристиками из конфигурации вида.
-     *
-     * @param type   тип животного (ключ из карты фабрик, например "Rabbit")
-     * @param x      координата x на острове
-     * @param y      координата y на острове
-     * @param config конфигурация вида (вес, скорость, потребность в еде)
-     * @return созданный объект животного
-     */
     public Animal createAnimal(String type, int x, int y, AnimalSpeciesConfig config) {
         if (!animals.containsKey(type)) {
             return null;

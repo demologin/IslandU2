@@ -26,11 +26,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * JavaFX-приложение, показывающее живую столбчатую диаграмму популяции
- * острова. Обновляется каждый такт — читает статистику через
- * StatisticsService, не влияет на логику симуляции.
- */
 public class IslandChartApp extends Application {
 
     private static final int MAX_TICKS = 100;

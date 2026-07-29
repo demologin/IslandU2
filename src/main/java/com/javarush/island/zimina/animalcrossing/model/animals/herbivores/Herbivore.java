@@ -6,10 +6,6 @@ import com.javarush.island.zimina.animalcrossing.model.animals.Animal;
 import com.javarush.island.zimina.animalcrossing.model.plant.Plant;
 import com.javarush.island.zimina.animalcrossing.util.ProbabilityUtils;
 
-
-/**
- * Базовый класс для всех травоядных животных на острове.
- */
 public abstract class Herbivore extends Animal {
 
     private static final int PLANT_EATING_CHANCE = 100;

@@ -6,14 +6,6 @@ import java.util.Map;
 
 public class Fox extends Predator {
 
-
-    /**
-     * Создаёт лису с характеристиками, загруженными из конфигурации вида.
-     *
-     * @param x      координата x на острове
-     * @param y      координата y на острове
-     * @param config конфигурация вида (вес, скорость, потребность в еде)
-     */
     public Fox(int x, int y, AnimalSpeciesConfig config) {
         super(x, y, config);
     }
