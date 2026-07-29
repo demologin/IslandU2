@@ -22,13 +22,10 @@ public class ConsoleView implements View {
     public void showStatistics() {
         Map<String, Set<Organism>> mapResidents = getMapResidents();
         Map<String, Integer> statistics = getStatistics(mapResidents);
-        System.out.println("STEP #: " + GameServiceProcessor.step);
-        System.out.println("Total residents: " + getTotalResidents());
-        System.out.println("Total grass weight: " + getTotalGrassWeight());
-        System.out.println("Total animals weight: " + getTotalAnimalWeight());
-        System.out.println("steps forward: " + Organism.stepForward);
-        System.out.println("steps from: " + Organism.stepFrom);
-        System.out.println("fullCellCounter: " + Organism.fullCellCounter);
+        System.out.println("STEP #:" + GameServiceProcessor.step);
+        System.out.print("Residents: " + getTotalResidents());
+        System.out.print(";   Grass weight: " + getTotalGrassWeight());
+        System.out.println(";   Animals weight: " + getTotalAnimalWeight());
         System.out.println(statistics);
     }
 
@@ -36,8 +33,8 @@ public class ConsoleView implements View {
         Map<String, Set<Organism>> mapResidents = new LinkedHashMap<>();
         Arrays.stream(gameMap.cells)
                 .flatMap(Arrays::stream)
-                .map(cell -> cell.getResidentsMap())
-                .map(map -> map.entrySet())
+                .map(Cell::getResidentsMap)
+                .map(Map::entrySet)
                 .forEach(set -> {
                     for (Map.Entry<String, Set<Organism>> stringSetEntry : set) {
                         mapResidents.merge(stringSetEntry.getKey(), new HashSet<>(stringSetEntry.getValue()), (set1, set2) -> {
@@ -101,35 +98,70 @@ public class ConsoleView implements View {
         return totalAnimalWeight;
     }
 
-    @Override
     public void safeShowCellResidents(Cell cell) {
-        System.out.print("x=" + cell.xCoordinate + " ,y=" + cell.yCoordinate + "   ");
+        System.out.print("(" + cell.xCoordinate + "," + cell.yCoordinate + ")");
         Lock lock = cell.getLock();
         lock.lock();
         try {
             Map<String, Set<Organism>> cellResidents = cell.getResidentsMap();
+            int cellResidentsCounter = cell.getResidentsSet().size();
+            Map<Character, Double> visibleMap = new LinkedHashMap<>();
             for (Map.Entry<String, Set<Organism>> stringSetEntry : cellResidents.entrySet()) {
                 try {
                     Class<?> clazz = Class.forName(stringSetEntry.getKey());
-                    String icon = Constants.PARAMS.get(clazz).icon();
-                    int counter = stringSetEntry.getValue().size();
-                    System.out.print(icon + counter + " ");
+                    char label = Constants.PARAMS.get(clazz).label();
+                    double part = (double) stringSetEntry.getValue().size() / cellResidentsCounter;
+                    visibleMap.put(label, part);
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
             }
+            visibleMap.entrySet().stream()
+                    .sorted(Map.Entry.<Character, Double>comparingByValue().reversed())
+                    .limit(Constants.CELL_SHOW_LENGTH)
+                    .forEach(e -> System.out.print(getColor(e.getValue()) + e.getKey() + Constants.RESET));
+            System.out.print(" ");
         } finally {
             lock.unlock();
         }
-        System.out.println();
     }
 
     @Override
     public void showMap() {
-        for (int i = 0; i < gameMap.cells.length; i++) {
-            for (int j = 0; j < gameMap.cells[i].length; j++) {
+        for (int i = 0; i < Constants.ROWS_SHOW; i++) {
+            for (int j = 0; j < Constants.COLS_SHOW; j++) {
                 safeShowCellResidents(gameMap.cells[i][j]);
             }
+            System.out.println();
         }
+    }
+
+    public void showLabels() {
+        for (Class<?> type : Constants.TYPES) {
+            String icon = Constants.PARAMS.get(type).icon();
+            char label = Constants.PARAMS.get(type).label();
+            System.out.print(icon + label + " ");
+        }
+        System.out.println();
+    }
+
+    public void showScale() {
+        for (int i = 1; i <= 10; i++) {
+            System.out.print(getColor((double) i / 10) + i * 10 + "% " + Constants.RESET);
+        }
+        System.out.println();
+    }
+
+    private String getColor(double part) {
+        if (part > 0.9) return Constants.RED;
+        if (part > 0.8) return Constants.PURPLE;
+        if (part > 0.7) return Constants.BRIGHT_PURPLE;
+        if (part > 0.6) return Constants.BLUE;
+        if (part > 0.5) return Constants.BRIGHT_BLUE;
+        if (part > 0.4) return Constants.GREEN;
+        if (part > 0.3) return Constants.BRIGHT_GREEN;
+        if (part > 0.2) return Constants.YELLOW;
+        if (part > 0.1) return Constants.BRIGHT_YELLOW;
+        return Constants.WHITE;
     }
 }

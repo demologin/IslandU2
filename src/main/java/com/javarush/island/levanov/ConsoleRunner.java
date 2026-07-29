@@ -16,7 +16,12 @@ public class ConsoleRunner {
         GameMap gameMap = creator.createGameMap();
         ConsoleView console = new ConsoleView(gameMap);
         Game game = new Game(gameMap,entityFactory, console);
-
+        // проверить все поля на private/public
+        // добавить функциональные интерфейсы?
+        // проверить Override
+        // проверить названия методов и переменных
+        // постараться сделать читаемым
+        // проверить что не смешиваем for и stream
         List<Runnable> services = List.of(
                 new MovingService(game),
                 new EatingService(game),
@@ -29,29 +34,11 @@ public class ConsoleRunner {
         GameServiceProcessor gameServiceProcessor = new GameServiceProcessor(game, services);
         Thread thread = new Thread(gameServiceProcessor);
         thread.start();
-
-//        ScheduledExecutorService viewPool = Executors.newSingleThreadScheduledExecutor();
-//        viewPool.scheduleWithFixedDelay(new ViewService(game), Constants.PERIOD*2/3, Constants.PERIOD, TimeUnit.MILLISECONDS);
-//
-//        System.out.println("START");
-//        console.showStatistics();
-
-
         try {
-            Thread.sleep(20000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         game.setFinished(true);
-
-
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println("FINISH");
-        console.showStatistics();
-//        console.showMap();
     }
 }

@@ -9,16 +9,12 @@ import com.javarush.island.levanov.util.Randomizer;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
-import java.util.stream.Collectors;
 
-public abstract class Organism implements Reproducible, Eating {
+public abstract class Organism implements Reproducible {
 
     public OrganismParams params;
     private final long id;
-    private double weight;
-    public static int stepForward = 0;
-    public static int stepFrom = 0;
-    public static int fullCellCounter = 0;
+    protected double weight;
 
     public Organism(double weight) {
         Class<?> clazz = this.getClass();
@@ -58,52 +54,6 @@ public abstract class Organism implements Reproducible, Eating {
     @Override
     public abstract void safeReproduce(Cell cell, EntityFactory entityFactory);
 
-    public void safeMove(Cell startCell) {
-        if (this.isHere(startCell)) {
-            Cell middleCell = startCell;
-            for (int i = 0; i < this.getVelocity(); i++) {
-                Cell nextCell = middleCell.getNextCell();
-                Lock nextCellLock = nextCell.getLock();
-                Lock middleCellLock = middleCell.getLock();
-                nextCellLock.lock();
-                try {
-                    middleCellLock.lock();
-                    try {
-                        if (!nextCell.isCellFull(this)) {
-                            if (this.safeAddToCell(nextCell)) {
-                                this.safeDeleteFromCell(middleCell);
-                                middleCell = nextCell;
-//                    System.out.println("Moving " + this + " from " + middleCell.xCoordinate + "," + middleCell.yCoordinate + " -> " + nextCell.xCoordinate + "," + nextCell.yCoordinate);
-                            }
-                        } else {
-                            fullCellCounter++;
-                        }
-                    } finally {
-                        middleCellLock.unlock();
-                    }
-                } finally {
-                    nextCellLock.unlock();
-                }
-            }
-        }
-    }
-
-    public void safeLooseWeight(Cell cell) {
-        Lock lock = cell.getLock();
-        double weight = this.getWeight();
-        lock.lock();
-        try {
-            weight = weight - this.getMaxWeight() * Constants.LOSE_WEIGHT_VELOCITY;
-            if (weight < 0) {
-                this.safeDeleteFromCell(cell);
-            } else {
-                this.setWeight(weight);
-            }
-        } finally {
-            lock.unlock();
-        }
-    }
-
     public boolean safeAddToCell(Cell cell) {
         boolean isAdded = false;
         Lock lock = cell.getLock();
@@ -113,7 +63,7 @@ public abstract class Organism implements Reproducible, Eating {
             Map<String, Set<Organism>> cellResidents = cell.getResidentsMap();
             Set<Organism> cellResidentsOfThisType = cellResidents.get(className);
             if (cellResidentsOfThisType.add(this)) {
-                stepForward++;
+//                stepForward++;
                 isAdded = true;
             }
             cellResidents.put(className, cellResidentsOfThisType);
@@ -124,74 +74,24 @@ public abstract class Organism implements Reproducible, Eating {
         return isAdded;
     }
 
-    private boolean safeDeleteFromCell(Cell cell) {
-        boolean result = false;
+    public void safeDeleteFromCell(Cell cell) {
+//        boolean result = false;
         Lock lock = cell.getLock();
         lock.lock();
         try {
             String className = this.getClass().getName();
             Map<String, Set<Organism>> cellResidents = cell.getResidentsMap();
             Set<Organism> cellResidentsOfThisType = cellResidents.get(className);
-            if (cellResidentsOfThisType.remove(this)) {
-                stepFrom++;
-                result = true;
-            }
+            cellResidentsOfThisType.remove(this);
+//            if (cellResidentsOfThisType.remove(this)) {
+//                result = true;
+//            }
             cellResidents.put(className, cellResidentsOfThisType);
             cell.setResidentsMap(cellResidents);
         } finally {
             lock.unlock();
         }
-        return result;
-    }
-
-    private boolean isHere(Cell cell) {
-        return cell.getResidentsSet().contains(this);
-    }
-
-    @Override
-    public void safeEat(Cell cell) {
-        Lock lock = cell.getLock();
-        lock.lock();
-        try {
-            double appetite = this.getAppetite();
-            if (appetite > 0) {
-                Set<Organism> food = safeFindFood(cell);
-                for (Organism organism : food) {
-                    if (appetite > organism.weight) {
-                        weight += organism.weight;
-                        organism.safeDeleteFromCell(cell);
-//                        System.out.println(organism + "has been eaten");
-                    } else {
-                        weight += this.getFoodMaxWeight();
-                        organism.weight -= appetite;
-                    }
-                    appetite = Math.max(0, appetite - organism.weight);
-                    if (appetite == 0) break;
-                }
-            }
-        } finally {
-            lock.unlock();
-        }
-    }
-
-    private double getAppetite() {
-        return Math.min(this.getFoodMaxWeight(), this.getMaxWeight() - weight);
-    }
-
-    public void safeGrow(Cell cell) {
-    }
-
-    public Set<Organism> safeFindFood(Cell cell) {
-        Lock lock = cell.getLock();
-        lock.lock();
-        try {
-            Set<Organism> food = cell.getResidentsSet().stream()
-                    .filter(organism -> organism.isCaught(this))
-                    .collect(Collectors.toSet());
-            return food;
-        } finally {
-            lock.unlock();
-        }
+//        return result;
     }
 
     public boolean isCaught(Organism catcher) {
@@ -207,7 +107,6 @@ public abstract class Organism implements Reproducible, Eating {
         }
         if (probability >= Randomizer.getRandomProbability()) {
             isCaught = true;
-//            System.out.println(this + " is caught by " + catcher);
         }
         return isCaught;
     }

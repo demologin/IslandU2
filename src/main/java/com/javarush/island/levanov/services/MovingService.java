@@ -4,10 +4,8 @@ import com.javarush.island.levanov.entity.Game;
 import com.javarush.island.levanov.entity.map.Cell;
 import com.javarush.island.levanov.entity.organisms.Organism;
 import com.javarush.island.levanov.entity.organisms.animals.Animal;
-import org.w3c.dom.ls.LSOutput;
 
 import java.util.*;
-import java.util.concurrent.locks.Lock;
 
 public class MovingService implements Runnable {
     private final Game game;
@@ -25,7 +23,9 @@ public class MovingService implements Runnable {
 
         for (Map.Entry<Cell, Set<Organism>> cellSetEntry : residentsToMove.entrySet()) {
             for (Organism organism : cellSetEntry.getValue()) {
-                organism.safeMove(cellSetEntry.getKey());
+                if (organism instanceof Animal) {
+                    ((Animal) organism).safeMove(cellSetEntry.getKey());
+                }
             }
         }
     }

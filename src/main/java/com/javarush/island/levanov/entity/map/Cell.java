@@ -80,7 +80,7 @@ public class Cell {
         Cell[][] cells = this.gameMap.cells;
         switch (this.xCoordinate) {
             case 0 -> availableCells.add(cells[this.xCoordinate + 1][this.yCoordinate]);
-            case Constants.COLS - 1 -> availableCells.add(cells[this.xCoordinate - 1][this.yCoordinate]);
+            case Constants.ROWS - 1 -> availableCells.add(cells[this.xCoordinate - 1][this.yCoordinate]);
             default -> {
                 availableCells.add(cells[this.xCoordinate + 1][this.yCoordinate]);
                 availableCells.add(cells[this.xCoordinate - 1][this.yCoordinate]);
@@ -88,7 +88,7 @@ public class Cell {
         }
         switch (this.yCoordinate) {
             case 0 -> availableCells.add(cells[this.xCoordinate][this.yCoordinate + 1]);
-            case Constants.ROWS - 1 -> availableCells.add(cells[this.xCoordinate][this.yCoordinate - 1]);
+            case Constants.COLS - 1 -> availableCells.add(cells[this.xCoordinate][this.yCoordinate - 1]);
             default -> {
                 availableCells.add(cells[this.xCoordinate][this.yCoordinate + 1]);
                 availableCells.add(cells[this.xCoordinate][this.yCoordinate - 1]);

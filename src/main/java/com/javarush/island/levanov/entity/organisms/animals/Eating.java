@@ -1,4 +1,4 @@
-package com.javarush.island.levanov.entity.organisms;
+package com.javarush.island.levanov.entity.organisms.animals;
 
 import com.javarush.island.levanov.entity.map.Cell;
 

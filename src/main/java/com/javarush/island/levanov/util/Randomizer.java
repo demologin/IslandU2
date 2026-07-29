@@ -13,4 +13,8 @@ public class Randomizer {
     public static int getRandomNextCell(int availableCellsNumber) {
         return ThreadLocalRandom.current().nextInt(availableCellsNumber);
     }
+
+    public static int getRandomInt(int maxValue) {
+        return ThreadLocalRandom.current().nextInt(maxValue + 1);
+    }
 }

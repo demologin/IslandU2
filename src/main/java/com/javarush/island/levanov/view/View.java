@@ -8,4 +8,8 @@ public interface View {
     void safeShowCellResidents(Cell cell);
 
     void showMap();
+
+    void showScale();
+
+    void showLabels();
 }

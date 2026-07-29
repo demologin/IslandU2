@@ -10,16 +10,20 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Constants {
-    public static final int ROWS = 20;
-    public static final int COLS = 100;
-    public static final int PERIOD = 30;
+    public static final int COLS = 20;
+    public static final int ROWS = 100;
+    public static final int PERIOD = 10;
     public static final int NUMBER_OF_PROCESSORS = Runtime.getRuntime().availableProcessors();
-    public static final double CHILD_WEIGHT = 0.25;
-    public static final double REPRODUCE_PROBABILITY = 0.1;
 
-    public static final double GROW_VELOCITY = 0.1;
+    public static final int INITIAL_CELL_EMPTINESS = 12;
+    public static final double REPRODUCE_PROBABILITY = 0.1;
+    public static final double CHILD_WEIGHT = 0.25;
+    public static final double GROW_VELOCITY = 0.9;
     public static final double LOSE_WEIGHT_VELOCITY = 0.05;
 
+    public static final long CELL_SHOW_LENGTH = 5;
+    public static final long COLS_SHOW = 10;
+    public static final long ROWS_SHOW = 5;
 
     public static final Class<?>[] TYPES = {
             Wolf.class, Boa.class, Fox.class, Bear.class, Eagle.class,
@@ -30,22 +34,22 @@ public class Constants {
     public static final Map<Class<?>, OrganismParams> PARAMS = new LinkedHashMap<>();
 
     static {
-        PARAMS.put(Wolf.class, new OrganismParams("Wolf", "\uD83D\uDC3A", 50, 30, 3, 8));
-        PARAMS.put(Boa.class, new OrganismParams("Boa", "\uD83D\uDC0D", 15, 30, 1, 3));
-        PARAMS.put(Fox.class, new OrganismParams("Fox", "\uD83E\uDD8A", 8, 30, 2, 2));
-        PARAMS.put(Bear.class, new OrganismParams("Bear", "\uD83D\uDC3B", 500, 5, 2, 80));
-        PARAMS.put(Eagle.class, new OrganismParams("Eagle", "\uD83E\uDD85", 6, 20, 3, 1));
-        PARAMS.put(Horse.class, new OrganismParams("Horse", "\uD83D\uDC0E", 400, 20, 4, 60));
-        PARAMS.put(Dear.class, new OrganismParams("Dear", "\uD83E\uDD8C", 300, 20, 4, 50));
-        PARAMS.put(Rabbit.class, new OrganismParams("Rabbit", "\uD83D\uDC07", 2, 150, 2, 0.45));
-        PARAMS.put(Mouse.class, new OrganismParams("Mouse", "\uD83D\uDC01", 0.05, 500, 1, 0.01));
-        PARAMS.put(Goat.class, new OrganismParams("Goat", "\uD83D\uDC10", 60, 140, 3, 10));
-        PARAMS.put(Sheep.class, new OrganismParams("Sheep", "\uD83D\uDC11", 70, 140, 3, 15));
-        PARAMS.put(Boar.class, new OrganismParams("Boar", "\uD83D\uDC17", 400, 50, 2, 50));
-        PARAMS.put(Buffalo.class, new OrganismParams("Buffalo", "\uD83D\uDC03", 700, 10, 3, 100));
-        PARAMS.put(Duck.class, new OrganismParams("Duck", "\uD83E\uDD86", 1, 200, 4, 0.15));
-        PARAMS.put(Caterpillar.class, new OrganismParams("Caterpillar", "\uD83D\uDC1B", 0.01, 1000, 0, 0));
-        PARAMS.put(Grass.class, new OrganismParams("Grass", "\uD83C\uDF3F", 30000, 200, 0, 0));
+        PARAMS.put(Wolf.class, new OrganismParams("Wolf", 'W', "\uD83D\uDC3A", 50, 30, 3, 8));
+        PARAMS.put(Boa.class, new OrganismParams("Boa", '&', "\uD83D\uDC0D", 15, 30, 1, 3));
+        PARAMS.put(Fox.class, new OrganismParams("Fox", 'F', "\uD83E\uDD8A", 8, 30, 2, 2));
+        PARAMS.put(Bear.class, new OrganismParams("Bear", 'B', "\uD83D\uDC3B", 500, 5, 2, 80));
+        PARAMS.put(Eagle.class, new OrganismParams("Eagle", 'E', "\uD83E\uDD85", 6, 20, 3, 1));
+        PARAMS.put(Horse.class, new OrganismParams("Horse", 'H', "\uD83D\uDC0E", 400, 20, 4, 60));
+        PARAMS.put(Dear.class, new OrganismParams("Dear", 'D', "\uD83E\uDD8C", 300, 20, 4, 50));
+        PARAMS.put(Rabbit.class, new OrganismParams("Rabbit", 'R', "\uD83D\uDC07", 2, 150, 2, 0.45));
+        PARAMS.put(Mouse.class, new OrganismParams("Mouse", 'M', "\uD83D\uDC01", 0.05, 500, 1, 0.01));
+        PARAMS.put(Goat.class, new OrganismParams("Goat", 'G', "\uD83D\uDC10", 60, 140, 3, 10));
+        PARAMS.put(Sheep.class, new OrganismParams("Sheep", 'S', "\uD83D\uDC11", 70, 140, 3, 15));
+        PARAMS.put(Boar.class, new OrganismParams("Boar", 'b', "\uD83D\uDC17", 400, 50, 2, 50));
+        PARAMS.put(Buffalo.class, new OrganismParams("Buffalo", 'U', "\uD83D\uDC03", 700, 10, 3, 100));
+        PARAMS.put(Duck.class, new OrganismParams("Duck", 'D', "\uD83E\uDD86", 1, 200, 4, 0.15));
+        PARAMS.put(Caterpillar.class, new OrganismParams("Caterpillar", 'C', "\uD83D\uDC1B", 0.01, 1000, 0, 0));
+        PARAMS.put(Grass.class, new OrganismParams("Grass", 'g', "\uD83C\uDF3F", 1, 200, 0, 0));
     }
 
     public static final Map<Class<?>, Map<Class<?>, Double>> PROBABILITY_BEING_CAUGHT = new LinkedHashMap<>();
@@ -127,4 +131,16 @@ public class Constants {
                 Map.entry(Grass.class, 1.0)
         )));
     }
+
+    public static final String RESET = "\u001B[0m";
+    public static final String RED = "\u001B[31m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String YELLOW = "\u001B[33m";
+    public static final String BLUE = "\u001B[34m";
+    public static final String PURPLE = "\u001B[35m";
+    public static final String WHITE = "\u001B[37m";
+    public static final String BRIGHT_GREEN = "\u001B[92m";
+    public static final String BRIGHT_YELLOW = "\u001B[93m";
+    public static final String BRIGHT_BLUE = "\u001B[94m";
+    public static final String BRIGHT_PURPLE = "\u001B[95m";
 }
