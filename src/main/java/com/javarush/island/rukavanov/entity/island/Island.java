@@ -9,10 +9,10 @@ public class Island {
     public Island() {
 
         locations = new Location[Settings.ISLAND_HEIGHT][Settings.ISLAND_WIDTH];
-
+        int id = 0;
         for (int y = 0; y < Settings.ISLAND_HEIGHT; y++) {
             for (int x = 0; x < Settings.ISLAND_WIDTH; x++) {
-                locations[y][x] = new Location(x, y);
+                locations[y][x] = new Location(id++, x, y);
             }
 
         }
@@ -35,13 +35,10 @@ public class Island {
         return x >= 0 && x < getWidth() && y >= 0 && y < getHeight();
     }
 
-
     public Location randomLocation() {
 
         int x = RandomUtil.random(getWidth());
         int y = RandomUtil.random(getHeight());
-
         return get(x, y);
-
     }
 }

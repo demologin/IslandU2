@@ -17,14 +17,16 @@ public class Location {
 
     private final int x;
     private final int y;
+    private final int id;
     private final EnumMap<OrganismType, List<Organism>> organisms = new EnumMap<>(OrganismType.class);
 
     private final ReentrantLock lock = new ReentrantLock();
 
-    public Location(int x, int y) {
+    public Location(int x, int y, int id) {
 
         this.x = x;
         this.y = y;
+        this.id = id;
 
         for (OrganismType type : OrganismType.values()) {
             organisms.put(type, new ArrayList<>());
