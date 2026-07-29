@@ -1,0 +1,96 @@
+animals:
+  Wolf:
+    weight: 50
+    maxPerCell: 30
+    speed: 3
+    foodNeeded: 8
+    initialCount: 100
+  Boa:
+    weight: 15
+    maxPerCell: 30
+    speed: 1
+    foodNeeded: 3
+    initialCount: 1200
+  Fox:
+    weight: 8
+    maxPerCell: 30
+    speed: 2
+    foodNeeded: 2
+    initialCount: 1000
+  Bear:
+    weight: 500
+    maxPerCell: 5
+    speed: 2
+    foodNeeded: 80
+    initialCount: 40
+  Eagle:
+    weight: 6
+    maxPerCell: 20
+    speed: 3
+    foodNeeded: 1
+    initialCount: 500
+  Horse:
+    weight: 400
+    maxPerCell: 20
+    speed: 4
+    foodNeeded: 60
+    initialCount: 4500
+  Deer:
+    weight: 300
+    maxPerCell: 20
+    speed: 4
+    foodNeeded: 50
+    initialCount: 4500
+  Rabbit:
+    weight: 2
+    maxPerCell: 150
+    speed: 2
+    foodNeeded: 0.45
+    initialCount: 90000
+  Mouse:
+    weight: 0.05
+    maxPerCell: 500
+    speed: 1
+    foodNeeded: 0.01
+    initialCount: 150000
+  Goat:
+    weight: 60
+    maxPerCell: 140
+    speed: 3
+    foodNeeded: 10
+    initialCount: 25000
+  Sheep:
+    weight: 70
+    maxPerCell: 140
+    speed: 3
+    foodNeeded: 15
+    initialCount: 25000
+  Boar:
+    weight: 400
+    maxPerCell: 50
+    speed: 2
+    foodNeeded: 50
+    initialCount: 4000
+  Buffalo:
+    weight: 700
+    maxPerCell: 10
+    speed: 3
+    foodNeeded: 100
+    initialCount: 1500
+  Duck:
+    weight: 1
+    maxPerCell: 200
+    speed: 4
+    foodNeeded: 0.15
+    initialCount: 20000
+  Caterpillar:
+    weight: 0.01
+    maxPerCell: 1000
+    speed: 0
+    foodNeeded: 0
+    initialCount: 700000
+
+plant:
+  weight: 1
+  maxPerCell: 200
+  initialCount: 300000
