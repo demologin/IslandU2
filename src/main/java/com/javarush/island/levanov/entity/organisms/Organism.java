@@ -11,8 +11,7 @@ import java.util.Set;
 import java.util.concurrent.locks.Lock;
 
 public abstract class Organism implements Reproducible {
-
-    public OrganismParams params;
+    private final OrganismParams params;
     private final long id;
     protected double weight;
 
@@ -51,7 +50,6 @@ public abstract class Organism implements Reproducible {
         return params.maxFoodWeight();
     }
 
-    @Override
     public abstract void safeReproduce(Cell cell, EntityFactory entityFactory);
 
     public boolean safeAddToCell(Cell cell) {
@@ -63,7 +61,6 @@ public abstract class Organism implements Reproducible {
             Map<String, Set<Organism>> cellResidents = cell.getResidentsMap();
             Set<Organism> cellResidentsOfThisType = cellResidents.get(className);
             if (cellResidentsOfThisType.add(this)) {
-//                stepForward++;
                 isAdded = true;
             }
             cellResidents.put(className, cellResidentsOfThisType);
@@ -75,7 +72,6 @@ public abstract class Organism implements Reproducible {
     }
 
     public void safeDeleteFromCell(Cell cell) {
-//        boolean result = false;
         Lock lock = cell.getLock();
         lock.lock();
         try {
@@ -83,15 +79,11 @@ public abstract class Organism implements Reproducible {
             Map<String, Set<Organism>> cellResidents = cell.getResidentsMap();
             Set<Organism> cellResidentsOfThisType = cellResidents.get(className);
             cellResidentsOfThisType.remove(this);
-//            if (cellResidentsOfThisType.remove(this)) {
-//                result = true;
-//            }
             cellResidents.put(className, cellResidentsOfThisType);
             cell.setResidentsMap(cellResidents);
         } finally {
             lock.unlock();
         }
-//        return result;
     }
 
     public boolean isCaught(Organism catcher) {

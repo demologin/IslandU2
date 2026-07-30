@@ -14,16 +14,14 @@ public class Constants {
     public static final int ROWS = 100;
     public static final int PERIOD = 10;
     public static final int NUMBER_OF_PROCESSORS = Runtime.getRuntime().availableProcessors();
-
     public static final int INITIAL_CELL_EMPTINESS = 12;
     public static final double REPRODUCE_PROBABILITY = 0.1;
     public static final double CHILD_WEIGHT = 0.25;
-    public static final double GROW_VELOCITY = 0.9;
+    public static final double GROW_VELOCITY = 0.5;
     public static final double LOSE_WEIGHT_VELOCITY = 0.05;
-
-    public static final long CELL_SHOW_LENGTH = 5;
-    public static final long COLS_SHOW = 10;
-    public static final long ROWS_SHOW = 5;
+    public static final long CELL_SHOW_LABELS_COUNTER = 5;
+    public static final long COLS_SHOW_IN_MAP = 10;
+    public static final long ROWS_SHOW_IN_MAP = 5;
 
     public static final Class<?>[] TYPES = {
             Wolf.class, Boa.class, Fox.class, Bear.class, Eagle.class,
@@ -32,7 +30,6 @@ public class Constants {
     };
 
     public static final Map<Class<?>, OrganismParams> PARAMS = new LinkedHashMap<>();
-
     static {
         PARAMS.put(Wolf.class, new OrganismParams("Wolf", 'W', "\uD83D\uDC3A", 50, 30, 3, 8));
         PARAMS.put(Boa.class, new OrganismParams("Boa", '&', "\uD83D\uDC0D", 15, 30, 1, 3));
@@ -53,7 +50,6 @@ public class Constants {
     }
 
     public static final Map<Class<?>, Map<Class<?>, Double>> PROBABILITY_BEING_CAUGHT = new LinkedHashMap<>();
-
     static {
         PROBABILITY_BEING_CAUGHT.put(Wolf.class, new HashMap<>(Map.ofEntries(
                 Map.entry(Horse.class, 0.1),

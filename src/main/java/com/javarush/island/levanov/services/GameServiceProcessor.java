@@ -13,7 +13,7 @@ public class GameServiceProcessor implements Runnable {
     private final Game game;
     private final List<Runnable> services;
     private ScheduledExecutorService mainPool;
-    public static int step = 0;
+
 
     public GameServiceProcessor(Game game, List<Runnable> services) {
         this.game = game;
@@ -32,7 +32,9 @@ public class GameServiceProcessor implements Runnable {
                 for (Runnable service : services) {
                     servicePool.submit(service);
                 }
+                int step = game.getGameMap().getStep();
                 step++;
+                game.getGameMap().setStep(step);
                 servicePool.shutdown();
             }
         } else {

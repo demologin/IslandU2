@@ -15,13 +15,7 @@ public class ConsoleRunner {
         Creator creator = new Creator(entityFactory);
         GameMap gameMap = creator.createGameMap();
         ConsoleView console = new ConsoleView(gameMap);
-        Game game = new Game(gameMap,entityFactory, console);
-        // проверить все поля на private/public
-        // добавить функциональные интерфейсы?
-        // проверить Override
-        // проверить названия методов и переменных
-        // постараться сделать читаемым
-        // проверить что не смешиваем for и stream
+        Game game = new Game(gameMap, entityFactory, console);
         List<Runnable> services = List.of(
                 new MovingService(game),
                 new EatingService(game),
@@ -30,7 +24,6 @@ public class ConsoleRunner {
                 new ReproduceService(game),
                 new ViewService(game)
         );
-
         GameServiceProcessor gameServiceProcessor = new GameServiceProcessor(game, services);
         Thread thread = new Thread(gameServiceProcessor);
         thread.start();

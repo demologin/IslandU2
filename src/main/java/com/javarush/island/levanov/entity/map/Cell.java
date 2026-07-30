@@ -62,19 +62,18 @@ public class Cell {
         return haveCouple;
     }
 
-    public Cell getNextCell() {
-        List<Cell> availableCells = this.getAvailableNextCells();
-        int size = availableCells.size();
-        return availableCells.get(Randomizer.getRandomNextCell(size));
-    }
-
     public boolean isCellFull(Organism organism) {
         Map<String, Set<Organism>> residents = this.getResidentsMap();
         Set<Organism> residentsOfThisType = residents.get(organism.getClass().getName());
         return residentsOfThisType.size() == organism.getMaxNumberInCell();
     }
 
-    // учесть маленькое поле 2 на 1
+    public Cell getNextCell() {
+        List<Cell> availableCells = this.getAvailableNextCells();
+        int size = availableCells.size();
+        return availableCells.get(Randomizer.getRandomNextCell(size));
+    }
+
     private List<Cell> getAvailableNextCells() {
         List<Cell> availableCells = new ArrayList<>();
         Cell[][] cells = this.gameMap.cells;

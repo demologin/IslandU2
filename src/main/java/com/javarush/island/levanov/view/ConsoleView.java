@@ -22,7 +22,7 @@ public class ConsoleView implements View {
     public void showStatistics() {
         Map<String, Set<Organism>> mapResidents = getMapResidents();
         Map<String, Integer> statistics = getStatistics(mapResidents);
-        System.out.println("STEP #:" + GameServiceProcessor.step);
+        System.out.println("STEP #:" + gameMap.getStep());
         System.out.print("Residents: " + getTotalResidents());
         System.out.print(";   Grass weight: " + getTotalGrassWeight());
         System.out.println(";   Animals weight: " + getTotalAnimalWeight());
@@ -47,7 +47,6 @@ public class ConsoleView implements View {
         return mapResidents;
     }
 
-    // подумать как написать на стримах красивее
     private Map<String, Integer> getStatistics(Map<String, Set<Organism>> mapResidents) {
         Map<String, Integer> statistics = new LinkedHashMap<>();
         for (Map.Entry<String, Set<Organism>> stringSetEntry : mapResidents.entrySet()) {
@@ -62,7 +61,6 @@ public class ConsoleView implements View {
         return statistics;
     }
 
-    // дает неточное число потому что берет все ячейки по очереди, в это время все перебегают между ячейками
     private int getTotalResidents() {
         return Arrays.stream(gameMap.cells)
                 .flatMap(Arrays::stream)
@@ -70,7 +68,7 @@ public class ConsoleView implements View {
                 .reduce(0, Integer::sum);
     }
 
-    double getTotalGrassWeight() {
+    private double getTotalGrassWeight() {
         double totalGrassWeight = Arrays.stream(gameMap.cells)
                 .flatMap(Arrays::stream)
                 .map(Cell::getResidentsSet)
@@ -84,7 +82,7 @@ public class ConsoleView implements View {
         return totalGrassWeight;
     }
 
-    double getTotalAnimalWeight() {
+    private double getTotalAnimalWeight() {
         double totalAnimalWeight = Arrays.stream(gameMap.cells)
                 .flatMap(Arrays::stream)
                 .map(Cell::getResidentsSet)
@@ -118,7 +116,7 @@ public class ConsoleView implements View {
             }
             visibleMap.entrySet().stream()
                     .sorted(Map.Entry.<Character, Double>comparingByValue().reversed())
-                    .limit(Constants.CELL_SHOW_LENGTH)
+                    .limit(Constants.CELL_SHOW_LABELS_COUNTER)
                     .forEach(e -> System.out.print(getColor(e.getValue()) + e.getKey() + Constants.RESET));
             System.out.print(" ");
         } finally {
@@ -126,10 +124,9 @@ public class ConsoleView implements View {
         }
     }
 
-    @Override
     public void showMap() {
-        for (int i = 0; i < Constants.ROWS_SHOW; i++) {
-            for (int j = 0; j < Constants.COLS_SHOW; j++) {
+        for (int i = 0; i < Constants.ROWS_SHOW_IN_MAP; i++) {
+            for (int j = 0; j < Constants.COLS_SHOW_IN_MAP; j++) {
                 safeShowCellResidents(gameMap.cells[i][j]);
             }
             System.out.println();
