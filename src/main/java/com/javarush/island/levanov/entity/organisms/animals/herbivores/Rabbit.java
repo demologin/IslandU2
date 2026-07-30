@@ -1,0 +1,7 @@
+package com.javarush.island.levanov.entity.organisms.animals.herbivores;
+
+public class Rabbit extends Herbivore{
+    public Rabbit(double weight) {
+        super(weight);
+    }
+}
