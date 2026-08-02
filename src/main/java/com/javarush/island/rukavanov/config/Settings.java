@@ -36,6 +36,8 @@ public final class Settings {
     public static final int BABIES_PER_BIRTH = 1;
     public static final double SATIETY_LOSS_PERCENT = 0.10;
     public static final int PLANT_GROWTH_PER_TICK = 5;
+    public static final double HUNGER_LOSS_PERCENT = 0.10;
+
 
     public static final int MIN_ANIMALS_TO_CONTINUE = 0;
 

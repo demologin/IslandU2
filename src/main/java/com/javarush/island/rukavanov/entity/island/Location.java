@@ -202,4 +202,18 @@ public class Location {
 
     }
 
+    public List<Animal> getAllAnimalsSnapshot() {
+
+        List<Animal> animals = new ArrayList<>();
+
+        for (OrganismType type : OrganismType.animals()) {
+
+            animals.addAll(getAnimalsSnapshot(type));
+
+        }
+
+        return animals;
+
+    }
+
 }

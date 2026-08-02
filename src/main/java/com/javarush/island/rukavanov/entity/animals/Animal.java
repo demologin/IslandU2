@@ -1,6 +1,8 @@
 package com.javarush.island.rukavanov.entity.animals;
 
+import com.javarush.island.rukavanov.config.FoodMatrix;
 import com.javarush.island.rukavanov.config.OrganismType;
+import com.javarush.island.rukavanov.config.Settings;
 import com.javarush.island.rukavanov.entity.Organism;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,19 +46,19 @@ public abstract class Animal extends Organism {
     }
 
 
-    public void loseSatiety(double amount) {
-
-        if (!alive) {
-            return;
-        }
-
-        satiety -= amount;
-
-        if (satiety <= 0) {
-            satiety = 0;
-            die();
-        }
-    }
+//    public void loseSatiety(double amount) {
+//
+//        if (!alive) {
+//            return;
+//        }
+//
+//        satiety -= amount;
+//
+//        if (satiety <= 0) {
+//            satiety = 0;
+//            die();
+//        }
+//    }
 
     public void eat(Organism food) {
 
@@ -83,5 +85,18 @@ public abstract class Animal extends Organism {
 
     public double getSatietyPercent() {
         return satiety / getData().getFoodNorm();
+    }
+
+    public int getChanceToEat(OrganismType foodType) {
+        return FoodMatrix.getChance(getData(), foodType);
+    }
+
+    public void loseSatiety() {
+
+        loseSatiety(
+                getData().getFoodNorm()
+                        * Settings.HUNGER_LOSS_PERCENT
+        );
+
     }
 }
