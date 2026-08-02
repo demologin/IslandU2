@@ -1,6 +1,7 @@
 package com.javarush.island.rukavanov.processor;
 
 import com.javarush.island.rukavanov.config.OrganismType;
+import com.javarush.island.rukavanov.config.Settings;
 import com.javarush.island.rukavanov.entity.animals.Animal;
 import com.javarush.island.rukavanov.entity.island.Island;
 import com.javarush.island.rukavanov.entity.island.Location;
@@ -9,15 +10,12 @@ import com.javarush.island.rukavanov.services.MoveHelper;
 import com.javarush.island.rukavanov.util.RandomUtil;
 
 public class MoveProcessor {
-    public void process(Location location,
 
-                        Island island) {
+    public void process(Location location, Island island) {
 
         for (OrganismType type : OrganismType.animals()) {
 
-            for (Animal animal :
-
-                    location.getAnimalsSnapshot(type)) {
+            for (Animal animal : location.getAnimalsSnapshot(type)) {
 
                 if (!animal.isAlive()) {
 
@@ -25,9 +23,7 @@ public class MoveProcessor {
 
                 }
 
-                int speed =
-
-                        animal.getData().getSpeed();
+                int speed = animal.getData().getSpeed();
 
                 if (speed == 0) {
 
@@ -35,27 +31,29 @@ public class MoveProcessor {
 
                 }
 
-                Direction direction =
+                // Не каждое животное двигается каждый такт
 
-                        Direction.random();
+                if (!RandomUtil.chance(Settings.MOVE_CHANCE)) {
 
-                int distance =
+                    continue;
 
-                        RandomUtil.random(1, speed);
+                }
 
-                Location target =
+                Direction direction = Direction.random();
 
-                        MoveHelper.getTargetLocation(
+                int distance = RandomUtil.random(1, speed);
 
-                                island,
+                Location target = MoveHelper.getTargetLocation(
 
-                                location,
+                        island,
 
-                                direction,
+                        location,
 
-                                distance
+                        direction,
 
-                        );
+                        distance
+
+                );
 
                 if (target == location) {
 
@@ -63,17 +61,12 @@ public class MoveProcessor {
 
                 }
 
-                location.moveOrganismTo(
-
-                        target,
-
-                        animal
-
-                );
+                location.moveOrganismTo(target, animal);
 
             }
 
         }
 
     }
+
 }

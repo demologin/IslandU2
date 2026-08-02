@@ -7,6 +7,7 @@ import com.javarush.island.rukavanov.processor.HungerProcessor;
 import com.javarush.island.rukavanov.processor.MoveProcessor;
 import com.javarush.island.rukavanov.processor.ReproduceProcessor;
 
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -21,6 +22,7 @@ public class LifeCycleService {
     private final MoveProcessor moveProcessor = new MoveProcessor();
 
     private final ReproduceProcessor reproduceProcessor = new ReproduceProcessor();
+    private final PlantGrowthService plantGrowthService = new PlantGrowthService();
 
     public void process(Island island) {
 
@@ -49,6 +51,7 @@ public class LifeCycleService {
         try {
 
             executor.awaitTermination(1, TimeUnit.HOURS);
+            plantGrowthService.process(island);
 
         } catch (InterruptedException e) {
 
@@ -59,7 +62,6 @@ public class LifeCycleService {
     }
 
     private void processLocation(Location location,
-
                                  Island island) {
 
         location.lock();
@@ -70,9 +72,9 @@ public class LifeCycleService {
 
             eatProcessor.process(location, island);
 
-            moveProcessor.process(location, island);
-
             reproduceProcessor.process(location, island);
+
+            moveProcessor.process(location, island);
 
         } finally {
 
