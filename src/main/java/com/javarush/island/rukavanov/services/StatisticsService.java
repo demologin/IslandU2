@@ -7,9 +7,13 @@ import com.javarush.island.rukavanov.renderer.Renderer;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class StatisticsService {
+
     private final Renderer renderer;
+
+    private final AtomicLong tick = new AtomicLong();
 
     public StatisticsService(Renderer renderer) {
 
@@ -23,7 +27,13 @@ public class StatisticsService {
 
                 collectStatistics(island);
 
-        renderer.render(statistics);
+        renderer.render(
+
+                tick.incrementAndGet(),
+
+                statistics
+
+        );
 
     }
 
@@ -51,13 +61,13 @@ public class StatisticsService {
 
                     for (OrganismType type : OrganismType.values()) {
 
-                        int current =
+                        result.compute(
 
-                                result.get(type.getIcon());
+                                type.getIcon(),
 
-                        current += location.count(type);
+                                (k, v) -> v + location.count(type)
 
-                        result.put(type.getIcon(), current);
+                        );
 
                     }
 
@@ -74,4 +84,5 @@ public class StatisticsService {
         return result;
 
     }
+
 }

@@ -46,19 +46,19 @@ public abstract class Animal extends Organism {
     }
 
 
-//    public void loseSatiety(double amount) {
-//
-//        if (!alive) {
-//            return;
-//        }
-//
-//        satiety -= amount;
-//
-//        if (satiety <= 0) {
-//            satiety = 0;
-//            die();
-//        }
-//    }
+    public void loseSatiety(double amount) {
+
+        if (!alive) {
+            return;
+        }
+
+        satiety -= amount;
+
+        if (satiety <= 0) {
+            satiety = 0;
+            die();
+        }
+    }
 
     public void eat(Organism food) {
 

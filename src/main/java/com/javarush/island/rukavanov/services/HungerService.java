@@ -12,12 +12,12 @@ public class HungerService extends AbstractIslandService {
     @Override
     protected void processLocation(Location location, Island island) {
 
-        for (OrganismType type : OrganismType.animals()) {
-            for (Animal animal : location.getAnimals(type)) {
-                animal.loseSatiety(animal.getData().getFoodNorm() * Settings.SATIETY_LOSS_PERCENT
-                );
-            }
-        }
-        location.removeDeadAnimals();
+//        for (OrganismType type : OrganismType.animals()) {
+//            for (Animal animal : location.getAnimals(type)) {
+//                animal.loseSatiety(animal.getData().getFoodNorm() * Settings.SATIETY_LOSS_PERCENT
+//                );
+//            }
+//        }
+//        location.removeDeadAnimals();
     }
 }
