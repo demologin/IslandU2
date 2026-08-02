@@ -141,4 +141,65 @@ public class Location {
 
     }
 
+    public boolean contains(Organism organism) {
+
+        return organisms
+                .get(organism.getData())
+                .contains(organism);
+
+    }
+
+    public List<Animal> getAnimalsSnapshot(OrganismType type) {
+
+        List<Animal> snapshot = new ArrayList<>();
+
+        for (Organism organism : organisms.get(type)) {
+            snapshot.add((Animal) organism);
+        }
+
+        return snapshot;
+
+    }
+
+    public boolean moveOrganismTo(Location target,
+                                  Animal animal) {
+
+        Location first =
+                this.id < target.id
+                        ? this
+                        : target;
+
+        Location second =
+                this.id < target.id
+                        ? target
+                        : this;
+
+        first.lock();
+        second.lock();
+
+        try {
+
+            if (!contains(animal)) {
+                return false;
+            }
+
+            if (target.isFull(animal.getData())) {
+                return false;
+            }
+
+            removeOrganism(animal);
+
+            target.addOrganism(animal);
+
+            return true;
+
+        } finally {
+
+            second.unlock();
+            first.unlock();
+
+        }
+
+    }
+
 }
