@@ -54,7 +54,4 @@ public enum OrganismType {
         return ANIMALS;
     }
 
-    public boolean isPlant() {
-        return this == PLANT;
-    }
 }

@@ -6,7 +6,6 @@ public class Eagle extends Predator {
 
     public Eagle() {
         super(OrganismType.EAGLE);
-
     }
 
 }

@@ -7,7 +7,6 @@ public abstract class Herbivore extends Animal {
 
     protected Herbivore(OrganismType data) {
         super(data);
-
     }
 
 }
