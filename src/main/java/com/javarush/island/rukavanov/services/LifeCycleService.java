@@ -2,10 +2,6 @@ package com.javarush.island.rukavanov.services;
 
 import com.javarush.island.rukavanov.entity.island.Island;
 import com.javarush.island.rukavanov.entity.island.Location;
-import com.javarush.island.rukavanov.processor.EatProcessor;
-import com.javarush.island.rukavanov.processor.HungerProcessor;
-import com.javarush.island.rukavanov.processor.MoveProcessor;
-import com.javarush.island.rukavanov.processor.ReproduceProcessor;
 
 
 import java.util.concurrent.ExecutorService;
@@ -15,13 +11,13 @@ import java.util.concurrent.TimeUnit;
 
 public class LifeCycleService {
 
-    private final HungerProcessor hungerProcessor = new HungerProcessor();
+    private final HungerService hungerService = new HungerService();
 
-    private final EatProcessor eatProcessor = new EatProcessor();
+    private final EatService eatService = new EatService();
 
-    private final MoveProcessor moveProcessor = new MoveProcessor();
+    private final MoveService moveService = new MoveService();
 
-    private final ReproduceProcessor reproduceProcessor = new ReproduceProcessor();
+    private final ReproduceService reproduceService = new ReproduceService();
     private final PlantGrowthService plantGrowthService = new PlantGrowthService();
 
     public void process(Island island) {
@@ -68,13 +64,13 @@ public class LifeCycleService {
 
         try {
 
-            hungerProcessor.process(location, island);
+            hungerService.process(location, island);
 
-            eatProcessor.process(location, island);
+            eatService.process(location, island);
 
-            reproduceProcessor.process(location, island);
+            reproduceService.process(location, island);
 
-            moveProcessor.process(location, island);
+            moveService.process(location, island);
 
         } finally {
 

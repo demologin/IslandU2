@@ -7,47 +7,46 @@ import com.javarush.island.rukavanov.entity.island.Island;
 import com.javarush.island.rukavanov.entity.island.Location;
 import com.javarush.island.rukavanov.util.RandomUtil;
 
-import java.util.Map;
+public class EatService {
+    public void process(Location location, Island island) {
 
-public class EatService extends AbstractIslandService {
+        for (OrganismType type : OrganismType.animals()) {
 
-    @Override
-    protected void processLocation(Location location, Island island) {
-
-        for (OrganismType hunterType : OrganismType.animals()) {
-
-            for (Animal hunter : location.getAnimals(hunterType)) {
+            for (Animal hunter : location.getAnimalsSnapshot(type)) {
 
                 if (!hunter.isAlive()) {
+
                     continue;
+
                 }
 
-                if (!hunter.isHungry()) {
+                Organism food =
+
+                        FoodSearcher.findFood(location, hunter);
+
+                if (food == null) {
+
                     continue;
+
                 }
 
-                for (Map.Entry<OrganismType, Integer> entry : FoodSearcher.getAvailableFood(hunterType).entrySet()) {
+                int chance =
 
-                    OrganismType foodType = entry.getKey();
-                    int probability = entry.getValue();
-                    if (!RandomUtil.chance(probability)) {
-                        continue;
-                    }
+                        hunter.getChanceToEat(food.getData());
 
-                    Organism victim = location.takeRandomOrganism(foodType);
+                if (!RandomUtil.chance(chance)) {
 
-                    if (victim == null) {
-                        continue;
-                    }
+                    continue;
 
-                    hunter.eat(victim);
-                    break;
                 }
+
+                location.removeOrganism(food);
+
+                hunter.eat(food);
 
             }
 
         }
 
     }
-
 }
