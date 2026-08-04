@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="296.0" prefWidth="547.0" style="-fx-background-color: #98ff98;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javarush.island.baksalyar.controllers.GameStartController">
+   <children>
+      <Text fx:id="titleText" layoutX="91.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Укажите размер острова">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Text>
+      <TextField fx:id="rowsTextFieId" layoutX="199.0" layoutY="122.0" />
+      <Text fx:id="heightText" layoutX="255.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Высота" />
+      <Text fx:id="widthText" layoutX="251.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ширина" />
+      <TextField fx:id="colsTextFieId" layoutX="199.0" layoutY="197.0" />
+      <Button fx:id="startButton" layoutX="245.0" layoutY="239.0" mnemonicParsing="false" text="Начать" />
+   </children>
+</AnchorPane>
