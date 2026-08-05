@@ -5,7 +5,7 @@ import com.javarush.island.rukavanov.entity.island.Island;
 import com.javarush.island.rukavanov.entity.island.Location;
 
 public class HungerService {
-    public void process(Location location, Island island) {
+    public void process(Location location) {
 
         for (Animal animal : location.getAllAnimalsSnapshot()) {
 

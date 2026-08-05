@@ -7,7 +7,7 @@ import com.javarush.island.rukavanov.entity.island.Location;
 import com.javarush.island.rukavanov.factory.OrganismFactory;
 
 public class ReproduceService {
-    public void process(Location location, Island island) {
+    public void process(Location location) {
 
         for (OrganismType type : OrganismType.animals()) {
 

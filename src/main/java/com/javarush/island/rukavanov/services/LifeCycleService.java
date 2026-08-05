@@ -56,9 +56,9 @@ public class LifeCycleService {
 
         try {
 
-            hungerService.process(location, island);
+            hungerService.process(location);
             eatService.process(location);
-            reproduceService.process(location, island);
+            reproduceService.process(location);
             moveService.process(location, island);
 
         } finally {
