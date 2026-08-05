@@ -14,15 +14,9 @@ public class IslandSnapshot {
 
             new EnumMap<>(OrganismType.class);
 
-
     private long tick;
 
     public void put(OrganismType type, int count) {
         statistics.put(type, count);
     }
-
-    public Map<OrganismType, Integer> getStatistics() {
-        return statistics;
-    }
-
 }

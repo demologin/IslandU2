@@ -11,7 +11,6 @@ import lombok.Setter;
 @Setter
 public abstract class Animal extends Organism {
 
-
     private double satiety;
     private boolean alive;
 
@@ -28,23 +27,9 @@ public abstract class Animal extends Organism {
         return alive;
     }
 
-
     public void die() {
         alive = false;
     }
-
-
-    public boolean isHungry() {
-        return satiety < getData().getFoodNorm();
-    }
-
-
-    public boolean isFull() {
-
-        return satiety >= getData().getFoodNorm();
-
-    }
-
 
     public void loseSatiety(double amount) {
 
@@ -73,18 +58,8 @@ public abstract class Animal extends Organism {
         }
     }
 
-    public void resetSatiety() {
-        satiety = getData().getFoodNorm();
-    }
-
-
     public double getSatiety() {
         return satiety;
-    }
-
-
-    public double getSatietyPercent() {
-        return satiety / getData().getFoodNorm();
     }
 
     public int getChanceToEat(OrganismType foodType) {

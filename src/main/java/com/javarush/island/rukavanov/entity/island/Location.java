@@ -50,10 +50,6 @@ public class Location {
         organisms.get(organism.getData()).remove(organism);
     }
 
-    public List<Organism> getOrganisms(OrganismType type) {
-        return organisms.get(type);
-    }
-
     public int count(OrganismType type) {
         return organisms.get(type).size();
     }
@@ -64,55 +60,6 @@ public class Location {
 
     public boolean isFull(OrganismType type) {
         return count(type) >= type.getMaxCount();
-    }
-
-//    public EnumMap<OrganismType, List<Organism>> getAllOrganisms() {
-//        return new EnumMap<>(organisms);
-//    }
-
-    public int getTotalOrganisms() {
-
-        int total = 0;
-        for (List<Organism> list : organisms.values()) {
-            total += list.size();
-        }
-        return total;
-    }
-
-    public boolean hasOrganisms() {
-        return getTotalOrganisms() > 0;
-    }
-
-    public Map<OrganismType, List<Organism>> getAllOrganisms() {
-
-        EnumMap<OrganismType, List<Organism>> copy = new EnumMap<>(OrganismType.class);
-
-        for (Map.Entry<OrganismType, List<Organism>> entry : organisms.entrySet()) {
-            copy.put(entry.getKey(), new ArrayList<>(entry.getValue()));
-        }
-
-        return copy;
-
-    }
-
-    public List<Animal> getAnimals(OrganismType type) {
-
-        return organisms.get(type)
-                .stream()
-                .map(organism -> (Animal) organism)
-                .toList();
-
-    }
-
-    public void removeDeadAnimals() {
-
-        for (OrganismType type : OrganismType.animals()) {
-
-            organisms.get(type)
-                    .removeIf(organism -> !((Animal) organism).isAlive());
-
-        }
-
     }
 
     public Organism getRandomOrganism(OrganismType type) {
@@ -127,19 +74,6 @@ public class Location {
 
     }
 
-    public Organism takeRandomOrganism(OrganismType type) {
-
-        List<Organism> list = organisms.get(type);
-
-        if (list.isEmpty()) {
-            return null;
-        }
-
-        int index = RandomUtil.random(list.size());
-
-        return list.remove(index);
-
-    }
 
     public boolean contains(Organism organism) {
 

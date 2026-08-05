@@ -1,7 +1,6 @@
 package com.javarush.island.rukavanov.entity.island;
 
 import com.javarush.island.rukavanov.config.Settings;
-import com.javarush.island.rukavanov.util.RandomUtil;
 
 public class Island {
     private final Location[][] locations;
@@ -31,14 +30,4 @@ public class Island {
         return Settings.ISLAND_HEIGHT;
     }
 
-    public boolean isInside(int x, int y) {
-        return x >= 0 && x < getWidth() && y >= 0 && y < getHeight();
-    }
-
-    public Location randomLocation() {
-
-        int x = RandomUtil.random(getWidth());
-        int y = RandomUtil.random(getHeight());
-        return get(x, y);
-    }
 }
