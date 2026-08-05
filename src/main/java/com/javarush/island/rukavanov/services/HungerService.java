@@ -1,7 +1,6 @@
 package com.javarush.island.rukavanov.services;
 
 import com.javarush.island.rukavanov.entity.animals.Animal;
-import com.javarush.island.rukavanov.entity.island.Island;
 import com.javarush.island.rukavanov.entity.island.Location;
 
 public class HungerService {

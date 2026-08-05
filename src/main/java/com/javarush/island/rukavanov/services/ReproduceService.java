@@ -2,7 +2,6 @@ package com.javarush.island.rukavanov.services;
 
 import com.javarush.island.rukavanov.config.OrganismType;
 import com.javarush.island.rukavanov.config.Settings;
-import com.javarush.island.rukavanov.entity.island.Island;
 import com.javarush.island.rukavanov.entity.island.Location;
 import com.javarush.island.rukavanov.factory.OrganismFactory;
 
