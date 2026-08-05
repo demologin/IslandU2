@@ -1,7 +1,9 @@
 package com.javarush.island.rukavanov.entity;
 
 import com.javarush.island.rukavanov.config.OrganismType;
+import lombok.Getter;
 
+@Getter
 public abstract class Organism {
 
     private final OrganismType data;
