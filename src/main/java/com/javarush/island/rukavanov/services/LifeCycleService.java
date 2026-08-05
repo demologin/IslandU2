@@ -66,7 +66,7 @@ public class LifeCycleService {
 
             hungerService.process(location, island);
 
-            eatService.process(location, island);
+            eatService.process(location);
 
             reproduceService.process(location, island);
 

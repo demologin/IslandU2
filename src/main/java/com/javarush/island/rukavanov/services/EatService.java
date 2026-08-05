@@ -8,7 +8,7 @@ import com.javarush.island.rukavanov.entity.island.Location;
 import com.javarush.island.rukavanov.util.RandomUtil;
 
 public class EatService {
-    public void process(Location location, Island island) {
+    public void process(Location location) {
 
         for (OrganismType type : OrganismType.animals()) {
 
