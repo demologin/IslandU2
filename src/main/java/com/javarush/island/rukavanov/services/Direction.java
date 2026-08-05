@@ -9,6 +9,7 @@ public enum Direction {
     RIGHT;
 
     private static final Direction[] VALUES = values();
+
     public static Direction random() {
 
         return VALUES[RandomUtil.random(VALUES.length)];

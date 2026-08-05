@@ -13,40 +13,25 @@ public class EatService {
         for (OrganismType type : OrganismType.animals()) {
 
             for (Animal hunter : location.getAnimalsSnapshot(type)) {
-
                 if (!hunter.isAlive()) {
-
                     continue;
-
                 }
 
-                Organism food =
-
-                        FoodSearcher.findFood(location, hunter);
+                Organism food = FoodSearcher.findFood(location, hunter);
 
                 if (food == null) {
-
                     continue;
-
                 }
 
-                int chance =
-
-                        hunter.getChanceToEat(food.getData());
+                int chance = hunter.getChanceToEat(food.getData());
 
                 if (!RandomUtil.chance(chance)) {
-
                     continue;
-
                 }
 
                 location.removeOrganism(food);
-
                 hunter.eat(food);
-
             }
-
         }
-
     }
 }

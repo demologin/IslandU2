@@ -1,6 +1,5 @@
 package com.javarush.island.rukavanov.entity;
 
-
 import com.javarush.island.rukavanov.config.OrganismType;
 
 public abstract class Organism {

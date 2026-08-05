@@ -8,10 +8,6 @@ import com.javarush.island.rukavanov.entity.plants.Plant;
 
 public final class OrganismFactory {
 
-    private OrganismFactory() {
-
-    }
-
     public static Organism create(OrganismType data) {
 
         return switch (data) {
