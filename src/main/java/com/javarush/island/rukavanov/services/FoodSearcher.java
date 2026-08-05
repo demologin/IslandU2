@@ -7,7 +7,6 @@ import com.javarush.island.rukavanov.entity.animals.Animal;
 import com.javarush.island.rukavanov.entity.island.Location;
 import com.javarush.island.rukavanov.util.RandomUtil;
 
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
 

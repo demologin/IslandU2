@@ -16,25 +16,17 @@ public class MoveService {
             for (Animal animal : location.getAnimalsSnapshot(type)) {
 
                 if (!animal.isAlive()) {
-
                     continue;
-
                 }
 
                 int speed = animal.getData().getSpeed();
 
                 if (speed == 0) {
-
                     continue;
-
                 }
 
-                // Не каждое животное двигается каждый такт
-
                 if (!RandomUtil.chance(Settings.MOVE_CHANCE)) {
-
                     continue;
-
                 }
 
                 Direction direction = Direction.random();
@@ -44,27 +36,17 @@ public class MoveService {
                 Location target = MoveHelper.getTargetLocation(
 
                         island,
-
                         location,
-
                         direction,
-
                         distance
 
                 );
 
                 if (target == location) {
-
                     continue;
-
                 }
-
                 location.moveOrganismTo(target, animal);
-
             }
-
         }
-
     }
-
 }

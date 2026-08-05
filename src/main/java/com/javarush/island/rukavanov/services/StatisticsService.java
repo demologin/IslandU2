@@ -23,25 +23,13 @@ public class StatisticsService {
 
     public void process(Island island) {
 
-        Map<String, Integer> statistics =
-
-                collectStatistics(island);
-
-        renderer.render(
-
-                tick.incrementAndGet(),
-
-                statistics
-
-        );
-
+        Map<String, Integer> statistics = collectStatistics(island);
+        renderer.render(tick.incrementAndGet(), statistics);
     }
 
     private Map<String, Integer> collectStatistics(Island island) {
 
-        Map<String, Integer> result =
-
-                new LinkedHashMap<>();
+        Map<String, Integer> result = new LinkedHashMap<>();
 
         for (OrganismType type : OrganismType.values()) {
 
@@ -54,20 +42,13 @@ public class StatisticsService {
             for (int x = 0; x < island.getWidth(); x++) {
 
                 Location location = island.get(x, y);
-
                 location.lock();
 
                 try {
 
                     for (OrganismType type : OrganismType.values()) {
 
-                        result.compute(
-
-                                type.getIcon(),
-
-                                (k, v) -> v + location.count(type)
-
-                        );
+                        result.compute(type.getIcon(), (k, v) -> v + location.count(type));
 
                     }
 

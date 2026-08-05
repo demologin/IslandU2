@@ -13,7 +13,6 @@ public final class MoveHelper {
             int distance) {
 
         int x = current.getX();
-
         int y = current.getY();
 
         switch (direction) {

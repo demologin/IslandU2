@@ -22,20 +22,13 @@ public class LifeCycleService {
 
     public void process(Island island) {
 
-        ExecutorService executor =
-
-                Executors.newFixedThreadPool(
-
-                        Runtime.getRuntime().availableProcessors()
-
-                );
+        ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
         for (int y = 0; y < island.getHeight(); y++) {
 
             for (int x = 0; x < island.getWidth(); x++) {
 
                 Location location = island.get(x, y);
-
                 executor.submit(() -> processLocation(location, island));
 
             }
@@ -57,25 +50,19 @@ public class LifeCycleService {
 
     }
 
-    private void processLocation(Location location,
-                                 Island island) {
+    private void processLocation(Location location, Island island) {
 
         location.lock();
 
         try {
 
             hungerService.process(location, island);
-
             eatService.process(location);
-
             reproduceService.process(location, island);
-
             moveService.process(location, island);
 
         } finally {
-
             location.unlock();
-
         }
 
     }

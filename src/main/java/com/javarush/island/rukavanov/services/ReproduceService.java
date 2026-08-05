@@ -12,38 +12,22 @@ public class ReproduceService {
         for (OrganismType type : OrganismType.animals()) {
 
             if (!MateSearcher.hasPair(location, type)) {
-
                 continue;
-
             }
 
-            int freePlaces =
-
-                    type.getMaxCount() - location.count(type);
+            int freePlaces = type.getMaxCount() - location.count(type);
 
             if (freePlaces <= 0) {
-
                 continue;
-
             }
 
-            int babies =
-
-                    Math.min(Settings.BABIES_PER_BIRTH,
-
-                            freePlaces);
+            int babies = Math.min(Settings.BABIES_PER_BIRTH, freePlaces);
 
             for (int i = 0; i < babies; i++) {
 
-                location.addOrganism(
-
-                        OrganismFactory.create(type)
-
-                );
+                location.addOrganism(OrganismFactory.create(type));
 
             }
-
         }
-
     }
 }

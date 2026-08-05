@@ -16,45 +16,22 @@ public class Simulation {
 
     private final Island island = new Island();
 
-    private final InitializationService initializationService =
+    private final InitializationService initializationService = new InitializationService();
 
-            new InitializationService();
+    private final PlantGrowthService plantGrowthService = new PlantGrowthService();
 
-    private final PlantGrowthService plantGrowthService =
+    private final LifeCycleService lifeCycleService = new LifeCycleService();
 
-            new PlantGrowthService();
+    private final Renderer renderer = new ConsoleRenderer();
 
-    private final LifeCycleService lifeCycleService =
+    private final StatisticsService statisticsService = new StatisticsService(renderer);
 
-            new LifeCycleService();
-
-    private final Renderer renderer =
-
-            new ConsoleRenderer();
-
-    private final StatisticsService statisticsService =
-
-            new StatisticsService(renderer);
-
-    private final ScheduledExecutorService scheduler =
-
-            Executors.newSingleThreadScheduledExecutor();
+    private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
     public void start() {
 
         initializationService.initialize(island);
-
-        scheduler.scheduleAtFixedRate(
-
-                this::tick,
-
-                0,
-
-                1,
-
-                TimeUnit.SECONDS
-
-        );
+        scheduler.scheduleAtFixedRate(this::tick, 0, 1, TimeUnit.SECONDS);
 
     }
 
@@ -63,9 +40,7 @@ public class Simulation {
         try {
 
             plantGrowthService.process(island);
-
             lifeCycleService.process(island);
-
             statisticsService.process(island);
 
         } catch (Exception e) {
@@ -73,12 +48,6 @@ public class Simulation {
             e.printStackTrace();
 
         }
-
-    }
-
-    public void stop() {
-
-        scheduler.shutdownNow();
 
     }
 

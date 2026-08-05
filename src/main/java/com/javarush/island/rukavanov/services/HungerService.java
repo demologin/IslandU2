@@ -10,16 +10,10 @@ public class HungerService {
         for (Animal animal : location.getAllAnimalsSnapshot()) {
 
             animal.loseSatiety();
-//            animal.loseSatiety(animal.getData().getFoodNorm() * Settings.SATIETY_LOSS_PERCENT
-//            );
 
             if (animal.getSatiety() <= 0) {
-
                 animal.die();
-
             }
-
         }
-
     }
 }
