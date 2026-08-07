@@ -1,16 +1,16 @@
 package com.javarush.island.sharifullina.view;
 
-import com.javarush.island.sharifullina.Settings;
+import com.javarush.island.sharifullina.entity.organizm.Settings;
 import com.javarush.island.sharifullina.entity.map.Cell;
 import com.javarush.island.sharifullina.entity.map.Island;
 
 import java.util.Map;
 
 public class ConsoleView implements View {
-    private Island island;
-    private int column;
-    private int row;
-    private String border;
+    private final Island island;
+    private final int column;
+    private final int row;
+    private final String border;
     boolean isAllColShow;
     boolean isAllRowShow;
 
@@ -48,7 +48,8 @@ public class ConsoleView implements View {
                 topInPercent.forEach(
                         (k, v) -> {
                             String color = Color.getColor(v);
-                            sb.append(color + safeGetLetter(k,1) + Color.RESET);
+                            String str = color + safeGetLetter(k, 1) + Color.RESET;
+                            sb.append(str);
                         });
                 if (topInPercent.size() < Settings.TOP_ORGANIZM_COUNT) {
                     sb.append(".".repeat(Settings.TOP_ORGANIZM_COUNT - topInPercent.size()));
@@ -61,7 +62,7 @@ public class ConsoleView implements View {
     }
 
     private String safeGetLetter(String word, int n){
-        if(word == null || word.length() == 0){
+        if(word == null || word.isEmpty()){
             return "?";
         }
         if(word.length() == n){
@@ -71,7 +72,7 @@ public class ConsoleView implements View {
     }
 
     private void showIslandStatistic() {
-        island.getStatistics().entrySet().stream().forEach(o -> System.out.print(o.getKey() + " : " + o.getValue() + "  "));
+        island.getStatistics().entrySet().forEach(o -> System.out.print(o.getKey() + " : " + o.getValue() + "  "));
         System.out.println();
     }
 
@@ -79,7 +80,8 @@ public class ConsoleView implements View {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 10; i++) {
             String color = Color.getColor(i * 10);
-            sb.append(color + i * 10 + "-" + (i + 1) * 10 + Color.RESET).append(" ");
+            String str = color + i * 10 + "-" + (i + 1) * 10 + Color.RESET;
+            sb.append(str).append(" ");
         }
         sb.append(Color.RED + 100 + Color.RESET + " ");
         sb.append(Color.FILL_RED + "> 100" + Color.RESET);

@@ -1,6 +1,5 @@
 package com.javarush.island.sharifullina.entity.organizm;
 
-import com.javarush.island.sharifullina.Settings;
 import com.javarush.island.sharifullina.execption.GameException;
 import com.javarush.island.sharifullina.services.TypePopulationCreatorService;
 import lombok.Getter;

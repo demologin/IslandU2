@@ -1,6 +1,6 @@
 package com.javarush.island.sharifullina.services;
 
-import com.javarush.island.sharifullina.Settings;
+import com.javarush.island.sharifullina.entity.organizm.Settings;
 import com.javarush.island.sharifullina.entity.map.Game;
 import com.javarush.island.sharifullina.entity.organizm.TypePopulation;
 import com.javarush.island.sharifullina.entity.organizm.Organizms;

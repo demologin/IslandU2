@@ -1,4 +1,4 @@
-package com.javarush.island.sharifullina;
+package com.javarush.island.sharifullina.entity.organizm;
 
 
 public final class Settings {

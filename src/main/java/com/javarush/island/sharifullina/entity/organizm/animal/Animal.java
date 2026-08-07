@@ -1,6 +1,6 @@
 package com.javarush.island.sharifullina.entity.organizm.animal;
 
-import com.javarush.island.sharifullina.Settings;
+import com.javarush.island.sharifullina.entity.organizm.Settings;
 import com.javarush.island.sharifullina.entity.map.Cell;
 import com.javarush.island.sharifullina.entity.organizm.FoodChances;
 import com.javarush.island.sharifullina.entity.organizm.Organizm;
