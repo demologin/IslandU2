@@ -1,16 +1,11 @@
 package com.javarush.island.sharifullina.entity.organizm.plant;
 
-import com.javarush.island.sharifullina.entity.NamedOrganizm;
+import com.javarush.island.sharifullina.api.annotation.TypedOrganizm;
 
-@NamedOrganizm(type = "Grass")
+@TypedOrganizm(type = "Grass")
 public class Grass extends Plant{
-
     public Grass(double weight) {
         super(weight);
-    }
-
-    @Override
-    public void reproduce() {
-
+        icon ="🌿";
     }
 }

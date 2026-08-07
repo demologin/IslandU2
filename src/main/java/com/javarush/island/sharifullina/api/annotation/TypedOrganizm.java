@@ -1,4 +1,4 @@
-package com.javarush.island.sharifullina.entity;
+package com.javarush.island.sharifullina.api.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface Hierarchy {
-    int number() default 0;
+public @interface TypedOrganizm {
+    String type();
 }
