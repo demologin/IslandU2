@@ -9,5 +9,4 @@ public class Sheep extends Herbivore{
         super(weight);
         icon = "\uD83D\uDC11";
     }
-
 }

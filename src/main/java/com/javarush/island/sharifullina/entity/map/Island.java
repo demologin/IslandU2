@@ -1,21 +1,17 @@
 package com.javarush.island.sharifullina.entity.map;
 
 
-import com.javarush.island.sharifullina.entity.organizm.TypePopulation;
+import com.javarush.island.sharifullina.entity.TypePopulation;
 import lombok.Getter;
 
 import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
-
+@Getter
 public class Island {
-    @Getter
     private int column;
-    @Getter
     private int row;
-    @Getter
     private Cell[][] cells;
 
     public Island(int row, int column){
@@ -64,21 +60,6 @@ public class Island {
                 });
         return map;
     }
-
-    public double getCommonWeight() {
-        double commonWeight = Arrays.stream(cells).flatMap(Arrays::stream)
-                .map(cell ->
-                        cell.getPopulation()
-                                .getPopulationMap()
-                                .entrySet().stream()
-                                .map(Map.Entry::getValue)
-                                .map(TypePopulation::getWeight)
-                                .mapToDouble(Double::doubleValue)
-                                .sum()
-                ).reduce((aDouble, aDouble2) -> aDouble + aDouble2).get();
-        return commonWeight;
-    }
-
 
     @Override
     public String toString() {

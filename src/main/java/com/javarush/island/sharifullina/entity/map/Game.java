@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter
 public class Game {
     private Island island;
     private View view;
@@ -14,5 +13,10 @@ public class Game {
     public Game(Island island, View view) {
         this.island = island;
         this.view = view;
+    }
+
+    public boolean isGameOver() {
+        Integer count = island.getStatistics().values().stream().reduce((a, b) -> a + b).get();
+        return count == 0;
     }
 }

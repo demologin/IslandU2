@@ -1,9 +1,9 @@
 package com.javarush.island.sharifullina.services;
 
-import com.javarush.island.sharifullina.entity.organizm.Settings;
+import com.javarush.island.sharifullina.entity.Settings;
 import com.javarush.island.sharifullina.entity.map.Game;
-import com.javarush.island.sharifullina.entity.organizm.TypePopulation;
-import com.javarush.island.sharifullina.entity.organizm.Organizms;
+import com.javarush.island.sharifullina.entity.TypePopulation;
+import com.javarush.island.sharifullina.entity.Organizms;
 import com.javarush.island.sharifullina.entity.map.Cell;
 import com.javarush.island.sharifullina.entity.organizm.animal.Animal;
 import com.javarush.island.sharifullina.entity.organizm.plant.Plant;
@@ -28,31 +28,30 @@ public class ScheduleService implements Runnable {
     }
 
     private void doOneStepGame() {
-        if (!game.isGameOver()) {
-            try (ExecutorService executorService = Executors.newFixedThreadPool(CORE_POOL_SIZE)) {
-                for (String type : Organizms.getOrganizmRegistry().keySet()) {
-                    Map<Cell, TypePopulation> organizmsByType = game.getIsland().getOrganizmsByType(type);
-                    Class<?> clazz = Organizms.getOrganizmRegistry().get(type);
-
-                    if (clazz != null && Animal.class.isAssignableFrom(clazz)) {
-                        LifeService service = new AnimalLifeService(organizmsByType);
-                        executorService.submit(service);
-                    }
-                    if (clazz != null && Plant.class.isAssignableFrom(clazz)) {
-                        LifeService service = new PlantLifeService(organizmsByType);
-                        executorService.submit(service);
-                    }
-                }
-                executorService.shutdown();
-            }
-            ViewService viewService = new ViewService(game);
-            Thread thread = new Thread(viewService);
-            thread.start();
-        } else {
+        if (game.isGameOver()) {
             mainPool.shutdown();
+            return;
         }
+        try (ExecutorService executorService = Executors.newFixedThreadPool(CORE_POOL_SIZE)) {
+            for (String type : Organizms.getOrganizmRegistry().keySet()) {
+                Map<Cell, TypePopulation> organizmsByType = game.getIsland().getOrganizmsByType(type);
+                Class<?> clazz = Organizms.getOrganizmRegistry().get(type);
+                if (clazz == null) {
+                    continue;
+                }
+                if (Animal.class.isAssignableFrom(clazz)) {
+                    LifeService service = new AnimalLifeService(organizmsByType);
+                    executorService.submit(service);
+                }
+                if (Plant.class.isAssignableFrom(clazz)) {
+                    LifeService service = new PlantLifeService(organizmsByType);
+                    executorService.submit(service);
+                }
+            }
+        }
+        ViewService viewService = new ViewService(game);
+        new Thread(viewService).start();
     }
-
 }
 
 

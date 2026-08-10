@@ -3,7 +3,7 @@ package com.javarush.island.sharifullina.entity.organizm.animal.predator;
 import com.javarush.island.sharifullina.api.annotation.TypedOrganizm;
 import com.javarush.island.sharifullina.entity.map.Cell;
 import com.javarush.island.sharifullina.entity.organizm.Organizm;
-import com.javarush.island.sharifullina.entity.organizm.TypePopulation;
+import com.javarush.island.sharifullina.entity.TypePopulation;
 import com.javarush.island.sharifullina.execption.GameException;
 
 import java.util.concurrent.ThreadLocalRandom;

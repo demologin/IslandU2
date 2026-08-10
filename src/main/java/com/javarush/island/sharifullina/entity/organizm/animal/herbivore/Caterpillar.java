@@ -2,10 +2,6 @@ package com.javarush.island.sharifullina.entity.organizm.animal.herbivore;
 
 import com.javarush.island.sharifullina.api.annotation.TypedOrganizm;
 import com.javarush.island.sharifullina.entity.map.Cell;
-import com.javarush.island.sharifullina.entity.organizm.TypePopulation;
-import com.javarush.island.sharifullina.execption.GameException;
-
-import java.util.concurrent.ThreadLocalRandom;
 
 @TypedOrganizm(type = "Caterpillar")
 public class Caterpillar extends Herbivore{

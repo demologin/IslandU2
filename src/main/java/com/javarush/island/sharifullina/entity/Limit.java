@@ -1,8 +1,8 @@
-package com.javarush.island.sharifullina.entity.organizm;
+package com.javarush.island.sharifullina.entity;
 
 import lombok.Getter;
-import lombok.Setter;
-@Getter   @Setter
+
+@Getter
 public class Limit {
 
    private double maxWeight;
@@ -12,5 +12,4 @@ public class Limit {
    private int flockSize;
    private int chanceToBorn;
    public Limit(){}
-
 }

@@ -1,14 +1,12 @@
 package com.javarush.island.sharifullina.repository;
 
-import com.javarush.island.sharifullina.entity.organizm.Organizms;
-import com.javarush.island.sharifullina.entity.organizm.Limit;
-import com.javarush.island.sharifullina.entity.organizm.Limits;
+import com.javarush.island.sharifullina.entity.Organizms;
+import com.javarush.island.sharifullina.entity.Limit;
+import com.javarush.island.sharifullina.entity.Limits;
 import com.javarush.island.sharifullina.entity.organizm.Organizm;
 import com.javarush.island.sharifullina.entity.organizm.plant.Plant;
 import com.javarush.island.sharifullina.execption.GameException;
 
-import javax.annotation.Nullable;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
@@ -36,14 +34,14 @@ public final class OrganizmFactory {
         Set<Organizm> organizmsTypeSet  = ConcurrentHashMap.newKeySet();;
         Map<String, Class<?>> organizmRegistry = Organizms.getOrganizmRegistry();
         if (!organizmRegistry.containsKey(type)) {
-            throw new GameException(String.format("No such organizm %s\n", type));
+            throw new GameException(String.format("No such organizm %s" +System.lineSeparator(), type));
         }
         if (!Limits.getLimits().containsKey(type)) {
-            throw new GameException(String.format("No limit for such organizm %s\n", type));
+            throw new GameException(String.format("No limit for such organizm %s" +System.lineSeparator(), type));
         }
         Limit typeLimit = Limits.getLimit(type);
         int flockSize = typeLimit.getFlockSize();
-        int maxFlockCount = typeLimit.getMaxCount() / flockSize; //подумать над выносом в отдельный метод
+        int maxFlockCount = typeLimit.getMaxCount() / flockSize;
         double maxWeight = typeLimit.getMaxWeight() * flockSize;
         int bound = ThreadLocalRandom.current().nextInt(maxFlockCount);
         try {
@@ -62,7 +60,6 @@ public final class OrganizmFactory {
         if(instance instanceof Plant plant){
             plant.increaseWeight();
             organizms.add(plant);
-//            System.out.println(plant);
         }
         if (instance instanceof Organizm organizm) {
             organizms.add(organizm);

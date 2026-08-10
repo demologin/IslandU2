@@ -1,13 +1,13 @@
 package com.javarush.island.sharifullina.entity.organizm.animal;
 
-import com.javarush.island.sharifullina.entity.organizm.Settings;
+import com.javarush.island.sharifullina.entity.Settings;
 import com.javarush.island.sharifullina.entity.map.Cell;
-import com.javarush.island.sharifullina.entity.organizm.FoodChances;
+import com.javarush.island.sharifullina.entity.FoodChances;
 import com.javarush.island.sharifullina.entity.organizm.Organizm;
 import com.javarush.island.sharifullina.api.entity.Eating;
 import com.javarush.island.sharifullina.api.entity.Movable;
 import com.javarush.island.sharifullina.api.entity.WeightLosable;
-import com.javarush.island.sharifullina.entity.organizm.TypePopulation;
+import com.javarush.island.sharifullina.entity.TypePopulation;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -62,7 +62,7 @@ public abstract class Animal extends Organizm implements Eating, Movable, Weight
 
     public double tryEat(Cell cell, String foodName, double requiredWeightForEating) {
         if (weight == 0) { //Костыль №2 : Мертвое животное не ест.
-            return 0;   //Почему мертвое животное вообще хочет есть не поняла((( Хочется поставить lock на сам Organizm
+            return 0;   //Почему мертвое животное вообще хочет есть не поняла(((
         }               //П.С.: последние 20 раз мертвые перестали есть (магия:))
         TypePopulation foodPopulation = cell.getPopulation().getPopulationMap().get(foodName);
         if (foodPopulation == null) {
@@ -74,7 +74,6 @@ public abstract class Animal extends Organizm implements Eating, Movable, Weight
         double foodToEat = Math.min(foodWeight, requiredWeightForEating);
 
         if (changeWeight(cell, foodToEat)) {
-//            System.out.println(foodOrganizm + " was eaten by " + this + ": " + foodToEat); //delete after
             if (foodWeight <= requiredWeightForEating) {
                 foodOrganizm.die(cell);
             } else {

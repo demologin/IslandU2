@@ -8,5 +8,4 @@ public class Wolf extends Predator {
         super(weight);
         icon = "\uD83D\uDC3A";
     }
-
 }

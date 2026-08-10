@@ -26,7 +26,6 @@ public class Color {
             GREEN,CYAN, BLUE, YELLOW, PURPLE, RED,
     };
 
-
     public static String getColor(int percent) {
         if (percent > 100) {
             return Color.FILL_RED;

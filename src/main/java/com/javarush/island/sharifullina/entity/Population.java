@@ -1,5 +1,6 @@
-package com.javarush.island.sharifullina.entity.organizm;
+package com.javarush.island.sharifullina.entity;
 
+import com.javarush.island.sharifullina.entity.organizm.Organizm;
 import com.javarush.island.sharifullina.execption.GameException;
 import com.javarush.island.sharifullina.services.TypePopulationCreatorService;
 import lombok.Getter;
@@ -66,14 +67,6 @@ public class Population {
                         Map.Entry::getKey,
                         entry -> entry.getValue().getCount()
                 ));
-    }
-
-    public boolean canAddOrganizm(String type, int count) {
-        return populationMap.get(type).canAddOrganizm(count);
-    }
-
-    public boolean canEat(String type,double weight) {
-        return populationMap.get(type).canEat(weight);
     }
 
     @Override

@@ -1,12 +1,10 @@
-package com.javarush.island.sharifullina.entity.organizm;
+package com.javarush.island.sharifullina.entity;
 
 import com.javarush.island.sharifullina.api.annotation.TypedOrganizm;
 import com.javarush.island.sharifullina.execption.GameException;
-import lombok.Getter;
 import org.reflections.Reflections;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;

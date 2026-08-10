@@ -1,16 +1,13 @@
-package com.javarush.island.sharifullina.entity.organizm;
+package com.javarush.island.sharifullina.entity;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.javarush.island.sharifullina.execption.GameException;
-import lombok.Getter;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Map;
 
 public class FoodChances {

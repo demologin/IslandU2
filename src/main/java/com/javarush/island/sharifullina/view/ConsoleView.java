@@ -1,6 +1,6 @@
 package com.javarush.island.sharifullina.view;
 
-import com.javarush.island.sharifullina.entity.organizm.Settings;
+import com.javarush.island.sharifullina.entity.Settings;
 import com.javarush.island.sharifullina.entity.map.Cell;
 import com.javarush.island.sharifullina.entity.map.Island;
 
@@ -13,6 +13,8 @@ public class ConsoleView implements View {
     private final String border;
     boolean isAllColShow;
     boolean isAllRowShow;
+    private final String lineSeparator = System.lineSeparator();
+    private final String scale = getScale();
 
     public ConsoleView(Island island) {
         this.island = island;
@@ -28,20 +30,17 @@ public class ConsoleView implements View {
     @Override
     public void show() {
         showIslandStatistic();
-        showScale();
+        System.out.println(scale);
         showCellsStatistic();
-
-//        Arrays.stream(island.getCells()).flatMap(Arrays::stream).forEach(System.out::println);
-//        System.out.println();
-//        System.out.println(island.getCommonWeight());
         System.out.println("#################################");
     }
 
     private void showCellsStatistic() {
         StringBuilder sb = new StringBuilder();
         Cell[][] cells = island.getCells();
+
         for (int i = 0; i < row; i++) {
-            sb.append(delimetrLine(i)).append(System.lineSeparator());
+            sb.append(delimetrLine(i)).append(lineSeparator);
             for (int j = 0; j < column; j++) {
                 sb.append(Boarder.CELL_MARGIN);
                 Map<String, Integer> topInPercent = cells[i][j].getTopInPercent();
@@ -55,17 +54,17 @@ public class ConsoleView implements View {
                     sb.append(".".repeat(Settings.TOP_ORGANIZM_COUNT - topInPercent.size()));
                 }
             }
-            sb.append(!isAllColShow ? Boarder.INF_MARGIN : Boarder.CELL_MARGIN).append(System.lineSeparator());
+            sb.append(!isAllColShow ? Boarder.INF_MARGIN : Boarder.CELL_MARGIN).append(lineSeparator);
         }
-        sb.append(delimetrLine(row)).append(System.lineSeparator());
+        sb.append(delimetrLine(row)).append(lineSeparator);
         System.out.println(sb);
     }
 
-    private String safeGetLetter(String word, int n){
-        if(word == null || word.isEmpty()){
+    private String safeGetLetter(String word, int n) {
+        if (word == null || word.isEmpty()) {
             return "?";
         }
-        if(word.length() == n){
+        if (word.length() == n) {
             return word;
         }
         return word.substring(0, n);
@@ -76,7 +75,7 @@ public class ConsoleView implements View {
         System.out.println();
     }
 
-    private void showScale() {
+    private String getScale() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 10; i++) {
             String color = Color.getColor(i * 10);
@@ -85,7 +84,7 @@ public class ConsoleView implements View {
         }
         sb.append(Color.RED + 100 + Color.RESET + " ");
         sb.append(Color.FILL_RED + "> 100" + Color.RESET);
-        System.out.println(sb);
+        return sb.toString();
     }
 
     private String delimetrLine(int row) {

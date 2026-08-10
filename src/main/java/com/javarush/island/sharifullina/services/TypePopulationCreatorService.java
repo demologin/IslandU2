@@ -1,6 +1,6 @@
 package com.javarush.island.sharifullina.services;
 
-import com.javarush.island.sharifullina.entity.organizm.TypePopulation;
+import com.javarush.island.sharifullina.entity.TypePopulation;
 
 import java.util.concurrent.Callable;
 

@@ -1,6 +1,7 @@
 package com.javarush.island.sharifullina.entity.map;
 
-import com.javarush.island.sharifullina.entity.organizm.TypePopulation;
+import com.javarush.island.sharifullina.entity.Population;
+import com.javarush.island.sharifullina.entity.TypePopulation;
 import com.javarush.island.sharifullina.entity.organizm.*;
 import lombok.Getter;
 
@@ -26,11 +27,6 @@ public class Cell {
         this.island = island;
         population = new Population();
     }
-//    public Cell(String type){
-//        Map<String, TypePopulation> map = new ConcurrentHashMap<>();
-//        map.put(type, new TypePopulation(type));
-//        population = new Population(map);
-//    }
 
     public boolean safeAddOrganizm(Organizm organizm) {
         lock.lock();
@@ -95,7 +91,6 @@ public class Cell {
                                         .append(" ".repeat(3))
                 );
         return "Cell[" + x + "," + y + "] " +
-//                "Organizms: " +
                 "" + sb;
     }
 }

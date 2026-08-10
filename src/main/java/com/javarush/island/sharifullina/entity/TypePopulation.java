@@ -1,5 +1,6 @@
-package com.javarush.island.sharifullina.entity.organizm;
+package com.javarush.island.sharifullina.entity;
 
+import com.javarush.island.sharifullina.entity.organizm.Organizm;
 import com.javarush.island.sharifullina.repository.OrganizmFactory;
 import lombok.Getter;
 

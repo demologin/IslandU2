@@ -1,6 +1,9 @@
 package com.javarush.island.sharifullina.entity.organizm;
 
 import com.javarush.island.sharifullina.api.entity.*;
+import com.javarush.island.sharifullina.entity.Limit;
+import com.javarush.island.sharifullina.entity.Limits;
+import com.javarush.island.sharifullina.entity.TypePopulation;
 import com.javarush.island.sharifullina.execption.GameException;
 import com.javarush.island.sharifullina.repository.OrganizmFactory;
 import com.javarush.island.sharifullina.entity.map.Cell;
@@ -19,17 +22,15 @@ public abstract class Organizm implements Reproducible, Dieable {
 
     protected Limit limit;
     protected String type;
-    protected String letter;
     protected OrganizmFactory organizmFactory;
     @Getter
-    protected String icon; // 🐃, 🐻, 🐎, 🦌, 🐗, 🐑, 🐐, 🐺, 🐍, 🦊, 🦅, 🐇, 🦆, 🐁, 🐛,🌿
+    protected String icon;
 
     public Organizm(double weight) {
         this.weight = weight;
         type = this.getClass().getSimpleName();
         limit = Limits.getLimit(type);
         organizmFactory = new OrganizmFactory(type);
-        letter = type.substring(0, 1).toUpperCase(); //does it need?
     }
 
     @Override
@@ -80,7 +81,6 @@ public abstract class Organizm implements Reproducible, Dieable {
             Object instance = organizmFactory.createInstance(newFlockWeight);
             if (instance instanceof Organizm organizm) {
                 cell.safeAddOrganizm(organizm);
-//                System.out.println(organizm + "new organizm");
             }
         } catch (Exception e) {
             throw new GameException(e.getMessage());
