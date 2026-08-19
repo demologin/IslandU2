@@ -87,6 +87,10 @@ public abstract class Organism implements Movable, Eating, Reproducible, Cloneab
         }
     }
 
+    private boolean remove(Organism organism) {
+        return false;
+    }
+
     protected boolean safeChangeWeight(Cell currentCell, int percent) {
         synchronized (currentCell.monitor()){
             double maxWeight = limit.getMaxWeight();
@@ -99,7 +103,6 @@ public abstract class Organism implements Movable, Eating, Reproducible, Cloneab
                     .contains(this);
         }
     }
-
 
     protected boolean safeMove(Cell source, Cell destination) {
         if (safeAddTo(destination)) { //if was added

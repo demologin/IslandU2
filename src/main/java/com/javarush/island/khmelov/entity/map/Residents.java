@@ -10,7 +10,7 @@ public class Residents extends ConcurrentHashMap<String, Organisms> {
     private static final int PERCENT_RANDOM_ROTATE = 1;
 
     private void checkNull(Object key) {
-        this.putIfAbsent(key.toString(), new Organisms());
+        this.putIfAbsent(key.toString(), null);
     }
 
     @Override

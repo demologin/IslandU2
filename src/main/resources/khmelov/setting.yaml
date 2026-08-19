@@ -7,7 +7,7 @@ life:
   percentPlantGrow: 25
 
 console:
-    showRows: 6
+    showRows: 20
     showCols: 15
     cellCharCount: 4
 
