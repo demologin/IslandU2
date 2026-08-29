@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class MovementService {
-    private final Island island;
     private final GameConfig config;
+    private final Island island;
 
     public void prepareReservations(Location location) {
         Map<OrganismType, Long> counts = location.getAnimals().stream()
@@ -40,7 +40,7 @@ public class MovementService {
             List<Location> neighbors = island.getReachableFrom(location, radius);
             Location targetLocation = chooseDirection(location, neighbors);
 
-            if (targetLocation != location) { //TODO this is the same as tryReserve returning false
+            if (targetLocation != location) {
                 if (tryReservePlace(targetLocation, animal)) {
                     targetLocation.getArrivalQueue().add(animal);
                     animals.remove();

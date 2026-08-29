@@ -5,7 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class RandomUtils {
 
     private RandomUtils() {
-        throw new UnsupportedOperationException(); //TODO message
+        throw new UnsupportedOperationException(Const.UNSUPPORTED_OPERATION);
     }
 
     public static ThreadLocalRandom instance() {

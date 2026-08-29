@@ -9,13 +9,11 @@ import lombok.Setter;
 @Setter
 public abstract class Animal extends Organism {
     private double satiety;
-    //TODO name, weight, maxSpeed, etc.?
 
     protected Animal(OrganismType type) {
         super(type);
     }
 
-    //TODO names? do i need this?
     public void increaseSatiety(double amount) {
         satiety += amount;
     }
@@ -23,5 +21,4 @@ public abstract class Animal extends Organism {
     public void decreaseSatiety(double amount) {
         satiety -= amount;
     }
-
 }

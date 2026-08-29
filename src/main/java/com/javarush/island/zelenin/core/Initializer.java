@@ -7,6 +7,7 @@ import com.javarush.island.zelenin.entity.map.Location;
 import com.javarush.island.zelenin.entity.organism.OrganismType;
 import com.javarush.island.zelenin.entity.organism.animal.Animal;
 import com.javarush.island.zelenin.entity.organism.plant.Plant;
+import com.javarush.island.zelenin.util.Const;
 import com.javarush.island.zelenin.util.GlobalStats;
 import com.javarush.island.zelenin.util.LifeCreator;
 import com.javarush.island.zelenin.util.RandomUtils;
@@ -17,7 +18,7 @@ public class Initializer {
     private final GameConfig config;
     private final LifeCreator creator;
 
-    public Island initializeMap() {
+    public Island initializeIsland() {
         Island island = new Island(config.getRows(), config.getCols());
         island.getLocations().forEach(this::populateLocation);
         return island;
@@ -31,7 +32,7 @@ public class Initializer {
                 switch (creator.createFrom(type)) {
                     case Animal animal -> location.getAnimals().add(animal);
                     case Plant plant -> location.getPlants().add(plant);
-                    default -> throw new GameException(); //TODO message
+                    default -> throw new GameException(Const.UNKNOWN_TYPE);
                 }
                 GlobalStats.increment(type);
             }

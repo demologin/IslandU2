@@ -18,7 +18,7 @@ public class Location {
     private final int col;
     private final List<Animal> animals = new ArrayList<>();
     private final List<Plant> plants = new ArrayList<>();
-    private final Map<OrganismType, AtomicInteger> reservations = new HashMap<>(); //TODO better names
+    private final Map<OrganismType, AtomicInteger> reservations = new HashMap<>();
     private final ConcurrentLinkedQueue<Animal> arrivalQueue = new ConcurrentLinkedQueue<>();
 
     public Location(int row, int col) {
@@ -28,12 +28,4 @@ public class Location {
             reservations.put(type, new AtomicInteger(0));
         }
     }
-
-//    public void add(Organism organism) {
-//        switch (organism) {
-//            case Animal animal -> animals.add(animal);
-//            case Plant plant -> plants.add(plant);
-//            default -> throw new GameException("Unexpected value: " + organism); //TODO message
-//        }
-//    }
 }

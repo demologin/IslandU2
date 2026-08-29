@@ -14,7 +14,7 @@ import java.util.Collections;
 public class EatingService {
     private final GameConfig config;
 
-    public void executeEating(Location location) {
+    public void processEating(Location location) {
         Collections.shuffle(location.getAnimals(), RandomUtils.instance());
         Collections.shuffle(location.getPlants(), RandomUtils.instance());
 
@@ -23,7 +23,6 @@ public class EatingService {
 
             double maxSatiety = config.getMaxSatiety(animal);
             if (animal.getSatiety() >= maxSatiety) continue;
-
             Organism food = findFood(animal, location);
             if (food == null) continue;
 

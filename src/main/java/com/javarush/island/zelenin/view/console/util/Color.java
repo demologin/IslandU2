@@ -1,5 +1,7 @@
 package com.javarush.island.zelenin.view.console.util;
 
+import com.javarush.island.zelenin.util.Const;
+
 public final class Color {
     public static final String RESET  = "\u001B[0m";
     public static final String RED    = "\u001B[31m";
@@ -12,6 +14,6 @@ public final class Color {
     public static final String BG_YELLOW = "\u001B[43m";
 
     private Color() {
-        throw new UnsupportedOperationException(); //TODO message
+        throw new UnsupportedOperationException(Const.UNSUPPORTED_OPERATION);
     }
 }

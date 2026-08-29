@@ -1,5 +1,7 @@
 package com.javarush.island.zelenin.view.console.util;
 
+import com.javarush.island.zelenin.util.Const;
+
 public final class Layout {
     public static final String CYAN_LINE = Color.CYAN + "=".repeat(50) + Color.RESET + "\n";
     public static final String LINE = "-".repeat(50) + "\n";
@@ -13,11 +15,10 @@ public final class Layout {
     public static final String SPECIES_FORMAT = "%s %-7s : %9d %s  %s\n";
     public static final String TOTAL = "Biosphere balance: ";
 
-
     public static final int SMALL_BAR_WIDTH = 15;
     public static final int TOTAL_BAR_WIDTH = 30;
 
     private Layout() {
-        throw new UnsupportedOperationException(); //TODO message
+        throw new UnsupportedOperationException(Const.UNSUPPORTED_OPERATION);
     }
 }

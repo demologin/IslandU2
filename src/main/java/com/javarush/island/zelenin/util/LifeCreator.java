@@ -11,7 +11,6 @@ import com.javarush.island.zelenin.entity.organism.plant.Grass;
 import com.javarush.island.zelenin.entity.organism.plant.Plant;
 import lombok.RequiredArgsConstructor;
 
-//TODO could be a service?
 @RequiredArgsConstructor
 public class LifeCreator {
     private final GameConfig config;
@@ -19,7 +18,7 @@ public class LifeCreator {
     public Organism createFrom(OrganismType type) {
         if (type.isAnimal()) return createAnimal(type);
         if (type.isPlant()) return createPlant(type);
-        throw new GameException(""); //TODO message Unsupported type?
+        throw new GameException(Const.UNKNOWN_TYPE);
     }
 
     public Animal createAnimal(OrganismType type) {
@@ -39,7 +38,7 @@ public class LifeCreator {
             case BUFFALO -> new Buffalo(type);
             case DUCK    -> new Duck(type);
             case WORM    -> new Worm(type);
-            default -> throw new GameException(""); //TODO message
+            default -> throw new GameException(Const.UNKNOWN_TYPE);
         };
         animal.setSatiety(config.getMaxSatiety(type));
         return animal;
@@ -48,7 +47,7 @@ public class LifeCreator {
     public Plant createPlant(OrganismType type) {
         return switch (type) {
             case GRASS -> new Grass(type);
-            default -> throw new GameException(""); //TODO message
+            default -> throw new GameException(Const.UNKNOWN_TYPE);
         };
     }
 }

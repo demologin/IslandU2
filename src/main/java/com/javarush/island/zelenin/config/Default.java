@@ -2,17 +2,17 @@ package com.javarush.island.zelenin.config;
 
 import com.javarush.island.zelenin.config.GameConfig.OrganismProps;
 import com.javarush.island.zelenin.entity.organism.OrganismType;
+import com.javarush.island.zelenin.util.Const;
 
 import java.util.Map;
 
 import static com.javarush.island.zelenin.entity.organism.OrganismType.*;
 import static java.util.Map.entry;
 
-
-//TODO abstract final, private constructor?
-public class Default {
+public final class Default {
     public static final int ROWS = 100;
     public static final int COLS = 100;
+    public static final int TICK_DELAY = 1000;
 
     public static final Map<OrganismType, OrganismProps> ORGANISMS = Map.ofEntries(
             entry(WOLF,    new OrganismProps("Wolf",    "\uD83D\uDC3A",  50,      30, 3,   8,      2,      25,  0)),
@@ -22,14 +22,14 @@ public class Default {
             entry(EAGLE,   new OrganismProps("Eagle",   "\uD83E\uDD85",   6,      20, 3,   1,      0.2,    25,  0)),
             entry(HORSE,   new OrganismProps("Horse",   "\uD83D\uDC0E", 400,      20, 4,  60,     10,      25,  0)),
             entry(DEER,    new OrganismProps("Deer",    "\uD83E\uDD8C", 300,      20, 4,  50,     10,      25,  0)),
-            entry(RABBIT,  new OrganismProps("Rabbit",  "\uD83D\uDC07",   2,     150, 2,   0.5,    0.125,  50,  0)),
+            entry(RABBIT,  new OrganismProps("Rabbit",  "\uD83D\uDC07",   2,     150, 2,   0.45,   0.125,  50,  0)),
             entry(MOUSE,   new OrganismProps("Mouse",   "\uD83D\uDC01",   0.05,  500, 1,   0.01,   0.0025, 50,  0)),
             entry(GOAT,    new OrganismProps("Goat",    "\uD83D\uDC10",  60,     140, 3,  10,      2,      25,  0)),
             entry(SHEEP,   new OrganismProps("Sheep",   "\uD83D\uDC11",  70,     140, 3,  15,      3,      25,  0)),
             entry(BOAR,    new OrganismProps("Boar",    "\uD83D\uDC17", 400,      50, 2,  50,     10,      25,  0)),
             entry(BUFFALO, new OrganismProps("Buffalo", "\uD83D\uDC03", 700,      10, 3, 100,     20,      25,  0)),
             entry(DUCK,    new OrganismProps("Duck",    "\uD83E\uDD86",   1,     200, 4,   0.15,   0.03,   50,  0)),
-            entry(WORM,    new OrganismProps("Worm",    "\uD83D\uDC1B",   0.01, 1000, 0,   0.005,  0.001,  50,  0)),
+            entry(WORM,    new OrganismProps("Worm",    "\uD83D\uDC1B",   0.01, 1000, 0,   0,      0,      50,  0)),
             entry(GRASS,   new OrganismProps("Grass",   "\uD83C\uDF31",   1,     200, 0,   0,      0,       0, 10))
     );
 
@@ -50,4 +50,8 @@ public class Default {
             entry(DUCK,    Map.of(WORM, 90, GRASS, 100)),
             entry(WORM,    Map.of(GRASS, 100))
     );
+
+    private Default() {
+        throw new UnsupportedOperationException(Const.UNSUPPORTED_OPERATION);
+    }
 }

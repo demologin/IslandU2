@@ -11,8 +11,8 @@ public class LifecycleService {
 
     public void processLife(Location location) {
         vitalityService.decreaseSatiety(location);
-        eatingService.executeEating(location);
+        eatingService.processEating(location);
         vitalityService.removeDead(location);
-        reproductionService.executeReproduction(location);
+        reproductionService.processReproduction(location);
     }
 }

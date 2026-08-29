@@ -1,6 +1,7 @@
 island:
   rows: 20
   cols: 20
+  tickDelay: 1000
 
 organisms:
   WOLF:

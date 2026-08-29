@@ -6,6 +6,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.javarush.island.zelenin.entity.organism.Organism;
 import com.javarush.island.zelenin.entity.organism.OrganismType;
 import com.javarush.island.zelenin.exception.GameException;
+import com.javarush.island.zelenin.util.Const;
 import lombok.Getter;
 
 import java.io.IOException;
@@ -16,12 +17,11 @@ import java.util.Map;
 
 @Getter
 public class GameConfig {
-    private IslandProps island; //TODO default method?
+    private IslandProps island;
     private Map<OrganismType, OrganismProps> organisms;
     private Map<OrganismType, Map<OrganismType, Integer>> eatingMatrix;
-    private static final String PROPERTIES_YAML = "/zelenin/properties.yaml"; //TODO dedicated const file?
 
-    public record IslandProps(int rows, int cols) {}
+    public record IslandProps(int rows, int cols, int tickDelay) {}
     public record OrganismProps(String name, String icon, double weight, int maxCount,
                                 int maxSpeed, double maxSatiety, double satietyLoss,
                                 double birthChance, int growthRate) {}
@@ -32,34 +32,38 @@ public class GameConfig {
     }
 
     private void loadDefaults() {
-        island = new IslandProps(Default.ROWS, Default.COLS);
+        island = new IslandProps(Default.ROWS, Default.COLS, Default.TICK_DELAY);
         organisms = new HashMap<>(Default.ORGANISMS);
         eatingMatrix = new HashMap<>(Default.EATING_MATRIX);
     }
 
     private void loadFromYaml() {
-        URL resource = GameConfig.class.getResource(PROPERTIES_YAML);
-        if (resource == null) return; //TODO throw exception, but continue with defaults?
+        URL resource = GameConfig.class.getResource(Const.PROPERTIES_YAML);
+        if (resource == null) return;
 
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         ObjectReader reader = mapper.readerForUpdating(this);
         try (InputStream stream = resource.openStream()) {
             reader.readValue(stream);
         } catch (IOException e) {
-            throw new GameException(e.getMessage()); //TODO message
+            throw new GameException(e.getMessage());
         }
     }
 
     public int getRows() {
-        return island.rows();
+        return island.rows;
     }
 
     public int getCols() {
-        return island.cols();
+        return island.cols;
+    }
+
+    public int getTickDelay() {
+        return island.tickDelay;
     }
 
     public String getName(OrganismType type) {
-        return organisms.get(type).name();
+        return organisms.get(type).name;
     }
 
     public String getName(Organism organism) {
@@ -67,7 +71,7 @@ public class GameConfig {
     }
 
     public String getIcon(OrganismType type) {
-        return organisms.get(type).icon();
+        return organisms.get(type).icon;
     }
 
     public String getIcon(Organism organism) {
@@ -75,7 +79,7 @@ public class GameConfig {
     }
 
     public double getWeight(OrganismType type) {
-        return organisms.get(type).weight();
+        return organisms.get(type).weight;
     }
 
     public double getWeight(Organism organism) {
@@ -83,7 +87,7 @@ public class GameConfig {
     }
 
     public int getMaxCount(OrganismType type) {
-        return organisms.get(type).maxCount();
+        return organisms.get(type).maxCount;
     }
 
     public int getMaxCount(Organism organism) {
@@ -91,7 +95,7 @@ public class GameConfig {
     }
 
     public int getMaxSpeed(OrganismType type) {
-        return organisms.get(type).maxSpeed();
+        return organisms.get(type).maxSpeed;
     }
 
     public int getMaxSpeed(Organism organism) {
@@ -99,7 +103,7 @@ public class GameConfig {
     }
 
     public double getMaxSatiety(OrganismType type) {
-        return organisms.get(type).maxSatiety();
+        return organisms.get(type).maxSatiety;
     }
 
     public double getMaxSatiety(Organism organism) {
@@ -107,7 +111,7 @@ public class GameConfig {
     }
 
     public double getSatietyLoss(OrganismType type) {
-        return organisms.get(type).satietyLoss();
+        return organisms.get(type).satietyLoss;
     }
 
     public double getSatietyLoss(Organism organism) {
@@ -115,7 +119,7 @@ public class GameConfig {
     }
 
     public double getBirthChance(OrganismType type) {
-        return organisms.get(type).birthChance();
+        return organisms.get(type).birthChance;
     }
 
     public double getBirthChance(Organism organism) {

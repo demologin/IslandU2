@@ -19,7 +19,7 @@ public class ReproductionService {
     private final GameConfig config;
     private final LifeCreator creator;
 
-    public void executeReproduction(Location location) {
+    public void processReproduction(Location location) {
         createAnimals(location);
         growPlants(location);
     }

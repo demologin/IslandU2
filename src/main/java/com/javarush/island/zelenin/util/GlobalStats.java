@@ -23,7 +23,7 @@ public class GlobalStats {
     }
 
     private GlobalStats() {
-        throw new UnsupportedOperationException(); //TODO message
+        throw new UnsupportedOperationException(Const.UNSUPPORTED_OPERATION);
     }
 
     public static void resetTotals() {

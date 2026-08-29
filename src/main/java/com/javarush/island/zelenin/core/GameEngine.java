@@ -1,5 +1,6 @@
 package com.javarush.island.zelenin.core;
 
+import com.javarush.island.zelenin.config.GameConfig;
 import com.javarush.island.zelenin.entity.map.Island;
 import com.javarush.island.zelenin.entity.map.Location;
 import com.javarush.island.zelenin.service.LifecycleService;
@@ -15,13 +16,14 @@ import java.util.function.Consumer;
 
 @RequiredArgsConstructor
 public class GameEngine implements Runnable {
+    private final GameConfig config;
     private final Island island;
+    private final View view;
     private final LifecycleService lifecycleService;
     private final MovementService movementService;
     private ExecutorService workerPool;
     private ExecutorService renderPool;
-
-    private final View view;
+    private ScheduledExecutorService schedulerPool;
 
     @Getter
     private final AtomicInteger tickCounter = new AtomicInteger(0);
@@ -30,8 +32,9 @@ public class GameEngine implements Runnable {
     public void run() {
         workerPool = Executors.newVirtualThreadPerTaskExecutor();
         renderPool = Executors.newSingleThreadExecutor();
-        ScheduledExecutorService schedulerPool = Executors.newSingleThreadScheduledExecutor(); //TODO <- this
-        schedulerPool.scheduleWithFixedDelay(this::runOneTick, 0, 1000, TimeUnit.MILLISECONDS);
+        schedulerPool = Executors.newSingleThreadScheduledExecutor();
+        schedulerPool.scheduleWithFixedDelay(this::runOneTick, 0,
+                config.getTickDelay(), TimeUnit.MILLISECONDS);
     }
 
     public void runOneTick() {
@@ -45,9 +48,8 @@ public class GameEngine implements Runnable {
                 .thenAccept(v -> runParallelStream(movementService::processArrivals))
                 .join();
 
-        long endTime = System.nanoTime();
-        double duration = (endTime - startTime) / 1_000_000.0;
-        System.out.printf("Next day took %.0f ms to compute.\n", duration);
+        long duration = (System.nanoTime() - startTime) / 1000000;
+        System.out.printf("Next day took %d ms to compute.\n", duration);
     }
 
     private CompletableFuture<Void> dispatchAsyncTasks(Consumer<Location> action) {

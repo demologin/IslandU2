@@ -32,13 +32,12 @@ public class Island {
         return locations[row][col];
     }
 
-    //TODO remove later?
-    public Location[][] getGrid() {
-        return locations;
-    }
-
     public List<Location> getLocations() {
         return cachedLocations;
+    }
+
+    public Location[][] getGrid() {
+        return locations;
     }
 
     public List<Location> getReachableFrom(Location location, int radius) {

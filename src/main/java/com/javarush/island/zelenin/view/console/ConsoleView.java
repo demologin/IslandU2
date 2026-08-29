@@ -35,7 +35,7 @@ public class ConsoleView implements View {
         GlobalStats.resetTotals();
         Map<OrganismType, Long> snapshot = GlobalStats.snapshot();
         StringBuilder report = new StringBuilder();
-        report.append(getName(currentTick));
+        report.append(getReportHeader(currentTick));
 
         for (OrganismType type : OrganismType.values()) {
             long count = snapshot.getOrDefault(type, 0L);
@@ -60,7 +60,7 @@ public class ConsoleView implements View {
         lastSnapshot.putAll(snapshot);
     }
 
-    private String getName(int currentTick) {
+    private String getReportHeader(int currentTick) {
         return "\n" + Layout.CYAN_LINE + Layout.ISLAND.formatted(currentTick) + Layout.CYAN_LINE;
     }
 

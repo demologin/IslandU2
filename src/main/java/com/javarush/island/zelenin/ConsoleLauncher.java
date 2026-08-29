@@ -13,18 +13,19 @@ public class ConsoleLauncher {
 
     public static void main(String[] args) {
         GameConfig config = new GameConfig();
+        View view = new ConsoleView(config);
         LifeCreator creator = new LifeCreator(config);
         Initializer initializer = new Initializer(config, creator);
-        Island island = initializer.initializeMap();
+        Island island = initializer.initializeIsland();
 
-        EatingService eatingService = new EatingService(config);
-        VitalityService vitalityService = new VitalityService(config);
-        ReproductionService reproductionService = new ReproductionService(config, creator);
-        LifecycleService lifecycleService = new LifecycleService(eatingService, vitalityService, reproductionService);
-        MovementService movementService = new MovementService(island, config);
+        LifecycleService lifecycleService = new LifecycleService(
+                new EatingService(config),
+                new VitalityService(config),
+                new ReproductionService(config, creator)
+        );
+        MovementService movementService = new MovementService(config, island);
 
-        View view = new ConsoleView(config);
-        GameEngine engine = new GameEngine(island, lifecycleService, movementService, view);
+        GameEngine engine = new GameEngine(config, island, view, lifecycleService, movementService);
         new Thread(engine).start();
     }
 }
