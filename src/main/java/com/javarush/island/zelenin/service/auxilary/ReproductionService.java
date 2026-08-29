@@ -1,12 +1,12 @@
-package com.javarush.island.zelenin.service;
+package com.javarush.island.zelenin.service.auxilary;
 
 import com.javarush.island.zelenin.config.GameConfig;
 import com.javarush.island.zelenin.entity.map.Location;
 import com.javarush.island.zelenin.entity.organism.OrganismType;
 import com.javarush.island.zelenin.entity.organism.animal.Animal;
 import com.javarush.island.zelenin.entity.organism.plant.Plant;
-import com.javarush.island.zelenin.util.GlobalStats;
-import com.javarush.island.zelenin.util.LifeCreator;
+import com.javarush.island.zelenin.repository.GameStats;
+import com.javarush.island.zelenin.repository.LifeCreator;
 import com.javarush.island.zelenin.util.RandomUtils;
 import lombok.RequiredArgsConstructor;
 
@@ -37,7 +37,7 @@ public class ReproductionService {
                         if (count >= config.getMaxCount(type)) break;
                         if (RandomUtils.rollChance(config.getBirthChance(type))) {
                             newborns.add(creator.createAnimal(type));
-                            GlobalStats.increment(type);
+                            GameStats.increment(type);
                             count++;
                         }
                     }
@@ -56,7 +56,7 @@ public class ReproductionService {
             for (int i = 0; i < config.getGrowthRate(type); i++) {
                 if (count++ >= config.getMaxCount(type)) break;
                 grownPlants.add(creator.createPlant(type));
-                GlobalStats.increment(type);
+                GameStats.increment(type);
             }
         }
         location.getPlants().addAll(grownPlants);

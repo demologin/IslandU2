@@ -1,6 +1,9 @@
 package com.javarush.island.zelenin.service;
 
 import com.javarush.island.zelenin.entity.map.Location;
+import com.javarush.island.zelenin.service.auxilary.EatingService;
+import com.javarush.island.zelenin.service.auxilary.ReproductionService;
+import com.javarush.island.zelenin.service.auxilary.VitalityService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

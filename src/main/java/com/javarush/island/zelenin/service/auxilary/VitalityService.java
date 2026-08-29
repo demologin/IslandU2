@@ -1,8 +1,8 @@
-package com.javarush.island.zelenin.service;
+package com.javarush.island.zelenin.service.auxilary;
 
 import com.javarush.island.zelenin.config.GameConfig;
 import com.javarush.island.zelenin.entity.map.Location;
-import com.javarush.island.zelenin.util.GlobalStats;
+import com.javarush.island.zelenin.repository.GameStats;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -17,12 +17,12 @@ public class VitalityService {
     public void removeDead(Location location) {
         location.getAnimals().removeIf(animal -> {
             if (!(animal.isEaten() || animal.getSatiety() <= 0)) return false;
-            GlobalStats.decrement(animal.getType());
+            GameStats.decrement(animal.getType());
             return true;
         });
         location.getPlants().removeIf(plant -> {
             if (!plant.isEaten()) return false;
-            GlobalStats.decrement(plant.getType());
+            GameStats.decrement(plant.getType());
             return true;
         });
     }

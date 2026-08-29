@@ -1,4 +1,4 @@
-package com.javarush.island.zelenin.service;
+package com.javarush.island.zelenin.service.auxilary;
 
 import com.javarush.island.zelenin.config.GameConfig;
 import com.javarush.island.zelenin.entity.map.Location;
@@ -37,7 +37,6 @@ public class EatingService {
         }
     }
 
-    //TODO 1. roll all chances? miss chance not accounted then 2. filter and findFirst
     private Organism findFood(Animal animal, Location location) {
         for (Plant plant : location.getPlants()) {
             if (!plant.isEaten() && config.getEatChance(animal, plant) > 0) {

@@ -5,7 +5,7 @@ import com.javarush.island.zelenin.entity.map.Island;
 import com.javarush.island.zelenin.entity.map.Location;
 import com.javarush.island.zelenin.entity.organism.OrganismType;
 import com.javarush.island.zelenin.entity.organism.animal.Animal;
-import com.javarush.island.zelenin.util.GlobalStats;
+import com.javarush.island.zelenin.repository.GameStats;
 import com.javarush.island.zelenin.util.RandomUtils;
 import lombok.RequiredArgsConstructor;
 
@@ -44,7 +44,7 @@ public class MovementService {
                 if (tryReservePlace(targetLocation, animal)) {
                     targetLocation.getArrivalQueue().add(animal);
                     animals.remove();
-                    GlobalStats.decrement(animal.getType());
+                    GameStats.decrement(animal.getType());
                 }
             }
         }
@@ -70,7 +70,7 @@ public class MovementService {
             Animal newcomer = location.getArrivalQueue().poll();
             if (newcomer != null) {
                 location.getAnimals().add(newcomer);
-                GlobalStats.increment(newcomer.getType());
+                GameStats.increment(newcomer.getType());
             }
         }
     }

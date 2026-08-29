@@ -1,11 +1,15 @@
 package com.javarush.island.zelenin;
 
 import com.javarush.island.zelenin.config.GameConfig;
-import com.javarush.island.zelenin.core.GameEngine;
-import com.javarush.island.zelenin.core.Initializer;
 import com.javarush.island.zelenin.entity.map.Island;
-import com.javarush.island.zelenin.service.*;
-import com.javarush.island.zelenin.util.LifeCreator;
+import com.javarush.island.zelenin.repository.Initializer;
+import com.javarush.island.zelenin.repository.LifeCreator;
+import com.javarush.island.zelenin.service.GameEngine;
+import com.javarush.island.zelenin.service.LifecycleService;
+import com.javarush.island.zelenin.service.MovementService;
+import com.javarush.island.zelenin.service.auxilary.EatingService;
+import com.javarush.island.zelenin.service.auxilary.ReproductionService;
+import com.javarush.island.zelenin.service.auxilary.VitalityService;
 import com.javarush.island.zelenin.view.View;
 import com.javarush.island.zelenin.view.console.ConsoleView;
 

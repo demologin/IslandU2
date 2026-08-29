@@ -1,6 +1,7 @@
-package com.javarush.island.zelenin.util;
+package com.javarush.island.zelenin.repository;
 
 import com.javarush.island.zelenin.entity.organism.OrganismType;
+import com.javarush.island.zelenin.util.Const;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -8,21 +9,21 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.LongAdder;
 
-public class GlobalStats {
-    private static final Map<OrganismType, LongAdder> COUNTERS;
+public class GameStats {
+    private static final Map<OrganismType, LongAdder> counters;
 
     @Getter private static long totalCarnivores;
     @Getter private static long totalHerbivores;
     @Getter private static long totalPlants;
 
     static {
-        COUNTERS = new ConcurrentHashMap<>();
+        counters = new ConcurrentHashMap<>();
         for (OrganismType type : OrganismType.values()) {
-            COUNTERS.put(type, new LongAdder());
+            counters.put(type, new LongAdder());
         }
     }
 
-    private GlobalStats() {
+    private GameStats() {
         throw new UnsupportedOperationException(Const.UNSUPPORTED_OPERATION);
     }
 
@@ -43,16 +44,16 @@ public class GlobalStats {
     }
 
     public static void increment(OrganismType type) {
-        COUNTERS.get(type).increment();
+        counters.get(type).increment();
     }
 
     public static void decrement(OrganismType type) {
-        COUNTERS.get(type).decrement();
+        counters.get(type).decrement();
     }
 
     public static Map<OrganismType, Long> snapshot() {
         Map<OrganismType, Long> snapshot = new HashMap<>();
-        COUNTERS.forEach((type, adder) -> snapshot.put(type, adder.sum()));
+        counters.forEach((type, adder) -> snapshot.put(type, adder.sum()));
         return snapshot;
     }
 }

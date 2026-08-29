@@ -1,4 +1,4 @@
-package com.javarush.island.zelenin.core;
+package com.javarush.island.zelenin.repository;
 
 import com.javarush.island.khmelov.exception.GameException;
 import com.javarush.island.zelenin.config.GameConfig;
@@ -8,8 +8,6 @@ import com.javarush.island.zelenin.entity.organism.OrganismType;
 import com.javarush.island.zelenin.entity.organism.animal.Animal;
 import com.javarush.island.zelenin.entity.organism.plant.Plant;
 import com.javarush.island.zelenin.util.Const;
-import com.javarush.island.zelenin.util.GlobalStats;
-import com.javarush.island.zelenin.util.LifeCreator;
 import com.javarush.island.zelenin.util.RandomUtils;
 import lombok.RequiredArgsConstructor;
 
@@ -34,7 +32,7 @@ public class Initializer {
                     case Plant plant -> location.getPlants().add(plant);
                     default -> throw new GameException(Const.UNKNOWN_TYPE);
                 }
-                GlobalStats.increment(type);
+                GameStats.increment(type);
             }
         }
     }

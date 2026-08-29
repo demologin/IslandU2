@@ -2,7 +2,7 @@ package com.javarush.island.zelenin.view.console;
 
 import com.javarush.island.zelenin.config.GameConfig;
 import com.javarush.island.zelenin.entity.organism.OrganismType;
-import com.javarush.island.zelenin.util.GlobalStats;
+import com.javarush.island.zelenin.repository.GameStats;
 import com.javarush.island.zelenin.view.View;
 import com.javarush.island.zelenin.view.console.util.Color;
 import com.javarush.island.zelenin.view.console.util.Layout;
@@ -32,8 +32,8 @@ public class ConsoleView implements View {
     }
 
     private void showStats(int currentTick) {
-        GlobalStats.resetTotals();
-        Map<OrganismType, Long> snapshot = GlobalStats.snapshot();
+        GameStats.resetTotals();
+        Map<OrganismType, Long> snapshot = GameStats.snapshot();
         StringBuilder report = new StringBuilder();
         report.append(getReportHeader(currentTick));
 
@@ -42,7 +42,7 @@ public class ConsoleView implements View {
             long lastCount = lastSnapshot.getOrDefault(type, count);
             long maxCount = maxCounts.get(type);
 
-            GlobalStats.updateTotals(type, count);
+            GameStats.updateTotals(type, count);
             String speciesBar = getSmallBar(count, maxCount);
             String trendArrow = getTrendArrow(count - lastCount);
             report.append(Layout.SPECIES_FORMAT.formatted(config.getIcon(type),
@@ -50,8 +50,8 @@ public class ConsoleView implements View {
         }
 
         report.append(Layout.LINE);
-        String totalBar = getTotalBar(GlobalStats.getTotalCarnivores(),
-                GlobalStats.getTotalHerbivores(), GlobalStats.getTotalPlants());
+        String totalBar = getTotalBar(GameStats.getTotalCarnivores(),
+                GameStats.getTotalHerbivores(), GameStats.getTotalPlants());
         report.append(Layout.TOTAL).append(totalBar).append("\n");
         report.append(Layout.CYAN_LINE);
 

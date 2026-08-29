@@ -1,4 +1,4 @@
-package com.javarush.island.zelenin.util;
+package com.javarush.island.zelenin.repository;
 
 import com.javarush.island.khmelov.exception.GameException;
 import com.javarush.island.zelenin.config.GameConfig;
@@ -9,6 +9,7 @@ import com.javarush.island.zelenin.entity.organism.animal.carnivore.*;
 import com.javarush.island.zelenin.entity.organism.animal.herbivore.*;
 import com.javarush.island.zelenin.entity.organism.plant.Grass;
 import com.javarush.island.zelenin.entity.organism.plant.Plant;
+import com.javarush.island.zelenin.util.Const;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

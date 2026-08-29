@@ -1,10 +1,8 @@
-package com.javarush.island.zelenin.core;
+package com.javarush.island.zelenin.service;
 
 import com.javarush.island.zelenin.config.GameConfig;
 import com.javarush.island.zelenin.entity.map.Island;
 import com.javarush.island.zelenin.entity.map.Location;
-import com.javarush.island.zelenin.service.LifecycleService;
-import com.javarush.island.zelenin.service.MovementService;
 import com.javarush.island.zelenin.view.View;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
