@@ -92,7 +92,7 @@ public class ConsoleView implements View {
         double ratio = (double) count / maxCount;
         int filledWidth = (int) (ratio * barWidth);
         int emptyWidth = barWidth - filledWidth;
-        String color = ratio < 0.20 || ratio > 0.80 ? Color.RED : Color.GREEN;
+        String color = ratio < 0.20 ? Color.RED : Color.GREEN;
         return color + "█".repeat(filledWidth) + "░".repeat(emptyWidth) + Color.RESET;
     }
 

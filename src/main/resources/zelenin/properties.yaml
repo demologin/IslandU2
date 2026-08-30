@@ -20,7 +20,7 @@ organisms:
     maxCount: 30
     maxSpeed: 1
     maxSatiety: 3
-    satietyLoss: 0.5
+    satietyLoss: 0.25
     birthChance: 25
   FOX:
     name: Fox
@@ -30,7 +30,7 @@ organisms:
     maxSpeed: 2
     maxSatiety: 2
     satietyLoss: 0.5
-    birthChance: 25
+    birthChance: 50
   BEAR:
     name: Bear
     icon: 🐻
@@ -143,20 +143,20 @@ organisms:
     name: Tree
     icon: 🌳
     weight: 500
-    maxCount: 50
-    growthRate: 10
+    maxCount: 100
+    growthRate: 25
   BUSH:
     name: Bush
     icon: 🌿
     weight: 50
-    maxCount: 200
-    growthRate: 40
+    maxCount: 500
+    growthRate: 100
   GRASS:
     name: Grass
     icon: 🌱
     weight: 1
-    maxCount: 1000
-    growthRate: 200
+    maxCount: 5000
+    growthRate: 1000
 
 eatingMatrix:
   WOLF:
@@ -198,38 +198,34 @@ eatingMatrix:
   HORSE:
     TREE: 40
     BUSH: 70
-    GRASS: 100
   DEER:
     TREE: 65
     BUSH: 90
-    GRASS: 100
   RABBIT:
     BUSH: 40
     GRASS: 100
   MOUSE:
     WORM: 90
     BUSH: 20
-    GRASS: 100
+    GRASS: 50
   GOAT:
     TREE: 50
-    BUSH: 100
+    BUSH: 70
     GRASS: 100
   SHEEP:
-    BUSH: 50
+    TREE: 50
+    BUSH: 70
     GRASS: 100
   BOAR:
     MOUSE: 50
     WORM: 90
     TREE: 20
     BUSH: 60
-    GRASS: 100
   BUFFALO:
-    TREE: 30
+    TREE: 70
     BUSH: 60
-    GRASS: 100
   DUCK:
     WORM: 90
-    BUSH: 10
     GRASS: 100
   WORM:
-    GRASS: 100
+    GRASS: 50

@@ -24,7 +24,7 @@ public class Initializer {
 
     private void populateLocation(Location location) {
         for (OrganismType type : OrganismType.values()) {
-            int count = RandomUtils.nextInt(0, config.getMaxCount(type));
+            int count = RandomUtils.nextInt(0, config.getMaxCount(type) + 1);
 
             for (int i = 0; i < count; i++) {
                 switch (creator.createFrom(type)) {
