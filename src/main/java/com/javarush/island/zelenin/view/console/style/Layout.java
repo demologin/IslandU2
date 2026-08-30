@@ -1,4 +1,4 @@
-package com.javarush.island.zelenin.view.console.util;
+package com.javarush.island.zelenin.view.console.style;
 
 import com.javarush.island.zelenin.util.Const;
 
@@ -12,7 +12,7 @@ public final class Layout {
     public static final String TREND_NONE = "%s▪       0%s".formatted(Color.YELLOW, Color.RESET);
     public static final String ALL_DEAD = "[ %sALL DEAD%s ]".formatted(Color.RED, Color.RESET);
 
-    public static final String SPECIES_FORMAT = "%s %-7s : %9d %s  %s\n";
+    public static final String SPECIES_FORMAT = "%s %-16s : %9d %s  %s\n";
     public static final String TOTAL = "Biosphere balance: ";
 
     public static final int SMALL_BAR_WIDTH = 15;

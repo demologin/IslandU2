@@ -4,8 +4,8 @@ import com.javarush.island.zelenin.config.GameConfig;
 import com.javarush.island.zelenin.entity.organism.OrganismType;
 import com.javarush.island.zelenin.repository.GameStats;
 import com.javarush.island.zelenin.view.View;
-import com.javarush.island.zelenin.view.console.util.Color;
-import com.javarush.island.zelenin.view.console.util.Layout;
+import com.javarush.island.zelenin.view.console.style.Color;
+import com.javarush.island.zelenin.view.console.style.Layout;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,8 +45,10 @@ public class ConsoleView implements View {
             GameStats.updateTotals(type, count);
             String speciesBar = getSmallBar(count, maxCount);
             String trendArrow = getTrendArrow(count - lastCount);
+            String name = getColoredName(type);
+
             report.append(Layout.SPECIES_FORMAT.formatted(config.getIcon(type),
-                    config.getName(type), count, speciesBar, trendArrow));
+                    name, count, speciesBar, trendArrow));
         }
 
         report.append(Layout.LINE);
@@ -62,6 +64,18 @@ public class ConsoleView implements View {
 
     private String getReportHeader(int currentTick) {
         return "\n" + Layout.CYAN_LINE + Layout.ISLAND.formatted(currentTick) + Layout.CYAN_LINE;
+    }
+
+    private String getColoredName(OrganismType type) {
+        String name = config.getName(type);
+        if (type.isCarnivore()) {
+            name = Color.RED + name;
+        } else if (type.isHerbivore()) {
+            name = Color.YELLOW + name;
+        } else {
+            name = Color.GREEN + name;
+        }
+        return name + Color.RESET;
     }
 
     private String getTrendArrow(long delta) {

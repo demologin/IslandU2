@@ -7,8 +7,10 @@ import com.javarush.island.zelenin.entity.organism.OrganismType;
 import com.javarush.island.zelenin.entity.organism.animal.Animal;
 import com.javarush.island.zelenin.entity.organism.animal.carnivore.*;
 import com.javarush.island.zelenin.entity.organism.animal.herbivore.*;
+import com.javarush.island.zelenin.entity.organism.plant.Bush;
 import com.javarush.island.zelenin.entity.organism.plant.Grass;
 import com.javarush.island.zelenin.entity.organism.plant.Plant;
+import com.javarush.island.zelenin.entity.organism.plant.Tree;
 import com.javarush.island.zelenin.util.Const;
 import lombok.RequiredArgsConstructor;
 
@@ -47,6 +49,8 @@ public class LifeCreator {
 
     public Plant createPlant(OrganismType type) {
         return switch (type) {
+            case TREE -> new Tree(type);
+            case BUSH -> new Bush(type);
             case GRASS -> new Grass(type);
             default -> throw new GameException(Const.UNKNOWN_TYPE);
         };

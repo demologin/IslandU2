@@ -1,4 +1,4 @@
-package com.javarush.island.zelenin.view.console.util;
+package com.javarush.island.zelenin.view.console.style;
 
 import com.javarush.island.zelenin.util.Const;
 

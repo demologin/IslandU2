@@ -30,6 +30,8 @@ public final class Default {
             entry(BUFFALO, new OrganismProps("Buffalo", "\uD83D\uDC03", 700,      10, 3, 100,     20,      25,  0)),
             entry(DUCK,    new OrganismProps("Duck",    "\uD83E\uDD86",   1,     200, 4,   0.15,   0.03,   50,  0)),
             entry(WORM,    new OrganismProps("Worm",    "\uD83D\uDC1B",   0.01, 1000, 0,   0,      0,      50,  0)),
+            entry(TREE,    new OrganismProps("Tree",    "\uD83C\uDF33",   0,       0, 0,   0,      0,       0,  0)),
+            entry(BUSH,    new OrganismProps("Bush",    "\uD83C\uDF3F",   0,       0, 0,   0,      0,       0,  0)),
             entry(GRASS,   new OrganismProps("Grass",   "\uD83C\uDF31",   1,     200, 0,   0,      0,       0, 10))
     );
 

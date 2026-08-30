@@ -5,7 +5,7 @@ import java.util.List;
 public enum OrganismType {
     WOLF, SNAKE, FOX, BEAR, EAGLE,
     HORSE, DEER, RABBIT, MOUSE, GOAT, SHEEP, BOAR, BUFFALO, DUCK, WORM,
-    GRASS;
+    TREE, BUSH, GRASS;
 
     public static List<OrganismType> getAnimals() {
         return List.of(WOLF, SNAKE, FOX, BEAR, EAGLE, HORSE, DEER,
@@ -21,7 +21,7 @@ public enum OrganismType {
     }
 
     public static List<OrganismType> getPlants() {
-        return List.of(GRASS);
+        return List.of(TREE, BUSH, GRASS);
     }
 
     public boolean isAnimal() {

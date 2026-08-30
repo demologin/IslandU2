@@ -139,12 +139,24 @@ organisms:
     maxSatiety: 0.005
     satietyLoss: 0.001
     birthChance: 50
+  TREE:
+    name: Tree
+    icon: 🌳
+    weight: 500
+    maxCount: 50
+    growthRate: 10
+  BUSH:
+    name: Bush
+    icon: 🌿
+    weight: 50
+    maxCount: 200
+    growthRate: 40
   GRASS:
     name: Grass
     icon: 🌱
     weight: 1
-    maxCount: 200
-    growthRate: 10
+    maxCount: 1000
+    growthRate: 200
 
 eatingMatrix:
   WOLF:
@@ -184,26 +196,40 @@ eatingMatrix:
     MOUSE: 90
     DUCK: 80
   HORSE:
+    TREE: 40
+    BUSH: 70
     GRASS: 100
   DEER:
+    TREE: 65
+    BUSH: 90
     GRASS: 100
   RABBIT:
+    BUSH: 40
     GRASS: 100
   MOUSE:
     WORM: 90
+    BUSH: 20
     GRASS: 100
   GOAT:
+    TREE: 50
+    BUSH: 100
     GRASS: 100
   SHEEP:
+    BUSH: 50
     GRASS: 100
   BOAR:
     MOUSE: 50
     WORM: 90
+    TREE: 20
+    BUSH: 60
     GRASS: 100
   BUFFALO:
+    TREE: 30
+    BUSH: 60
     GRASS: 100
   DUCK:
     WORM: 90
+    BUSH: 10
     GRASS: 100
   WORM:
     GRASS: 100
