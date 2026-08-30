@@ -40,6 +40,12 @@ public class Island {
         return locations;
     }
 
+    /**
+     * Returns a {@link List} of locations within radius of the provided {@link Location}.
+     * @param location original location
+     * @param radius max distance from the source location (ignores diagonal movement)
+     * @return list of locations (with the original location)
+     */
     public List<Location> getReachableFrom(Location location, int radius) {
         List<Location> locations = new ArrayList<>();
         int minRow = Math.max(location.getRow() - radius, 0);

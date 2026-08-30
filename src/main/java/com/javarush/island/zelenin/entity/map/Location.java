@@ -5,10 +5,7 @@ import com.javarush.island.zelenin.entity.organism.animal.Animal;
 import com.javarush.island.zelenin.entity.organism.plant.Plant;
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -19,7 +16,7 @@ public class Location {
     private final List<Animal> animals = new ArrayList<>();
     private final List<Plant> plants = new ArrayList<>();
     private final Map<OrganismType, AtomicInteger> reservations = new HashMap<>();
-    private final ConcurrentLinkedQueue<Animal> arrivalQueue = new ConcurrentLinkedQueue<>();
+    private final Queue<Animal> arrivalQueue = new ConcurrentLinkedQueue<>();
 
     public Location(int row, int col) {
         this.row = row;

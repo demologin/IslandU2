@@ -7,9 +7,9 @@ public final class Layout {
     public static final String LINE = "-".repeat(50) + "\n";
     public static final String ISLAND = Color.CYAN + "\uD83C\uDF34 ISLAND LIFE: Day %d" + "\n";
 
-    public static final String TREND_UP = "%s▲ +%%d%s".formatted(Color.GREEN, Color.RESET);
-    public static final String TREND_DOWN = "%s▼ %%d%s".formatted(Color.RED, Color.RESET);
-    public static final String TREND_NONE = "%s▪ 0%s".formatted(Color.YELLOW, Color.RESET);
+    public static final String TREND_UP = "%s▲ %%+7d%s".formatted(Color.GREEN, Color.RESET);
+    public static final String TREND_DOWN = "%s▼ %%7d%s".formatted(Color.RED, Color.RESET);
+    public static final String TREND_NONE = "%s▪       0%s".formatted(Color.YELLOW, Color.RESET);
     public static final String ALL_DEAD = "[ %sALL DEAD%s ]".formatted(Color.RED, Color.RESET);
 
     public static final String SPECIES_FORMAT = "%s %-7s : %9d %s  %s\n";

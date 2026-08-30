@@ -5,7 +5,6 @@ import com.javarush.island.zelenin.entity.map.Island;
 import com.javarush.island.zelenin.entity.map.Location;
 import com.javarush.island.zelenin.entity.organism.OrganismType;
 import com.javarush.island.zelenin.entity.organism.animal.Animal;
-import com.javarush.island.zelenin.repository.GameStats;
 import com.javarush.island.zelenin.util.RandomUtils;
 import lombok.RequiredArgsConstructor;
 
@@ -20,14 +19,18 @@ public class MovementService {
     private final GameConfig config;
     private final Island island;
 
+    /**
+     * Prepares animal "reservations" for the next movement cycle. Reservations store
+     * the number of animals currently in a location plus the number of animals that
+     * are allowed to move to that location in the following movement cycle.
+     * @param location the target location
+     */
     public void prepareReservations(Location location) {
-        Map<OrganismType, Long> counts = location.getAnimals().stream()
+        Map<OrganismType, Long> animalCounts = location.getAnimals().stream()
                 .collect(Collectors.groupingBy(Animal::getType, Collectors.counting()));
 
-        location.getReservations().forEach((animalType, counter) -> {
-            int count = counts.getOrDefault(animalType, 0L).intValue();
-            counter.set(count);
-        });
+        location.getReservations().forEach((animalType, counter) ->
+                counter.set(animalCounts.getOrDefault(animalType, 0L).intValue()));
     }
 
     public void planDepartures(Location location) {
@@ -35,42 +38,39 @@ public class MovementService {
 
         while (animals.hasNext()) {
             Animal animal = animals.next();
-
-            int radius = config.getMaxSpeed(animal.getType());
+            int radius = config.getMaxSpeed(animal);
             List<Location> neighbors = island.getReachableFrom(location, radius);
-            Location targetLocation = chooseDirection(location, neighbors);
 
-            if (targetLocation != location) {
-                if (tryReservePlace(targetLocation, animal)) {
-                    targetLocation.getArrivalQueue().add(animal);
-                    animals.remove();
-                    GameStats.decrement(animal.getType());
-                }
+            int index = RandomUtils.nextInt(0, neighbors.size());
+            Location targetLocation = neighbors.get(index);
+            if (targetLocation == location) continue;
+
+            if (tryReservePlace(targetLocation, animal)) {
+                targetLocation.getArrivalQueue().add(animal);
+                animals.remove();
             }
         }
-    }
-
-    public Location chooseDirection(Location currentLocation, List<Location> reachableLocations) {
-        if (reachableLocations.isEmpty()) return currentLocation;
-        int index = RandomUtils.nextInt(0, reachableLocations.size());
-        return reachableLocations.get(index);
     }
 
     private boolean tryReservePlace(Location location, Animal animal) {
         AtomicInteger counter = location.getReservations().get(animal.getType());
         while (true) {
             int count = counter.get();
-            if (count >= config.getMaxCount(animal.getType())) return false;
+            if (count >= config.getMaxCount(animal)) return false;
             if (counter.compareAndSet(count, count + 1)) return true;
         }
     }
 
+    /**
+     * Puts incoming animals from a location's staging arrival queue into
+     * the actual list of animals that currently reside in that location.
+     * @param location the target location
+     */
     public void processArrivals(Location location) {
         while (!location.getArrivalQueue().isEmpty()) {
             Animal newcomer = location.getArrivalQueue().poll();
             if (newcomer != null) {
                 location.getAnimals().add(newcomer);
-                GameStats.increment(newcomer.getType());
             }
         }
     }
