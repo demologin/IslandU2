@@ -12,7 +12,7 @@ import lombok.Getter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 @Getter
@@ -33,8 +33,8 @@ public class GameConfig {
 
     private void loadDefaults() {
         island = new IslandProps(Default.ROWS, Default.COLS, Default.TICK_DELAY);
-        organisms = new HashMap<>(Default.ORGANISMS);
-        eatingMatrix = new HashMap<>(Default.EATING_MATRIX);
+        organisms = new EnumMap<>(Default.ORGANISMS);
+        eatingMatrix = new EnumMap<>(Default.EATING_MATRIX);
     }
 
     private void loadFromYaml() {

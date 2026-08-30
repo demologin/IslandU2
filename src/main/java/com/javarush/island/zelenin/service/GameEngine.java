@@ -50,6 +50,18 @@ public class GameEngine implements Runnable {
         System.out.printf("Next day took %d ms to compute.\n", duration);
     }
 
+    //Runs as fast as the variant above
+    /*public void runOneTick() {
+        int tick = tickCounter.incrementAndGet();
+        CompletableFuture.runAsync(() -> view.render(tick), renderPool);
+
+        List<Location> locations = island.getLocations();
+        locations.parallelStream().forEach(lifecycleService::processLife);
+        locations.parallelStream().forEach(movementService::prepareReservations);
+        locations.parallelStream().forEach(movementService::planDepartures);
+        locations.parallelStream().forEach(movementService::processArrivals);
+    }*/
+
     private CompletableFuture<Void> dispatchAsyncTasks(Consumer<Location> action) {
         List<Location> locations = island.getLocations();
         CompletableFuture<?>[] futures = new CompletableFuture[locations.size()];
