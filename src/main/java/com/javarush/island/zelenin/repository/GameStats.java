@@ -43,12 +43,12 @@ public class GameStats {
         }
     }
 
-    public static void increment(OrganismType type) {
-        counters.get(type).increment();
+    public static void add(OrganismType type, int count) {
+        counters.get(type).add(count);
     }
 
-    public static void decrement(OrganismType type) {
-        counters.get(type).decrement();
+    public static void subtract(OrganismType type, int count) {
+        counters.get(type).add(-count);
     }
 
     public static Map<OrganismType, Long> snapshot() {

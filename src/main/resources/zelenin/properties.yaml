@@ -1,6 +1,6 @@
 island:
-  rows: 20
-  cols: 20
+  rows: 100
+  cols: 100
   tickDelay: 1000
 
 organisms:
@@ -8,6 +8,7 @@ organisms:
     name: Wolf
     icon: 🐺
     weight: 50
+    packSize: 5
     maxCount: 30
     maxSpeed: 3
     maxSatiety: 8
@@ -17,6 +18,7 @@ organisms:
     name: Snake
     icon: 🐍
     weight: 15
+    packSize: 5
     maxCount: 30
     maxSpeed: 1
     maxSatiety: 3
@@ -26,6 +28,7 @@ organisms:
     name: Fox
     icon: 🦊
     weight: 8
+    packSize: 5
     maxCount: 30
     maxSpeed: 2
     maxSatiety: 2
@@ -35,6 +38,7 @@ organisms:
     name: Bear
     icon: 🐻
     weight: 500
+    packSize: 1
     maxCount: 5
     maxSpeed: 2
     maxSatiety: 80
@@ -44,6 +48,7 @@ organisms:
     name: Eagle
     icon: 🦅
     weight: 6
+    packSize: 4
     maxCount: 20
     maxSpeed: 3
     maxSatiety: 1
@@ -53,6 +58,7 @@ organisms:
     name: Horse
     icon: 🐎
     weight: 400
+    packSize: 4
     maxCount: 20
     maxSpeed: 4
     maxSatiety: 60
@@ -62,6 +68,7 @@ organisms:
     name: Deer
     icon: 🦌
     weight: 300
+    packSize: 4
     maxCount: 20
     maxSpeed: 4
     maxSatiety: 50
@@ -71,6 +78,7 @@ organisms:
     name: Rabbit
     icon: 🐇
     weight: 2
+    packSize: 25
     maxCount: 150
     maxSpeed: 2
     maxSatiety: 0.5
@@ -80,6 +88,7 @@ organisms:
     name: Mouse
     icon: 🐁
     weight: 0.05
+    packSize: 50
     maxCount: 500
     maxSpeed: 1
     maxSatiety: 0.01
@@ -89,6 +98,7 @@ organisms:
     name: Goat
     icon: 🐐
     weight: 60
+    packSize: 20
     maxCount: 140
     maxSpeed: 3
     maxSatiety: 10
@@ -98,6 +108,7 @@ organisms:
     name: Sheep
     icon: 🐑
     weight: 70
+    packSize: 20
     maxCount: 140
     maxSpeed: 3
     maxSatiety: 15
@@ -107,6 +118,7 @@ organisms:
     name: Boar
     icon: 🐗
     weight: 400
+    packSize: 5
     maxCount: 50
     maxSpeed: 2
     maxSatiety: 50
@@ -116,6 +128,7 @@ organisms:
     name: Buffalo
     icon: 🐃
     weight: 700
+    packSize: 2
     maxCount: 10
     maxSpeed: 3
     maxSatiety: 100
@@ -125,6 +138,7 @@ organisms:
     name: Duck
     icon: 🦆
     weight: 1
+    packSize: 20
     maxCount: 200
     maxSpeed: 4
     maxSatiety: 0.15
@@ -134,6 +148,7 @@ organisms:
     name: Worm
     icon: 🐛
     weight: 0.01
+    packSize: 100
     maxCount: 1000
     maxSpeed: 0
     maxSatiety: 0.005
@@ -143,19 +158,22 @@ organisms:
     name: Tree
     icon: 🌳
     weight: 500
+    packSize: 5
     maxCount: 100
     growthRate: 25
   BUSH:
     name: Bush
     icon: 🌿
     weight: 50
+    packSize: 10
     maxCount: 500
     growthRate: 100
   GRASS:
     name: Grass
     icon: 🌱
     weight: 1
-    maxCount: 5000
+    packSize: 250
+    maxCount: 2500
     growthRate: 1000
 
 eatingMatrix:

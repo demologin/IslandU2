@@ -15,24 +15,24 @@ public final class Default {
     public static final int TICK_DELAY = 1000;
 
     public static final Map<OrganismType, OrganismProps> ORGANISMS = Map.ofEntries(
-            entry(WOLF,    new OrganismProps("Wolf",    "\uD83D\uDC3A",  50,      30, 3,   8,      2,      25,  0)),
-            entry(SNAKE,   new OrganismProps("Snake",   "\uD83D\uDC0D",  15,      30, 1,   3,      0.5,    25,  0)),
-            entry(FOX,     new OrganismProps("Fox",     "\uD83E\uDD8A",   8,      30, 2,   2,      0.5,    25,  0)),
-            entry(BEAR,    new OrganismProps("Bear",    "\uD83D\uDC3B", 500,       5, 2,  80,     10,      25,  0)),
-            entry(EAGLE,   new OrganismProps("Eagle",   "\uD83E\uDD85",   6,      20, 3,   1,      0.2,    25,  0)),
-            entry(HORSE,   new OrganismProps("Horse",   "\uD83D\uDC0E", 400,      20, 4,  60,     10,      25,  0)),
-            entry(DEER,    new OrganismProps("Deer",    "\uD83E\uDD8C", 300,      20, 4,  50,     10,      25,  0)),
-            entry(RABBIT,  new OrganismProps("Rabbit",  "\uD83D\uDC07",   2,     150, 2,   0.45,   0.125,  50,  0)),
-            entry(MOUSE,   new OrganismProps("Mouse",   "\uD83D\uDC01",   0.05,  500, 1,   0.01,   0.0025, 50,  0)),
-            entry(GOAT,    new OrganismProps("Goat",    "\uD83D\uDC10",  60,     140, 3,  10,      2,      25,  0)),
-            entry(SHEEP,   new OrganismProps("Sheep",   "\uD83D\uDC11",  70,     140, 3,  15,      3,      25,  0)),
-            entry(BOAR,    new OrganismProps("Boar",    "\uD83D\uDC17", 400,      50, 2,  50,     10,      25,  0)),
-            entry(BUFFALO, new OrganismProps("Buffalo", "\uD83D\uDC03", 700,      10, 3, 100,     20,      25,  0)),
-            entry(DUCK,    new OrganismProps("Duck",    "\uD83E\uDD86",   1,     200, 4,   0.15,   0.03,   50,  0)),
-            entry(WORM,    new OrganismProps("Worm",    "\uD83D\uDC1B",   0.01, 1000, 0,   0,      0,      50,  0)),
-            entry(TREE,    new OrganismProps("Tree",    "\uD83C\uDF33",   0,       0, 0,   0,      0,       0,  0)),
-            entry(BUSH,    new OrganismProps("Bush",    "\uD83C\uDF3F",   0,       0, 0,   0,      0,       0,  0)),
-            entry(GRASS,   new OrganismProps("Grass",   "\uD83C\uDF31",   1,     200, 0,   0,      0,       0, 10))
+            entry(WOLF,    new OrganismProps("Wolf",    "\uD83D\uDC3A",  50,    0,   30, 3,   8,      2,      25,  0)),
+            entry(SNAKE,   new OrganismProps("Snake",   "\uD83D\uDC0D",  15,    0,   30, 1,   3,      0.5,    25,  0)),
+            entry(FOX,     new OrganismProps("Fox",     "\uD83E\uDD8A",   8,    0,   30, 2,   2,      0.5,    25,  0)),
+            entry(BEAR,    new OrganismProps("Bear",    "\uD83D\uDC3B", 500,    0,    5, 2,  80,     10,      25,  0)),
+            entry(EAGLE,   new OrganismProps("Eagle",   "\uD83E\uDD85",   6,    0,   20, 3,   1,      0.2,    25,  0)),
+            entry(HORSE,   new OrganismProps("Horse",   "\uD83D\uDC0E", 400,    0,   20, 4,  60,     10,      25,  0)),
+            entry(DEER,    new OrganismProps("Deer",    "\uD83E\uDD8C", 300,    0,   20, 4,  50,     10,      25,  0)),
+            entry(RABBIT,  new OrganismProps("Rabbit",  "\uD83D\uDC07",   2,    0,  150, 2,   0.45,   0.125,  50,  0)),
+            entry(MOUSE,   new OrganismProps("Mouse",   "\uD83D\uDC01",   0.05, 0,  500, 1,   0.01,   0.0025, 50,  0)),
+            entry(GOAT,    new OrganismProps("Goat",    "\uD83D\uDC10",  60,    0,  140, 3,  10,      2,      25,  0)),
+            entry(SHEEP,   new OrganismProps("Sheep",   "\uD83D\uDC11",  70,    0,  140, 3,  15,      3,      25,  0)),
+            entry(BOAR,    new OrganismProps("Boar",    "\uD83D\uDC17", 400,    0,   50, 2,  50,     10,      25,  0)),
+            entry(BUFFALO, new OrganismProps("Buffalo", "\uD83D\uDC03", 700,    0,   10, 3, 100,     20,      25,  0)),
+            entry(DUCK,    new OrganismProps("Duck",    "\uD83E\uDD86",   1,    0,  200, 4,   0.15,   0.03,   50,  0)),
+            entry(WORM,    new OrganismProps("Worm",    "\uD83D\uDC1B",   0.01, 0, 1000, 0,   0,      0,      50,  0)),
+            entry(TREE,    new OrganismProps("Tree",    "\uD83C\uDF33",   0,    0,    0, 0,   0,      0,       0,  0)),
+            entry(BUSH,    new OrganismProps("Bush",    "\uD83C\uDF3F",   0,    0,    0, 0,   0,      0,       0,  0)),
+            entry(GRASS,   new OrganismProps("Grass",   "\uD83C\uDF31",   1,    0,  200, 0,   0,      0,       0, 10))
     );
 
     public static final Map<OrganismType, Map<OrganismType, Integer>> EATING_MATRIX = Map.ofEntries(

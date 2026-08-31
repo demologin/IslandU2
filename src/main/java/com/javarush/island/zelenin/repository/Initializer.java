@@ -24,15 +24,17 @@ public class Initializer {
 
     private void populateLocation(Location location) {
         for (OrganismType type : OrganismType.values()) {
-            int count = RandomUtils.nextInt(0, config.getMaxCount(type) + 1);
+            int packSize = config.getPackSize(type);
+            int maxPacks = packSize > 0 ? config.getMaxCount(type) / packSize : 0;
+            int packsToCreate = RandomUtils.nextInt(0, maxPacks + 1);
 
-            for (int i = 0; i < count; i++) {
+            for (int i = 0; i < packsToCreate; i++) {
                 switch (creator.createFrom(type)) {
                     case Animal animal -> location.getAnimals().add(animal);
                     case Plant plant -> location.getPlants().add(plant);
                     default -> throw new GameException(Const.UNKNOWN_TYPE);
                 }
-                GameStats.increment(type);
+                GameStats.add(type, packSize);
             }
         }
     }

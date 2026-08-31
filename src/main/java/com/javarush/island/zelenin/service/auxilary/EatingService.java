@@ -28,7 +28,9 @@ public class EatingService {
 
             if (RandomUtils.rollChance(config.getEatChance(animal, food))) {
                 food.setEaten(true);
-                animal.increaseSatiety(config.getWeight(food));
+
+                double totalWeight = config.getWeight(food) * config.getPackSize(food);
+                animal.increaseSatiety(totalWeight / config.getPackSize(animal));
 
                 if (animal.getSatiety() > maxSatiety) {
                     animal.setSatiety(maxSatiety);

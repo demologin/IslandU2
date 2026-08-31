@@ -26,11 +26,11 @@ public class MovementService {
      * @param location the target location
      */
     public void prepareReservations(Location location) {
-        Map<OrganismType, Long> animalCounts = location.getAnimals().stream()
+        Map<OrganismType, Long> packCounts = location.getAnimals().stream()
                 .collect(Collectors.groupingBy(Animal::getType, Collectors.counting()));
 
         location.getReservations().forEach((animalType, counter) ->
-                counter.set(animalCounts.getOrDefault(animalType, 0L).intValue()));
+                counter.set(packCounts.getOrDefault(animalType, 0L).intValue()));
     }
 
     public void planDepartures(Location location) {
@@ -54,9 +54,11 @@ public class MovementService {
 
     private boolean tryReservePlace(Location location, Animal animal) {
         AtomicInteger counter = location.getReservations().get(animal.getType());
+        int maxPacks = config.getMaxCount(animal) / config.getPackSize(animal);
+
         while (true) {
             int count = counter.get();
-            if (count >= config.getMaxCount(animal)) return false;
+            if (count >= maxPacks) return false;
             if (counter.compareAndSet(count, count + 1)) return true;
         }
     }

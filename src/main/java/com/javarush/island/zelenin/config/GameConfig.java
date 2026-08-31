@@ -22,7 +22,7 @@ public class GameConfig {
     private Map<OrganismType, Map<OrganismType, Integer>> eatingMatrix;
 
     public record IslandProps(int rows, int cols, int tickDelay) {}
-    public record OrganismProps(String name, String icon, double weight, int maxCount,
+    public record OrganismProps(String name, String icon, double weight, int packSize, int maxCount,
                                 int maxSpeed, double maxSatiety, double satietyLoss,
                                 double birthChance, int growthRate) {}
 
@@ -84,6 +84,14 @@ public class GameConfig {
 
     public double getWeight(Organism organism) {
         return getWeight(organism.getType());
+    }
+
+    public int getPackSize(OrganismType type) {
+        return organisms.get(type).packSize;
+    }
+
+    public int getPackSize(Organism organism) {
+        return getPackSize(organism.getType());
     }
 
     public int getMaxCount(OrganismType type) {

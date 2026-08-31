@@ -16,13 +16,15 @@ public class VitalityService {
 
     public void removeDead(Location location) {
         location.getAnimals().removeIf(animal -> {
-            if (!(animal.isEaten() || animal.getSatiety() <= 0)) return false;
-            GameStats.decrement(animal.getType());
+            if (!animal.isEaten() && animal.getSatiety() > 0) return false;
+            int packSize = config.getPackSize(animal.getType());
+            GameStats.subtract(animal.getType(), packSize);
             return true;
         });
         location.getPlants().removeIf(plant -> {
             if (!plant.isEaten()) return false;
-            GameStats.decrement(plant.getType());
+            int packSize = config.getPackSize(plant.getType());
+            GameStats.subtract(plant.getType(), packSize);
             return true;
         });
     }

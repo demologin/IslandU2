@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Consumer;
 
 @RequiredArgsConstructor
 public class GameEngine implements Runnable {
@@ -19,7 +18,6 @@ public class GameEngine implements Runnable {
     private final View view;
     private final LifecycleService lifecycleService;
     private final MovementService movementService;
-    private ExecutorService workerPool;
     private ExecutorService renderPool;
     private ScheduledExecutorService schedulerPool;
 
@@ -28,10 +26,9 @@ public class GameEngine implements Runnable {
 
     @Override
     public void run() {
-        workerPool = Executors.newVirtualThreadPerTaskExecutor();
         renderPool = Executors.newSingleThreadExecutor();
         schedulerPool = Executors.newSingleThreadScheduledExecutor();
-        schedulerPool.scheduleWithFixedDelay(this::runOneTick, 0,
+        schedulerPool.scheduleAtFixedRate(this::runOneTick, 0,
                 config.getTickDelay(), TimeUnit.MILLISECONDS);
     }
 
@@ -40,41 +37,13 @@ public class GameEngine implements Runnable {
         int tick = tickCounter.incrementAndGet();
         CompletableFuture.runAsync(() -> view.render(tick), renderPool);
 
-        dispatchAsyncTasks(lifecycleService::processLife)
-                .thenRunAsync(() -> runParallelStream(movementService::prepareReservations))
-                .thenCompose(v -> dispatchAsyncTasks(movementService::planDepartures))
-                .thenAccept(v -> runParallelStream(movementService::processArrivals))
-                .join();
-
-        long duration = (System.nanoTime() - startTime) / 1000000;
-        System.out.printf("Next day took %d ms to compute.\n", duration);
-    }
-
-    //Runs as fast as the variant above
-    /*public void runOneTick() {
-        int tick = tickCounter.incrementAndGet();
-        CompletableFuture.runAsync(() -> view.render(tick), renderPool);
-
         List<Location> locations = island.getLocations();
         locations.parallelStream().forEach(lifecycleService::processLife);
         locations.parallelStream().forEach(movementService::prepareReservations);
         locations.parallelStream().forEach(movementService::planDepartures);
         locations.parallelStream().forEach(movementService::processArrivals);
-    }*/
 
-    private CompletableFuture<Void> dispatchAsyncTasks(Consumer<Location> action) {
-        List<Location> locations = island.getLocations();
-        CompletableFuture<?>[] futures = new CompletableFuture[locations.size()];
-
-        for (int i = 0; i < locations.size(); i++) {
-            Location location = locations.get(i);
-            Runnable task = () -> action.accept(location);
-            futures[i] = CompletableFuture.runAsync(task, workerPool);
-        }
-        return CompletableFuture.allOf(futures);
-    }
-
-    private void runParallelStream(Consumer<Location> action) {
-        island.getLocations().parallelStream().forEach(action);
+        long duration = (System.nanoTime() - startTime) / 1000000;
+        System.out.printf("Next day took %d ms to compute.\n", duration);
     }
 }

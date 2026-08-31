@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -31,14 +32,18 @@ public class ReproductionService {
                 .collect(Collectors.groupingBy(Animal::getType))
                 .forEach((type, parents) -> {
                     if (parents.size() < 2) return;
-                    int count = parents.size();
+
+                    int packSize = config.getPackSize(type);
+                    int maxPacks = config.getMaxCount(type) / packSize;
+                    int currentPacks = parents.size();
 
                     for (int i = 0; i < parents.size() / 2; i++) {
-                        if (count >= config.getMaxCount(type)) break;
+                        if (currentPacks >= maxPacks) break;
+
                         if (RandomUtils.rollChance(config.getBirthChance(type))) {
                             newborns.add(creator.createAnimal(type));
-                            GameStats.increment(type);
-                            count++;
+                            GameStats.add(type, packSize);
+                            currentPacks++;
                         }
                     }
                 });
@@ -48,15 +53,23 @@ public class ReproductionService {
     private void growPlants(Location location) {
         List<Plant> grownPlants = new ArrayList<>();
 
-        for (OrganismType type : OrganismType.getPlants()) {
-            long count = location.getPlants().stream()
-                    .filter(plant -> plant.getType() == type).count();
-            if (count <= 0) continue;
+        Map<OrganismType, Long> counts = location.getPlants().stream()
+                .collect(Collectors.groupingBy(Plant::getType, Collectors.counting()));
 
-            for (int i = 0; i < config.getGrowthRate(type); i++) {
-                if (count++ >= config.getMaxCount(type)) break;
+        for (OrganismType type : OrganismType.getPlants()) {
+            long currentPacks = counts.getOrDefault(type, 0L);
+            if (currentPacks <= 0) continue;
+
+            int packSize = config.getPackSize(type);
+            int maxPacks = config.getMaxCount(type) / packSize;
+            int packsToGrow = config.getGrowthRate(type) / packSize;
+
+            for (int i = 0; i < packsToGrow; i++) {
+                if (currentPacks >= maxPacks) break;
+
                 grownPlants.add(creator.createPlant(type));
-                GameStats.increment(type);
+                GameStats.add(type, packSize);
+                currentPacks++;
             }
         }
         location.getPlants().addAll(grownPlants);
