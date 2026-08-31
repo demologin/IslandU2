@@ -22,9 +22,9 @@ public class GameConfig {
     private Map<OrganismType, Map<OrganismType, Integer>> eatingMatrix;
 
     public record IslandProps(int rows, int cols, int tickDelay) {}
-    public record OrganismProps(String name, String icon, double weight, int packSize, int maxCount,
-                                int maxSpeed, double maxSatiety, double satietyLoss,
-                                double birthChance, int growthRate) {}
+    public record OrganismProps(String name, String icon, double weight, int packSize,
+                                int maxCount, int maxSpeed, double maxSatiety,
+                                double satietyLoss, double birthChance, int growthRate) {}
 
     public GameConfig() {
         loadDefaults();

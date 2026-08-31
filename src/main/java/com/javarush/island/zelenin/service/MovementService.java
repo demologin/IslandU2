@@ -20,10 +20,11 @@ public class MovementService {
     private final Island island;
 
     /**
-     * Prepares animal "reservations" for the next movement cycle. Reservations store
-     * the number of animals currently in a location plus the number of animals that
-     * are allowed to move to that location in the following movement cycle.
-     * @param location the target location
+     * Syncs animal "reservations" with the actual number of animal packs currently residing
+     * in a given {@link Location}. Reservations store the number of animals currently living
+     * in the location plus any number of animals that are allowed to move to that location
+     * in the following movement cycle.
+     * @param location the location for which to evaluate its reservations
      */
     public void prepareReservations(Location location) {
         Map<OrganismType, Long> packCounts = location.getAnimals().stream()
@@ -33,6 +34,12 @@ public class MovementService {
                 counter.set(packCounts.getOrDefault(animalType, 0L).intValue()));
     }
 
+    /**
+     * Moves animal from one {@link Location} into another's location staging queue if there's
+     * available space in that location. The target location is chosen randomly among the locations
+     * that are within a certain radius of the original location.
+     * @param location the original location
+     */
     public void planDepartures(Location location) {
         Iterator<Animal> animals = location.getAnimals().iterator();
 
@@ -64,9 +71,9 @@ public class MovementService {
     }
 
     /**
-     * Puts incoming animals from a location's staging arrival queue into
+     * Puts incoming animals from a {@link Location}'s staging arrival queue into
      * the actual list of animals that currently reside in that location.
-     * @param location the target location
+     * @param location the processed location
      */
     public void processArrivals(Location location) {
         while (!location.getArrivalQueue().isEmpty()) {
