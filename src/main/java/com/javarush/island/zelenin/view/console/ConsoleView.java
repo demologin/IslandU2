@@ -7,23 +7,13 @@ import com.javarush.island.zelenin.view.View;
 import com.javarush.island.zelenin.view.console.style.Color;
 import com.javarush.island.zelenin.view.console.style.Layout;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 public class ConsoleView implements View {
     private final GameConfig config;
-    private final Map<OrganismType, Long> lastSnapshot;
-    private final Map<OrganismType, Long> maxCounts;
+    private final ReportBuffer reportBuffer;
 
     public ConsoleView(GameConfig config) {
         this.config = config;
-        lastSnapshot = new ConcurrentHashMap<>();
-        maxCounts = new HashMap<>();
-        for (OrganismType type : OrganismType.values()) {
-            maxCounts.put(type, (long) config.getMaxCount(type)
-                    * config.getRows() * config.getCols());
-        }
+        reportBuffer = new ReportBuffer();
     }
 
     @Override
@@ -32,41 +22,43 @@ public class ConsoleView implements View {
     }
 
     private void showStats(int currentTick) {
-        GameStats.resetTotals();
-        Map<OrganismType, Long> snapshot = GameStats.snapshot();
+        reportBuffer.update(GameStats.snapshot());
         StringBuilder report = new StringBuilder();
-        report.append(getReportHeader(currentTick));
+        report.append(renderReportHeader(currentTick));
 
         for (OrganismType type : OrganismType.values()) {
-            long count = snapshot.getOrDefault(type, 0L);
-            long lastCount = lastSnapshot.getOrDefault(type, count);
-            long maxCount = maxCounts.get(type);
-
-            GameStats.updateTotals(type, count);
-            String speciesBar = getSmallBar(count, maxCount);
-            String trendArrow = getTrendArrow(count - lastCount);
-            String name = getColoredName(type);
-
-            report.append(Layout.SPECIES_FORMAT.formatted(config.getIcon(type),
-                    name, count, speciesBar, trendArrow));
+            report.append(renderSpeciesRow(type));
         }
-
         report.append(Layout.LINE);
-        String totalBar = getTotalBar(GameStats.getTotalCarnivores(),
-                GameStats.getTotalHerbivores(), GameStats.getTotalPlants());
+        String totalBar = renderTotalBar(
+                reportBuffer.getCarnivores(),
+                reportBuffer.getHerbivores(),
+                reportBuffer.getPlants()
+        );
         report.append(Layout.TOTAL).append(totalBar).append("\n");
         report.append(Layout.CYAN_LINE);
-
         System.out.print(report);
-        lastSnapshot.clear();
-        lastSnapshot.putAll(snapshot);
     }
 
-    private String getReportHeader(int currentTick) {
+    private String renderSpeciesRow(OrganismType type) {
+        long trend = reportBuffer.getTrend(type);
+        long count = reportBuffer.getCount(type);
+        long maxCount = config.getTotalMaxCount(type);
+
+        return Layout.SPECIES_FORMAT.formatted(
+                config.getIcon(type),
+                renderColoredName(type),
+                count,
+                renderSmallBar(count, maxCount),
+                renderTrendInfo(trend)
+        );
+    }
+
+    private String renderReportHeader(int currentTick) {
         return "\n" + Layout.CYAN_LINE + Layout.ISLAND.formatted(currentTick) + Layout.CYAN_LINE;
     }
 
-    private String getColoredName(OrganismType type) {
+    private String renderColoredName(OrganismType type) {
         String name = config.getName(type);
         if (type.isCarnivore()) {
             name = Color.RED + name;
@@ -78,7 +70,7 @@ public class ConsoleView implements View {
         return name + Color.RESET;
     }
 
-    private String getTrendArrow(long delta) {
+    private String renderTrendInfo(long delta) {
         if (delta > 0) {
             return Layout.TREND_UP.formatted(delta);
         } else if (delta < 0) {
@@ -87,7 +79,7 @@ public class ConsoleView implements View {
         return Layout.TREND_NONE;
     }
 
-    private String getSmallBar(long count, long maxCount) {
+    private String renderSmallBar(long count, long maxCount) {
         int barWidth = Layout.SMALL_BAR_WIDTH;
         double ratio = (double) count / maxCount;
         int filledWidth = (int) (ratio * barWidth);
@@ -96,7 +88,7 @@ public class ConsoleView implements View {
         return color + "█".repeat(filledWidth) + "░".repeat(emptyWidth) + Color.RESET;
     }
 
-    private String getTotalBar(long carnivores, long herbivores, long plants) {
+    private String renderTotalBar(long carnivores, long herbivores, long plants) {
         long total = carnivores + herbivores + plants;
         if (total == 0) return Layout.ALL_DEAD;
 

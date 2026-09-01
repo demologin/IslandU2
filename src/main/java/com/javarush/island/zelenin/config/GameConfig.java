@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 
 @Getter
@@ -20,6 +21,7 @@ public class GameConfig {
     private IslandProps island;
     private Map<OrganismType, OrganismProps> organisms;
     private Map<OrganismType, Map<OrganismType, Integer>> eatingMatrix;
+    private final Map<OrganismType, Long> totalMaxCounts;
 
     public record IslandProps(int rows, int cols, int tickDelay) {}
     public record OrganismProps(String name, String icon, double weight, int packSize,
@@ -29,6 +31,7 @@ public class GameConfig {
     public GameConfig() {
         loadDefaults();
         loadFromYaml();
+        totalMaxCounts = cacheTotalMaxCounts();
     }
 
     private void loadDefaults() {
@@ -48,6 +51,15 @@ public class GameConfig {
         } catch (IOException e) {
             throw new GameException(e.getMessage());
         }
+    }
+
+    private Map<OrganismType, Long> cacheTotalMaxCounts() {
+        Map<OrganismType, Long> maxCounts = new HashMap<>();
+        for (OrganismType type : OrganismType.values()) {
+            long count = (long) getMaxCount(type) * getRows() * getCols();
+            maxCounts.put(type, count);
+        }
+        return maxCounts;
     }
 
     public int getRows() {
@@ -148,5 +160,13 @@ public class GameConfig {
 
     public int getEatChance(Organism animal, Organism food) {
         return getEatChance(animal.getType(), food.getType());
+    }
+
+    public long getTotalMaxCount(OrganismType type) {
+        return totalMaxCounts.get(type);
+    }
+
+    public long getTotalMaxCount(Organism organism) {
+        return getTotalMaxCount(organism.getType());
     }
 }
